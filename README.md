@@ -5,6 +5,8 @@ The elevator programming game
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+[![CI](https://github.com/elevator-saga/elevatorsaga/actions/workflows/ci.yml/badge.svg)](https://github.com/elevator-saga/elevatorsaga/actions/workflows/ci.yml)
+
 [Play it now!](http://play.elevatorsaga.com/)
 
 Or [Run the unit tests](http://play.elevatorsaga.com/test/)
