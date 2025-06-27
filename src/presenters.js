@@ -1,8 +1,9 @@
-import _ from 'lodash';
+import each from 'lodash/each';
+import map from 'lodash/map';
 import * as riot from 'riot';
 
 function clearAll($elems) {
-  _.each($elems, function ($elem) {
+  each($elems, function ($elem) {
     $elem.empty();
   });
 }
@@ -90,7 +91,7 @@ function presentWorld($world, world, floorTempl, elevatorTempl, elevatorButtonTe
   $world.css('height', world.floorHeight * world.floors.length);
 
   $world.append(
-    _.map(world.floors, function (f) {
+    map(world.floors, function (f) {
       var $floor = $(riot.render(floorTempl, f));
       var $up = $floor.find('.up');
       var $down = $floor.find('.down');
@@ -112,7 +113,7 @@ function presentWorld($world, world, floorTempl, elevatorTempl, elevatorButtonTe
 
   function renderElevatorButtons(states) {
     // This is a rarely executed inner-inner loop, does not need efficiency
-    return _.map(states, function (b, i) {
+    return map(states, function (b, i) {
       return riot.render(elevatorButtonTempl, { floorNum: i });
     }).join('');
   }
@@ -121,7 +122,7 @@ function presentWorld($world, world, floorTempl, elevatorTempl, elevatorButtonTe
     var $elevator = $(riot.render(elevatorTempl, { e: e }));
     var elem_elevator = $elevator.get(0);
     $elevator.find('.buttonindicator').html(renderElevatorButtons(e.buttonStates));
-    var $buttons = _.map($elevator.find('.buttonindicator').children(), function (c) {
+    var $buttons = map($elevator.find('.buttonindicator').children(), function (c) {
       return $(c);
     });
     var elem_floorindicator = $elevator.find('.floorindicator > span').get(0);
@@ -149,7 +150,7 @@ function presentWorld($world, world, floorTempl, elevatorTempl, elevatorButtonTe
   }
 
   $world.append(
-    _.map(world.elevators, function (e) {
+    map(world.elevators, function (e) {
       return setUpElevator(e);
     })
   );

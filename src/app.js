@@ -1,8 +1,20 @@
 import observable from '@riotjs/observable';
 import { route } from '@riotjs/route';
-import _ from 'lodash';
 import debounce from 'lodash/debounce';
-import { presentChallenge, presentCodeStatus, presentFeedback, presentStats, presentWorld } from './presenters';
+import each from 'lodash/each';
+import map from 'lodash/map';
+import merge from 'lodash/merge';
+import parseInt from 'lodash/parseInt';
+import reduce from 'lodash/reduce';
+import { challenges } from './challenges';
+import {
+  clearAll,
+  presentChallenge,
+  presentCodeStatus,
+  presentFeedback,
+  presentStats,
+  presentWorld,
+} from './presenters';
 import { typeDeclarations } from './types';
 import { createWorldController, createWorldCreator } from './world';
 
@@ -110,7 +122,7 @@ const createEditorAsync = () =>
 var createParamsUrl = function (current, overrides) {
   return (
     '#' +
-    _.map(_.merge(current, overrides), function (val, key) {
+    map(merge(current, overrides), function (val, key) {
       return key + '=' + val;
     }).join(',')
   );
@@ -238,7 +250,7 @@ $(function () {
       // fitnessSuite(codeStr, true, function(results) {
       //     var message = "";
       //     if(!results.error) {
-      //         message = "Fitness avg wait times: " + _.map(results, function(r){ return r.options.description + ": " + r.result.avgWaitTime.toPrecision(3) + "s" }).join("&nbsp&nbsp&nbsp");
+      //         message = "Fitness avg wait times: " + map(results, function(r){ return r.options.description + ": " + r.result.avgWaitTime.toPrecision(3) + "s" }).join("&nbsp&nbsp&nbsp");
       //     } else {
       //         message = "Could not compute fitness due to error: " + results.error;
       //     }
@@ -248,7 +260,7 @@ $(function () {
     editor.trigger('change');
 
     route(function (path) {
-      params = _.reduce(
+      params = reduce(
         path.split(','),
         function (result, p) {
           var match = p.match(/(\w+)=(\w+$)/);
@@ -262,9 +274,9 @@ $(function () {
       var requestedChallenge = 0;
       var autoStart = false;
       var timeScale = parseFloat(localStorage.getItem(tsKey)) || 2.0;
-      _.each(params, function (val, key) {
+      each(params, function (val, key) {
         if (key === 'challenge') {
-          requestedChallenge = _.parseInt(val) - 1;
+          requestedChallenge = parseInt(val) - 1;
           if (requestedChallenge < 0 || requestedChallenge >= challenges.length) {
             console.log('Invalid challenge index', requestedChallenge);
             console.log('Defaulting to first challenge');

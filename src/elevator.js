@@ -1,4 +1,7 @@
-import _ from 'lodash';
+import map from 'lodash/map';
+import random from 'lodash/random';
+import range from 'lodash/range';
+import reduce from 'lodash/reduce';
 import { epsilonEquals, limitNumber, newGuard } from './base.js';
 import Movable from './movable.js';
 
@@ -26,12 +29,12 @@ class Elevator extends Movable {
 
     this.currentFloor = 0;
     this.previousTruncFutureFloorIfStopped = 0;
-    this.buttonStates = _.map(_.range(floorCount), function (e, i) {
+    this.buttonStates = map(range(floorCount), function (e, i) {
       return false;
     });
     this.moveCount = 0;
     this.removed = false;
-    this.userSlots = _.map(_.range(this.maxUsers), function (user, i) {
+    this.userSlots = map(range(this.maxUsers), function (user, i) {
       return { pos: [2 + i * 10, 30], user: null };
     });
     this.width = this.maxUsers * 10;
@@ -62,7 +65,7 @@ class Elevator extends Movable {
   }
 
   userEntering(user) {
-    const randomOffset = _.random(this.userSlots.length - 1);
+    const randomOffset = random(this.userSlots.length - 1);
     for (let i = 0; i < this.userSlots.length; i++) {
       const slot = this.userSlots[(i + randomOffset) % this.userSlots.length];
       if (slot.user === null) {
@@ -232,7 +235,7 @@ class Elevator extends Movable {
   }
 
   getLoadFactor() {
-    const load = _.reduce(
+    const load = reduce(
       this.userSlots,
       function (sum, slot) {
         return sum + (slot.user ? slot.user.weight : 0);

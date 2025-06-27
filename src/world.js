@@ -1,12 +1,20 @@
 import observable from '@riotjs/observable';
-import _ from 'lodash';
+import clone from 'lodash/clone';
+import defaults from 'lodash/defaults';
+import each from 'lodash/each';
+import map from 'lodash/map';
+import random from 'lodash/random';
+import range from 'lodash/range';
+import reduce from 'lodash/reduce';
+import Elevator from './elevator';
 import asFloor from './floor';
+import asElevatorInterface from './interfaces';
 
 var createWorldCreator = function () {
   var creator = {};
 
   creator.createFloors = function (floorCount, floorHeight, errorHandler) {
-    var floors = _.map(_.range(floorCount), function (e, i) {
+    var floors = map(range(floorCount), function (e, i) {
       var yPos = (floorCount - 1 - i) * floorHeight;
       var floor = asFloor({}, i, yPos, errorHandler);
       return floor;
@@ -16,7 +24,7 @@ var createWorldCreator = function () {
   creator.createElevators = function (elevatorCount, floorCount, floorHeight, elevatorCapacities) {
     elevatorCapacities = elevatorCapacities || [4];
     var currentX = 200.0;
-    var elevators = _.map(_.range(elevatorCount), function (e, i) {
+    var elevators = map(range(elevatorCount), function (e, i) {
       var elevator = new Elevator(2.6, floorCount, floorHeight, elevatorCapacities[i % elevatorCapacities.length]);
 
       // Move to right x position
@@ -30,11 +38,11 @@ var createWorldCreator = function () {
   };
 
   creator.createRandomUser = function () {
-    var weight = _.random(55, 100);
+    var weight = random(55, 100);
     var user = new User(weight);
-    if (_.random(40) === 0) {
+    if (random(40) === 0) {
       user.displayType = 'child';
-    } else if (_.random(1) === 0) {
+    } else if (random(1) === 0) {
       user.displayType = 'female';
     } else {
       user.displayType = 'male';
@@ -44,16 +52,16 @@ var createWorldCreator = function () {
 
   creator.spawnUserRandomly = function (floorCount, floorHeight, floors) {
     var user = creator.createRandomUser();
-    user.moveTo(105 + _.random(40), 0);
-    var currentFloor = _.random(1) === 0 ? 0 : _.random(floorCount - 1);
+    user.moveTo(105 + random(40), 0);
+    var currentFloor = random(1) === 0 ? 0 : random(floorCount - 1);
     var destinationFloor;
     if (currentFloor === 0) {
       // Definitely going up
-      destinationFloor = _.random(1, floorCount - 1);
+      destinationFloor = random(1, floorCount - 1);
     } else {
       // Usually going down, but sometimes not
-      if (_.random(10) === 0) {
-        destinationFloor = (currentFloor + _.random(1, floorCount - 1)) % floorCount;
+      if (random(10) === 0) {
+        destinationFloor = (currentFloor + random(1, floorCount - 1)) % floorCount;
       } else {
         destinationFloor = 0;
       }
@@ -65,7 +73,7 @@ var createWorldCreator = function () {
   creator.createWorld = function (options) {
     console.log('Creating world with options', options);
     var defaultOptions = { floorHeight: 50, floorCount: 4, elevatorCount: 2, spawnRate: 0.5 };
-    options = _.defaults(_.clone(options), defaultOptions);
+    options = defaults(clone(options), defaultOptions);
     var world = { floorHeight: options.floorHeight, transportedCounter: 0 };
     observable(world);
 
@@ -80,7 +88,7 @@ var createWorldCreator = function () {
       world.floorHeight,
       options.elevatorCapacities
     );
-    world.elevatorInterfaces = _.map(world.elevators, function (e) {
+    world.elevatorInterfaces = map(world.elevators, function (e) {
       return asElevatorInterface({}, e, options.floorCount, handleUserCodeError);
     });
     world.users = [];
@@ -95,7 +103,7 @@ var createWorldCreator = function () {
     var recalculateStats = function () {
       world.transportedPerSec = world.transportedCounter / world.elapsedTime;
       // TODO: Optimize this loop?
-      world.moveCount = _.reduce(
+      world.moveCount = reduce(
         world.elevators,
         function (sum, elevator) {
           return sum + elevator.moveCount;
@@ -146,7 +154,7 @@ var createWorldCreator = function () {
 
     var handleButtonRepressing = function (eventName, floor) {
       // Need randomize iteration order or we'll tend to fill upp first elevator
-      for (var i = 0, len = world.elevators.length, offset = _.random(len - 1); i < len; ++i) {
+      for (var i = 0, len = world.elevators.length, offset = random(len - 1); i < len; ++i) {
         var elevIndex = (i + offset) % len;
         var elevator = world.elevators[elevIndex];
         if (
@@ -221,7 +229,7 @@ var createWorldCreator = function () {
 
     world.unWind = function () {
       console.log('Unwinding', world);
-      _.each(
+      each(
         world.elevators.concat(world.elevatorInterfaces).concat(world.users).concat(world.floors).concat([world]),
         function (obj) {
           obj.off('*');

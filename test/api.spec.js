@@ -1,5 +1,7 @@
 import { jest } from '@jest/globals';
-import _ from 'lodash';
+import chain from 'lodash/chain';
+import random from 'lodash/random';
+import range from 'lodash/range';
 import Elevator from '../src/elevator.js';
 import asElevatorInterface from '../src/interfaces.js';
 import { timeForwarder } from './helpers.js';
@@ -123,13 +125,13 @@ describe('API', function () {
 
     it('normalizes load factor', function () {
       var fnNewUser = function () {
-          return { weight: _.random(55, 100) };
+          return { weight: random(55, 100) };
         },
         fnEnterElevator = function (user) {
           e.userEntering(user);
         };
 
-      _.chain(_.range(20)).map(fnNewUser).forEach(fnEnterElevator);
+      chain(range(20)).map(fnNewUser).forEach(fnEnterElevator);
       var load = elevInterface.loadFactor();
       expect(load >= 0 && load <= 1).toBeTruthy();
     });

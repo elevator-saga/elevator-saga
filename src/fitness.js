@@ -1,3 +1,8 @@
+import forOwn from 'lodash/forOwn';
+import map from 'lodash/map';
+import pluck from 'lodash/pluck';
+import range from 'lodash/range';
+import times from 'lodash/times';
 import { createFrameRequester, createWorldController, createWorldCreator } from './world';
 
 var requireNothing = function () {
@@ -64,8 +69,8 @@ function calculateFitness(challenge, codeObj, stepSize, stepsToSimulate) {
 
 function makeAverageResult(results) {
   var averagedResult = {};
-  _.forOwn(results[0].result, function (value, resultProperty) {
-    var sum = _.sum(_.pluck(_.pluck(results, 'result'), resultProperty));
+  forOwn(results[0].result, function (value, resultProperty) {
+    var sum = sum(pluck(pluck(results, 'result'), resultProperty));
     averagedResult[resultProperty] = sum / results.length;
   });
   return { options: results[0].options, result: averagedResult };
@@ -81,8 +86,8 @@ function doFitnessSuite(codeStr, runCount) {
   var error = null;
 
   var testruns = [];
-  _.times(runCount, function () {
-    var results = _.map(fitnessChallenges, function (challenge) {
+  times(runCount, function () {
+    var results = map(fitnessChallenges, function (challenge) {
       var fitness = calculateFitness(challenge, codeObj, 1000.0 / 60.0, 12000);
       if (fitness.error) {
         error = fitness.error;
@@ -100,8 +105,8 @@ function doFitnessSuite(codeStr, runCount) {
   }
 
   // Now do averaging over all properties for each challenge's test runs
-  var averagedResults = _.map(_.range(testruns[0].length), function (n) {
-    return makeAverageResult(_.pluck(testruns, n));
+  var averagedResults = map(range(testruns[0].length), function (n) {
+    return makeAverageResult(pluck(testruns, n));
   });
 
   return averagedResults;

@@ -1,5 +1,6 @@
 import { jest } from '@jest/globals';
-import _ from 'lodash';
+import each from 'lodash/each';
+import range from 'lodash/range';
 import Elevator from '../src/elevator';
 import { timeForwarder } from './helpers';
 
@@ -179,7 +180,7 @@ describe('Elevator object', () => {
   });
 
   it('doesnt seem to overshoot when stopping at floors', function () {
-    _.each(_.range(60, 120, 2.32133), function (updatesPerSecond) {
+    each(range(60, 120, 2.32133), function (updatesPerSecond) {
       var STEPSIZE = 1.0 / updatesPerSecond;
       e.setFloorPosition(1);
       e.goToFloor(3);

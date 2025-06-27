@@ -1,5 +1,7 @@
 import observable from '@riotjs/observable';
-import _ from 'lodash';
+import first from 'lodash/first';
+import last from 'lodash/last';
+import tail from 'lodash/tail';
 import { createBoolPassthroughFunction, epsilonEquals, limitNumber } from './base.js';
 
 // Interface that hides actual elevator object behind a more robust facade,
@@ -21,7 +23,7 @@ var asElevatorInterface = function (obj, elevator, floorCount, errorHandler) {
   elevatorInterface.checkDestinationQueue = function () {
     if (!elevator.isBusy()) {
       if (elevatorInterface.destinationQueue.length) {
-        elevator.goToFloor(_.first(elevatorInterface.destinationQueue));
+        elevator.goToFloor(first(elevatorInterface.destinationQueue));
       } else {
         tryTrigger('idle');
       }
@@ -34,8 +36,8 @@ var asElevatorInterface = function (obj, elevator, floorCount, errorHandler) {
     // Auto-prevent immediately duplicate destinations
     if (elevatorInterface.destinationQueue.length) {
       var adjacentElement = forceNow
-        ? _.first(elevatorInterface.destinationQueue)
-        : _.last(elevatorInterface.destinationQueue);
+        ? first(elevatorInterface.destinationQueue)
+        : last(elevatorInterface.destinationQueue);
       if (epsilonEquals(floorNum, adjacentElement)) {
         return;
       }
@@ -82,10 +84,10 @@ var asElevatorInterface = function (obj, elevator, floorCount, errorHandler) {
   elevator.on('stopped', function (position) {
     if (
       elevatorInterface.destinationQueue.length &&
-      epsilonEquals(_.first(elevatorInterface.destinationQueue), position)
+      epsilonEquals(first(elevatorInterface.destinationQueue), position)
     ) {
       // Reached the destination, so remove element at front of queue
-      elevatorInterface.destinationQueue = _.tail(elevatorInterface.destinationQueue);
+      elevatorInterface.destinationQueue = tail(elevatorInterface.destinationQueue);
       if (elevator.isOnAFloor()) {
         elevator.wait(1, function () {
           elevatorInterface.checkDestinationQueue();

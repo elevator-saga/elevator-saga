@@ -8,24 +8,24 @@
     "test": "test"
   },
   "scripts": {
-    "serve": "npx esbuild src/app.js --bundle --outfile=docs/bundle.js --format=iife --sourcemap && npx http-server docs -p 8080",
+    "serve": "npm run build && npx http-server docs -p 8080",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand --testEnvironment=jsdom --config=jest.config.js",
-    "lint": "eslint . --ext .js",
-    "format": "prettier --write .",
+    "lint": "npx eslint . --ext .js",
+    "format": "npx prettier --write .",
     "prepare": "lefthook install",
     "deploy": "npx gh-pages -d docs",
-    "build": "esbuild src/app.js --bundle --outfile=docs/bundle.js --format=iife --sourcemap"
+    "build": "npx esbuild src/app.js --bundle --outfile=docs/bundle.js --format=iife --sourcemap"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/elevator-saga/elevatorsaga.git"
+    "url": "git+https://github.com/elevator-saga/elevator-saga.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/elevator-saga/elevatorsaga/issues"
+    "url": "https://github.com/elevator-saga/elevator-saga/issues"
   },
-  "homepage": "https://github.com/elevator-saga/elevatorsaga#readme",
+  "homepage": "https://github.com/elevator-saga/elevator-saga#readme",
   "devDependencies": {
     "@types/jest": "^30.0.0",
     "@types/node": "^24.0.4",

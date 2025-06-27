@@ -165,6 +165,8 @@ var challenges = [
 /* jshint laxcomma:false */
 
 export {
+  challenges,
+  requireDemo,
   requireUserCountWithinMoves,
   requireUserCountWithinTime,
   requireUserCountWithinTimeWithMaxWaitTime,
