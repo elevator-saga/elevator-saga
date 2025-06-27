@@ -7,7 +7,7 @@ import random from 'lodash/random';
 import range from 'lodash/range';
 import reduce from 'lodash/reduce';
 import Elevator from './elevator';
-import asFloor from './floor';
+import Floor from './floor';
 import asElevatorInterface from './interfaces';
 
 var createWorldCreator = function () {
@@ -16,7 +16,7 @@ var createWorldCreator = function () {
   creator.createFloors = function (floorCount, floorHeight, errorHandler) {
     var floors = map(range(floorCount), function (e, i) {
       var yPos = (floorCount - 1 - i) * floorHeight;
-      var floor = asFloor({}, i, yPos, errorHandler);
+      var floor = new Floor({}, i, yPos, errorHandler);
       return floor;
     });
     return floors;

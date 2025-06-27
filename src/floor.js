@@ -1,59 +1,58 @@
 import observable from '@riotjs/observable';
 
-var asFloor = function (obj, floorLevel, yPosition, errorHandler) {
-  var floor = observable(obj);
+class Floor {
+  constructor(obj, floorLevel, yPosition, errorHandler) {
+    observable(this);
+    this.level = floorLevel;
+    this.yPosition = yPosition;
+    this.buttonStates = { up: '', down: '' };
+    this._errorHandler = errorHandler;
+  }
 
-  floor.level = floorLevel;
-  floor.yPosition = yPosition;
-  floor.buttonStates = { up: '', down: '' };
-
-  // TODO: Ideally the floor should have a facade where tryTrigger is done
-  var tryTrigger = function (event, arg1, arg2, arg3, arg4) {
+  _tryTrigger(event, arg1, arg2, arg3, arg4) {
     try {
-      floor.trigger(event, arg1, arg2, arg3, arg4);
+      this.trigger(event, arg1, arg2, arg3, arg4);
     } catch (e) {
-      errorHandler(e);
+      this._errorHandler(e);
     }
-  };
+  }
 
-  floor.pressUpButton = function () {
-    var prev = floor.buttonStates.up;
-    floor.buttonStates.up = 'activated';
-    if (prev !== floor.buttonStates.up) {
-      tryTrigger('buttonstate_change', floor.buttonStates);
-      tryTrigger('up_button_pressed', floor);
+  pressUpButton() {
+    const prev = this.buttonStates.up;
+    this.buttonStates.up = 'activated';
+    if (prev !== this.buttonStates.up) {
+      this._tryTrigger('buttonstate_change', this.buttonStates);
+      this._tryTrigger('up_button_pressed', this);
     }
-  };
+  }
 
-  floor.pressDownButton = function () {
-    var prev = floor.buttonStates.down;
-    floor.buttonStates.down = 'activated';
-    if (prev !== floor.buttonStates.down) {
-      tryTrigger('buttonstate_change', floor.buttonStates);
-      tryTrigger('down_button_pressed', floor);
+  pressDownButton() {
+    const prev = this.buttonStates.down;
+    this.buttonStates.down = 'activated';
+    if (prev !== this.buttonStates.down) {
+      this._tryTrigger('buttonstate_change', this.buttonStates);
+      this._tryTrigger('down_button_pressed', this);
     }
-  };
+  }
 
-  floor.elevatorAvailable = function (elevator) {
-    if (elevator.goingUpIndicator && floor.buttonStates.up) {
-      floor.buttonStates.up = '';
-      tryTrigger('buttonstate_change', floor.buttonStates);
+  elevatorAvailable(elevator) {
+    if (elevator.goingUpIndicator && this.buttonStates.up) {
+      this.buttonStates.up = '';
+      this._tryTrigger('buttonstate_change', this.buttonStates);
     }
-    if (elevator.goingDownIndicator && floor.buttonStates.down) {
-      floor.buttonStates.down = '';
-      tryTrigger('buttonstate_change', floor.buttonStates);
+    if (elevator.goingDownIndicator && this.buttonStates.down) {
+      this.buttonStates.down = '';
+      this._tryTrigger('buttonstate_change', this.buttonStates);
     }
-  };
+  }
 
-  floor.getSpawnPosY = function () {
-    return floor.yPosition + 30;
-  };
+  getSpawnPosY() {
+    return this.yPosition + 30;
+  }
 
-  floor.floorNum = function () {
-    return floor.level;
-  };
+  floorNum() {
+    return this.level;
+  }
+}
 
-  return floor;
-};
-
-export default asFloor;
+export default Floor;
