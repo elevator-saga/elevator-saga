@@ -1,19 +1,11 @@
 <!doctype html>
 <html>
+
   <head>
     <title>Elevator Saga - the elevator programming game</title>
     <meta charset="UTF-8" />
-    <link
-      rel="stylesheet"
-      href="font-awesome-4.1-1.0/css/font-awesome.min.css"
-      type="text/css"
-      media="all"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Oswald:400,700,300"
-      rel="stylesheet"
-      type="text/css"
-    />
+    <link rel="stylesheet" href="font-awesome-4.1-1.0/css/font-awesome.min.css" type="text/css" media="all" />
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,700,300" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="libs/codemirror/codemirror.css" />
     <link rel="stylesheet" href="libs/codemirror/themes/solarized.css" />
     <link rel="stylesheet" href="style.css" type="text/css" media="all" />
@@ -24,18 +16,18 @@
 
     <script type="text/javascript" src="libs/unobservable.js"></script>
 
-    <script type="text/javascript" src="base.js"></script>
-    <script type="text/javascript" src="movable.js"></script>
-    <script type="text/javascript" src="floor.js"></script>
-    <script type="text/javascript" src="user.js"></script>
-    <script type="text/javascript" src="elevator.js"></script>
-    <script type="text/javascript" src="interfaces.js"></script>
-    <script type="text/javascript" src="world.js"></script>
-    <script type="text/javascript" src="presenters.js"></script>
-    <script type="text/javascript" src="challenges.js"></script>
-    <script type="text/javascript" src="fitness.js"></script>
-    <script type="text/javascript" src="types.js"></script>
-    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="src/ßbase.js"></script>
+    <script type="text/javascript" src="src/ßmovable.js"></script>
+    <script type="text/javascript" src="src/ßfloor.js"></script>
+    <script type="text/javascript" src="src/ßuser.js"></script>
+    <script type="text/javascript" src="src/ßelevator.js"></script>
+    <script type="text/javascript" src="src/ßinterfaces.js"></script>
+    <script type="text/javascript" src="src/ßworld.js"></script>
+    <script type="text/javascript" src="src/ßpresenters.js"></script>
+    <script type="text/javascript" src="src/ßchallenges.js"></script>
+    <script type="text/javascript" src="src/ßfitness.js"></script>
+    <script type="text/javascript" src="src/ßtypes.js"></script>
+    <script type="text/javascript" src="src/ßapp.js"></script>
 
     <script type="text/template" id="user-template">
       <i class="movable fa user fa-{u.displayType} {state}"></i>
@@ -140,6 +132,7 @@
       })
     </script>
   </head>
+
   <body>
     <div class="container">
       <div class="header">
@@ -180,9 +173,8 @@
             <span class="key">Max waiting time</span><span class="value maxwaittime"></span>
           </div>
           <div style="top: 120px">
-            <span class="key" title="Number of floors that have been travelled by elevators"
-              >Moves</span
-            ><span class="value movecount"></span>
+            <span class="key" title="Number of floors that have been travelled by elevators">Moves</span><span
+              class="value movecount"></span>
           </div>
         </div>
       </div>
@@ -232,4 +224,5 @@
       ga('send', 'pageview');
     </script>
   </body>
+
 </html>
