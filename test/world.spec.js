@@ -1,5 +1,5 @@
 import { jest } from '@jest/globals';
-import observable from 'riot-observable';
+import observable from '@riotjs/observable';
 import { createFrameRequester } from '../src/base';
 import { createWorldController } from '../src/world';
 

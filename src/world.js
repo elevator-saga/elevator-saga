@@ -1,5 +1,6 @@
+import observable from '@riotjs/observable';
 import _ from 'lodash';
-import observable from 'riot-observable';
+import asFloor from './floor';
 
 var createWorldCreator = function () {
   var creator = {};

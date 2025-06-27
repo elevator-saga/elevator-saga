@@ -46,9 +46,10 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
+    "@riotjs/observable": "^4.1.1",
+    "@riotjs/route": "^9.2.2",
     "lodash": "^4.17.21",
     "riot": "^9.4.9",
-    "riot-observable": "^3.0.0",
     "typescript": "^5.8.3"
   }
 }

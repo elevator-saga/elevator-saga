@@ -1,5 +1,5 @@
+import observable from '@riotjs/observable';
 import _ from 'lodash';
-import observable from 'riot-observable';
 import { createBoolPassthroughFunction, epsilonEquals, limitNumber } from './base.js';
 
 // Interface that hides actual elevator object behind a more robust facade,

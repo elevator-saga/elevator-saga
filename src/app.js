@@ -1,5 +1,10 @@
-import * as riot from 'riot';
-import observable from 'riot-observable';
+import observable from '@riotjs/observable';
+import { route } from '@riotjs/route';
+import _ from 'lodash';
+import debounce from 'lodash/debounce';
+import { presentChallenge, presentCodeStatus, presentFeedback, presentStats, presentWorld } from './presenters';
+import { typeDeclarations } from './types';
+import { createWorldController, createWorldCreator } from './world';
 
 const createEditorAsync = () =>
   new Promise((resolve, reject) => {
@@ -68,7 +73,7 @@ const createEditorAsync = () =>
       });
 
       var returnObj = observable({});
-      var autoSaver = _.debounce(saveCode, 1000);
+      var autoSaver = debounce(saveCode, 1000);
       cm.onDidChangeModelContent = autoSaver;
 
       returnObj.getCodeObj = function () {
@@ -242,7 +247,7 @@ $(function () {
     });
     editor.trigger('change');
 
-    riot.route(function (path) {
+    route(function (path) {
       params = _.reduce(
         path.split(','),
         function (result, p) {

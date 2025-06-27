@@ -1,4 +1,3 @@
-// Created by Josef Wittmann: https://gist.github.com/Josef37/e075b6a005a47d146c7e7ab9ed7ae893
 var typeDeclarations = `interface Solution {
     init: (elevators: Elevator[], floors: Floor[]) => void;
     update: (dt: number, elevators: Elevator[], floors: Floor[]) => void;
@@ -89,3 +88,5 @@ interface Floor {
      */
     on(event: "down_button_pressed", callback: () => void): Floor;
 }`;
+
+export { typeDeclarations };

@@ -1,4 +1,4 @@
-import observable from 'riot-observable';
+import observable from '@riotjs/observable';
 
 var asFloor = function (obj, floorLevel, yPosition, errorHandler) {
   var floor = observable(obj);
@@ -55,3 +55,5 @@ var asFloor = function (obj, floorLevel, yPosition, errorHandler) {
 
   return floor;
 };
+
+export default asFloor;

@@ -7,16 +7,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"
       type="text/css" media="all" />
     <link href="https://fonts.googleapis.com/css?family=Oswald:400,700,300" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="libs/codemirror/codemirror.css" />
-    <link rel="stylesheet" href="libs/codemirror/themes/solarized.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/solarized.min.css" />
     <link rel="stylesheet" href="style.css" type="text/css" media="all" />
-
-    <script type="text/javascript" href="https://unpkg.com/jquery@3.7.0/dist/jquery.js"></script>
-    <script type="text/javascript"
-      href="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.19/lodash.min.js"></script>
-    <script type="text/javascript" href="https://unpkg.com/riot@9.0.3/riot.js"></script>
-
-    <script type="text/javascript" src="bundle.js"></script>
 
     <script type="text/template" id="user-template">
       <i class="movable fa user fa-{u.displayType} {state}"></i>
@@ -192,7 +185,19 @@
     </div>
 
     <!-- Load Monaco Editor from CDN; from: https://log.schemescape.com/posts/web-development/embedding-monaco-from-cdn.html -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.29.1/min/vs/loader.min.js"></script>
+    <script type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/javascript/javascript.min.js"></script>
+    <script type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/edit/closebrackets.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.19/lodash.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/riot/9.4.9/riot.min.js"></script>
+    <script type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.2/min/vs/loader.min.js"></script>
+    <script type="text/javascript" src="bundle.js"></script>
 
     <script>
       (function (i, s, o, g, r, a, m) {

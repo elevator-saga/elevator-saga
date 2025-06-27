@@ -189,3 +189,15 @@ function makeDemoFullscreen() {
   $('body .container > *').not('.world').css('visibility', 'hidden');
   $('html, body, body .container, .world').css({ width: '100%', margin: '0', padding: 0 });
 }
+
+export {
+  clearAll,
+  makeDemoFullscreen,
+  presentChallenge,
+  presentCodeStatus,
+  presentFeedback,
+  presentStats,
+  presentWorld,
+  setTransformPos,
+  updateUserState,
+};
