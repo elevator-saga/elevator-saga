@@ -8,15 +8,15 @@
     "test": "test"
   },
   "scripts": {
-    "serve": "npm run dev && npx http-server docs -p 8080",
+    "serve": "npm run dev && npx http-server public -p 8080",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand --testEnvironment=jsdom --config=jest.config.js",
     "lint": "npx eslint . --ext .js",
     "format": "npx prettier --write .",
     "prepare": "lefthook install",
-    "deploy": "npx gh-pages -d docs",
-    "dev": "npx esbuild src/app.js --bundle --outfile=docs/bundle.js --format=iife --sourcemap --watch",
-    "build": "npx esbuild src/app.js --bundle --outfile=docs/bundle.js --format=iife --sourcemap",
-    "start": "concurrently \"npm:dev\" \"npx http-server docs -p 8080\""
+    "deploy": "npx gh-pages -d public",
+    "dev": "npx esbuild src/app.js --bundle --outfile=public/bundle.js --format=iife --sourcemap --watch",
+    "build": "npx esbuild src/app.js --bundle --outfile=public/bundle.js --format=iife --sourcemap",
+    "start": "concurrently \"npm:dev\" \"npx http-server public -p 8080\""
   },
   "repository": {
     "type": "git",
