@@ -1,5 +1,4 @@
 import { jest } from '@jest/globals';
-import chain from 'lodash/chain';
 import random from 'lodash/random';
 import range from 'lodash/range';
 import Elevator from '../src/elevator.js';
@@ -131,7 +130,7 @@ describe('API', function () {
           e.userEntering(user);
         };
 
-      chain(range(20)).map(fnNewUser).forEach(fnEnterElevator);
+      range(20).map(fnNewUser).forEach(fnEnterElevator);
       var load = elevInterface.loadFactor();
       expect(load >= 0 && load <= 1).toBeTruthy();
     });
