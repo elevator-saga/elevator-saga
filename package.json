@@ -1,0 +1,42 @@
+{
+  "name": "elevator-saga",
+  "version": "1.0.0",
+  "description": "The elevator programming game",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "lefthook install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elevator-saga/elevatorsaga.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/elevator-saga/elevatorsaga/issues"
+  },
+  "homepage": "https://github.com/elevator-saga/elevatorsaga#readme",
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.0.4",
+    "@typescript-eslint/parser": "^8.35.0",
+    "doctoc": "^2.2.1",
+    "esbuild": "^0.25.5",
+    "eslint": "^9.29.0",
+    "eslint-config-prettier": "^10.1.5",
+    "jest": "^30.0.3",
+    "lefthook": "^1.11.14",
+    "lockfile-lint": "^4.14.1",
+    "markdownlint-cli2": "^0.18.1",
+    "prettier": "^3.6.2",
+    "ts-jest": "^29.4.0",
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "typescript": "^5.8.3"
+  }
+}
