@@ -1,13 +1,17 @@
 {
   "name": "elevator-saga",
   "version": "1.0.0",
+  "type": "module",
   "description": "The elevator programming game",
   "main": "app.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --testEnvironment=jsdom --config=jest.config.js",
+    "test:exp": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand --testEnvironment=jsdom --config=jest.config.js",
+    "lint": "eslint . --ext .js",
+    "format": "prettier --write .",
     "prepare": "lefthook install"
   },
   "repository": {
@@ -28,7 +32,9 @@
     "esbuild": "^0.25.5",
     "eslint": "^9.29.0",
     "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.5.1",
     "jest": "^30.0.3",
+    "jest-environment-jsdom": "^30.0.2",
     "lefthook": "^1.11.14",
     "lockfile-lint": "^4.14.1",
     "markdownlint-cli2": "^0.18.1",
@@ -37,6 +43,9 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
+    "lodash": "^4.17.21",
+    "riot": "^9.4.9",
+    "riot-observable": "^3.0.0",
     "typescript": "^5.8.3"
   }
 }

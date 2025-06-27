@@ -29,21 +29,22 @@ function getJasmineRequireObj() {
   }
 }
 
-getJasmineRequireObj().console = function(jRequire, j$) {
+getJasmineRequireObj().console = function (jRequire, j$) {
   j$.ConsoleReporter = jRequire.ConsoleReporter();
 };
 
-getJasmineRequireObj().ConsoleReporter = function() {
-
+getJasmineRequireObj().ConsoleReporter = function () {
   var noopTimer = {
-    start: function(){},
-    elapsed: function(){ return 0; }
+    start: function () {},
+    elapsed: function () {
+      return 0;
+    },
   };
 
   function ConsoleReporter(options) {
     var print = options.print,
       showColors = options.showColors || false,
-      onComplete = options.onComplete || function() {},
+      onComplete = options.onComplete || function () {},
       timer = options.timer || noopTimer,
       specCount,
       failureCount,
@@ -53,10 +54,10 @@ getJasmineRequireObj().ConsoleReporter = function() {
         green: '\x1B[32m',
         red: '\x1B[31m',
         yellow: '\x1B[33m',
-        none: '\x1B[0m'
+        none: '\x1B[0m',
       };
 
-    this.jasmineStarted = function() {
+    this.jasmineStarted = function () {
       specCount = 0;
       failureCount = 0;
       pendingCount = 0;
@@ -65,17 +66,17 @@ getJasmineRequireObj().ConsoleReporter = function() {
       timer.start();
     };
 
-    this.jasmineDone = function() {
+    this.jasmineDone = function () {
       printNewline();
       for (var i = 0; i < failedSpecs.length; i++) {
         specFailureDetails(failedSpecs[i]);
       }
 
-      if(specCount > 0) {
+      if (specCount > 0) {
         printNewline();
 
-        var specCounts = specCount + ' ' + plural('spec', specCount) + ', ' +
-          failureCount + ' ' + plural('failure', failureCount);
+        var specCounts =
+          specCount + ' ' + plural('spec', specCount) + ', ' + failureCount + ' ' + plural('failure', failureCount);
 
         if (pendingCount) {
           specCounts += ', ' + pendingCount + ' pending ' + plural('spec', pendingCount);
@@ -95,7 +96,7 @@ getJasmineRequireObj().ConsoleReporter = function() {
       onComplete(failureCount === 0);
     };
 
-    this.specDone = function(result) {
+    this.specDone = function (result) {
       specCount++;
 
       if (result.status == 'pending') {
@@ -123,7 +124,7 @@ getJasmineRequireObj().ConsoleReporter = function() {
     }
 
     function colored(color, str) {
-      return showColors ? (ansi[color] + str + ansi.none) : str;
+      return showColors ? ansi[color] + str + ansi.none : str;
     }
 
     function plural(str, count) {

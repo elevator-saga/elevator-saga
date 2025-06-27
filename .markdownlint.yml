@@ -1,0 +1,47 @@
+default: true
+
+# MD001/heading-increment/header-increment - Heading levels should only increment by one level at a time
+MD001: true
+
+# Conflicting with prettier
+MD007: false
+
+# MD013/line-length - Line length
+MD013:
+  # Include code blocks
+  code_blocks: false
+  # Include tables
+  tables: false
+  # Line length
+  line_length: 120
+
+# MD024/no-duplicate-heading/no-duplicate-header Multiple headings with the same content
+MD024: false
+
+# MD029/ol-prefix Ordered list item prefix
+MD029: false
+
+# Conflicting with prettier
+MD030: false
+
+# MD033/no-inline-html - Inline HTML
+MD033:
+  allowed_elements:
+    - br
+    - abbr
+    - nobr
+    # The followin are the reporting done by dependency-cruiser
+    - details
+    - summary
+    # The following are for the anchor for NX
+    - a
+    - img
+
+# MD040:
+#   language_only: true
+
+MD046:
+  style: fenced
+
+MD049:
+  emphasis: "underscore"

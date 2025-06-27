@@ -1,31 +1,31 @@
 pre-commit:
   piped: true
   commands:
-    "1. lint code":
-      glob: "*.ts"
-      interactive: true
-      run: npx eslint --fix {staged_files}
+    '1. lint code':
+      glob: '*.{ts,js}'
+      # interactive: true
+      run: npx eslint . --fix
       stage_fixed: true
 
-    "2. format code, docs and config":
-      glob: "*.{ts,json,md,yaml}"
-      interactive: true
-      run: npx prettier {staged_files}
+    '2. format code, docs and config':
+      glob: '*.{ts,js,json,md,yaml}'
+      # interactive: true
+      run: npx prettier {staged_files} --write
       stage_fixed: true
 
-    "3. lint docs":
-      glob: "*.md"
-      interactive: true
+    '3. lint docs':
+      glob: '*.md'
+      # interactive: true
       run: npx markdownlint-cli2 --fix {staged_files}
       stage_fixed: true
 
-    "4. generate markdown TOC":
-      glob: "*.md"
-      interactive: true
+    '4. generate markdown TOC':
+      glob: '*.md'
+      # interactive: true
       run: npx doctoc {staged_files}
       stage_fixed: true
 
 pre-push:
   commands:
-    "1. Run unit tests":
+    '1. Run unit tests':
       run: npx jest -A
