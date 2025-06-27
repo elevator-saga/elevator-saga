@@ -4,30 +4,19 @@
   <head>
     <title>Elevator Saga - the elevator programming game</title>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="font-awesome-4.1-1.0/css/font-awesome.min.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"
+      type="text/css" media="all" />
     <link href="https://fonts.googleapis.com/css?family=Oswald:400,700,300" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="libs/codemirror/codemirror.css" />
     <link rel="stylesheet" href="libs/codemirror/themes/solarized.css" />
     <link rel="stylesheet" href="style.css" type="text/css" media="all" />
 
-    <script type="text/javascript" src="libs/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="libs/lodash.min.js"></script>
-    <script type="text/javascript" src="libs/riot.js"></script>
+    <script type="text/javascript" href="https://unpkg.com/jquery@3.7.0/dist/jquery.js"></script>
+    <script type="text/javascript"
+      href="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.19/lodash.min.js"></script>
+    <script type="text/javascript" href="https://unpkg.com/riot@9.0.3/riot.js"></script>
 
-    <script type="text/javascript" src="libs/unobservable.js"></script>
-
-    <script type="text/javascript" src="src/ßbase.js"></script>
-    <script type="text/javascript" src="src/ßmovable.js"></script>
-    <script type="text/javascript" src="src/ßfloor.js"></script>
-    <script type="text/javascript" src="src/ßuser.js"></script>
-    <script type="text/javascript" src="src/ßelevator.js"></script>
-    <script type="text/javascript" src="src/ßinterfaces.js"></script>
-    <script type="text/javascript" src="src/ßworld.js"></script>
-    <script type="text/javascript" src="src/ßpresenters.js"></script>
-    <script type="text/javascript" src="src/ßchallenges.js"></script>
-    <script type="text/javascript" src="src/ßfitness.js"></script>
-    <script type="text/javascript" src="src/ßtypes.js"></script>
-    <script type="text/javascript" src="src/ßapp.js"></script>
+    <script type="text/javascript" src="bundle.js"></script>
 
     <script type="text/template" id="user-template">
       <i class="movable fa user fa-{u.displayType} {state}"></i>
@@ -197,7 +186,7 @@
       <div class="footer">
         <h4>Made by Magnus Wolffelt and contributors</h4>
         <h4>Version <span class="emphasis-color">1.6.5</span></h4>
-        <h4><a href="https://github.com/magwo/elevatorsaga">Source code</a> on GitHub</h4>
+        <h4><a href="https://github.com/elevator-saga/elevator-saga">Source code</a> on GitHub</h4>
         <h4><a href="test/index.html">Run tests</a></h4>
       </div>
     </div>

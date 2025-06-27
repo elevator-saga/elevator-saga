@@ -8,10 +8,13 @@
     "test": "test"
   },
   "scripts": {
+    "serve": "npx esbuild src/app.js --bundle --outfile=docs/bundle.js --format=iife --sourcemap && npx http-server docs -p 8080",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand --testEnvironment=jsdom --config=jest.config.js",
     "lint": "eslint . --ext .js",
     "format": "prettier --write .",
-    "prepare": "lefthook install"
+    "prepare": "lefthook install",
+    "deploy": "npx gh-pages -d docs",
+    "build": "esbuild src/app.js --bundle --outfile=docs/bundle.js --format=iife --sourcemap"
   },
   "repository": {
     "type": "git",
@@ -32,6 +35,7 @@
     "eslint": "^9.29.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.5.1",
+    "gh-pages": "^6.3.0",
     "jest": "^30.0.3",
     "jest-environment-jsdom": "^30.0.2",
     "lefthook": "^1.11.14",
