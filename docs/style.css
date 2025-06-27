@@ -9,7 +9,6 @@ body {
 body {
   font-family: Oswald, Arial, Helvetica, sans-serif;
 }
-
 h1,
 h2,
 h3,
@@ -42,7 +41,6 @@ a {
   font-weight: bold;
   text-decoration: none;
 }
-
 a:hover {
   text-decoration: underline;
 }
@@ -57,7 +55,6 @@ h5 {
 dl {
   color: #555;
 }
-
 dl dd {
   font:
     15px Arial,
@@ -108,13 +105,11 @@ button.right {
   animation: blink 0.5s steps(3, start) infinite;
   -webkit-animation: blink 0.5s steps(3, start) infinite;
 }
-
 @keyframes blink {
   to {
     visibility: hidden;
   }
 }
-
 @-webkit-keyframes blink {
   to {
     visibility: hidden;
@@ -192,7 +187,6 @@ button.right {
   height: 575px;
   margin: 10px auto;
 }
-
 .world {
   position: relative;
   width: 1220px;
@@ -271,7 +265,8 @@ button.right {
   z-index: 2;
 }
 
-.user.happy {}
+.user.happy {
+}
 
 .user.frustrated {
   color: yellow;
@@ -333,13 +328,11 @@ button.right {
   line-height: 8px;
   color: rgba(255, 255, 255, 0.3);
 }
-
 .elevator .buttonpress {
   cursor: pointer;
   margin: 0;
   display: inline-block;
 }
-
 .elevator .buttonpress.activated {
   color: #33ff44;
 }
@@ -349,11 +342,12 @@ button.right {
   width: 100%;
   height: 49px;
   background-color: rgba(255, 255, 255, 0.1);
-  background: linear-gradient(rgba(255, 255, 255, 0.1),
-      rgba(255, 255, 255, 0.2),
-      rgba(255, 255, 255, 0.24),
-      rgba(255, 255, 255, 0.1));
-  /* Standard syntax */
+  background: linear-gradient(
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.24),
+    rgba(255, 255, 255, 0.1)
+  ); /* Standard syntax */
   border-bottom: 1px solid #333;
 }
 
@@ -363,7 +357,6 @@ button.right {
   padding-left: 50px;
   color: rgba(255, 255, 255, 0.2);
 }
-
 .floor .buttonindicator .activated {
   color: rgba(55, 255, 55, 1);
 }
@@ -379,7 +372,6 @@ button.right {
 .footer {
   margin-top: 20px;
 }
-
 .footer h4 {
   font-size: 13px;
 }
