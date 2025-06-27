@@ -8,8 +8,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "jest --testEnvironment=jsdom --config=jest.config.js",
-    "test:exp": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand --testEnvironment=jsdom --config=jest.config.js",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand --testEnvironment=jsdom --config=jest.config.js",
     "lint": "eslint . --ext .js",
     "format": "prettier --write .",
     "prepare": "lefthook install"

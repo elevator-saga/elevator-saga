@@ -28,4 +28,4 @@ pre-commit:
 pre-push:
   commands:
     '1. Run unit tests':
-      run: npx jest -A
+      run: npm run test
