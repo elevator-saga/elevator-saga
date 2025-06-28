@@ -5,7 +5,6 @@ import observable from '@riotjs/observable';
  * Handles button states, triggers events, and manages elevator availability.
  *
  * @class Floor
- * @param {Object} obj - The observable object context.
  * @param {number} floorLevel - The floor number/level.
  * @param {number} yPosition - The vertical position of the floor.
  * @param {Function} errorHandler - Function to handle errors during event triggering.
@@ -24,7 +23,7 @@ import observable from '@riotjs/observable';
  * @method _tryTrigger - Tries to trigger an event and handles errors.
  */
 class Floor {
-  constructor(obj, floorLevel, yPosition, errorHandler) {
+  constructor(floorLevel, yPosition, errorHandler) {
     observable(this);
     this.level = floorLevel;
     this.yPosition = yPosition;

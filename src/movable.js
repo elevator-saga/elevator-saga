@@ -1,5 +1,5 @@
-import { newGuard } from './base.js';
-import { Observable } from './unobservable.js';
+import observable from '@riotjs/observable';
+import { newGuard } from './base';
 
 const EPSILON = 0.00001;
 
@@ -80,9 +80,9 @@ const _tmpPosStorage = [0, 0];
  *   @method getWorldPosition(storage) - Computes the object's world position, considering parent hierarchy.
  *   @method setParent(movableParent) - Sets or removes the object's parent, preserving world position.
  */
-class Movable extends Observable {
+class Movable {
   constructor() {
-    super();
+    observable(this);
     newGuard(this, Movable);
     this.x = 0.0;
     this.y = 0.0;
