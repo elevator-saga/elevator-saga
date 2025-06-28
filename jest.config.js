@@ -6,4 +6,14 @@ export default {
   transform: {
     '^.+\\.jsx?$': 'babel-jest',
   },
+  reporters: [
+    'default',
+    [
+      './node_modules/jest-html-reporter',
+      {
+        pageTitle: 'Elevator Sage Test Report',
+        outputPath: 'public/test-report.html',
+      },
+    ],
+  ],
 };
