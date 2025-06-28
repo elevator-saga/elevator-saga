@@ -1,7 +1,7 @@
 import { jest } from '@jest/globals';
 import observable from '@riotjs/observable';
 import { createFrameRequester } from './base';
-import { createWorldController } from './world';
+import WorldController from './world-controller';
 
 describe('World controller', function () {
   var controller = null;
@@ -11,7 +11,7 @@ describe('World controller', function () {
   var DT_MAX = 1000.0 / 59;
 
   beforeEach(function () {
-    controller = createWorldController(DT_MAX);
+    controller = new WorldController(DT_MAX);
     fakeWorld = {
       update: function (dt) {},
       init: function () {},

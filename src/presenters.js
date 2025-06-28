@@ -1,6 +1,9 @@
 import each from 'lodash/each';
 import map from 'lodash/map';
 import * as riot from 'riot';
+import Challenge from './challenge';
+import User from './user';
+import World from './world';
 
 /**
  * Removes all child elements from each element in the provided collection.
@@ -33,7 +36,7 @@ export function setTransformPos(elem, x, y) {
  *
  * @param {jQuery} $user - The jQuery-wrapped DOM element representing the user.
  * @param {HTMLElement} elem_user - The raw DOM element for the user.
- * @param {Object} user - The user object containing state and position.
+ * @param {User} user - The user object containing state and position.
  * @param {number} user.worldX - The X coordinate of the user in the world.
  * @param {number} user.worldY - The Y coordinate of the user in the world.
  * @param {boolean} user.done - Whether the user has completed their action.
@@ -49,7 +52,7 @@ export function updateUserState($user, elem_user, user) {
  * Updates the statistics display elements within the given parent element based on the current state of the world object.
  *
  * @param {jQuery} $parent - The jQuery-wrapped parent element containing the stats display elements.
- * @param {Object} world - The world object that emits 'stats_display_changed' events and contains statistics properties:
+ * @param {World} world - The world object that emits 'stats_display_changed' events and contains statistics properties:
  *   @param {number} world.transportedCounter - The total number of transported passengers.
  *   @param {number} world.elapsedTime - The elapsed time in seconds.
  *   @param {number} world.transportedPerSec - The number of passengers transported per second.
@@ -82,9 +85,9 @@ export function presentStats($parent, world) {
  * Renders and initializes the challenge UI in the given parent element.
  *
  * @param {jQuery} $parent - The parent jQuery element where the challenge UI will be rendered.
- * @param {Object} challenge - The challenge data object.
+ * @param {Challenge} challenge - The challenge data object.
  * @param {Object} app - The main application object, providing control methods.
- * @param {Object} world - The current world state object.
+ * @param {World} world - The current world state object.
  * @param {Object} worldController - Controller for managing world state and time scale.
  * @param {number} challengeNum - The current challenge number.
  * @param {string} challengeTempl - The Riot.js template string for rendering the challenge UI.
@@ -126,7 +129,7 @@ export function presentChallenge($parent, challenge, app, world, worldController
  *
  * @param {jQuery} $parent - The jQuery element to render the feedback into.
  * @param {string} feedbackTempl - The Riot template string for rendering feedback.
- * @param {Object} world - The world object containing floor information.
+ * @param {World} world - The world object containing floor information.
  * @param {Array} world.floors - Array of floor objects.
  * @param {number} world.floorHeight - The height of each floor.
  * @param {string} title - The title to display in the feedback.
@@ -151,7 +154,7 @@ export function presentFeedback($parent, feedbackTempl, world, title, message, u
  * Renders and manages the interactive world view for the elevator simulation.
  *
  * @param {jQuery} $world - The jQuery element representing the world container.
- * @param {Object} world - The world model containing floors, elevators, and related state.
+ * @param {World} world - The world model containing floors, elevators, and related state.
  * @param {string} floorTempl - Riot.js template string for rendering a floor.
  * @param {string} elevatorTempl - Riot.js template string for rendering an elevator.
  * @param {string} elevatorButtonTempl - Riot.js template string for rendering elevator buttons.

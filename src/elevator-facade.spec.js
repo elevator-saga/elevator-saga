@@ -19,9 +19,10 @@ describe('API', function () {
     }
   });
 
-  describe('Elevator interface', function () {
+  describe('Elevator Facade', function () {
     var e = null;
     var elevInterface = null;
+
     beforeEach(function () {
       e = new Elevator(1.5, 4, 40);
       e.setFloorPosition(0);
