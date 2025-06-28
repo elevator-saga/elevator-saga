@@ -15,8 +15,8 @@
     "format": "npx prettier --write .",
     "prepare": "lefthook install",
     "deploy": "npx gh-pages -d public",
-    "dev": "npx esbuild src/app.js --bundle --outfile=public/scripts/bundle.js --format=iife --sourcemap --watch --external:*.test.js",
-    "build": "npx esbuild src/app.js --bundle --outfile=public/scripts/bundle.js --format=iife --sourcemap --external:*.test.js",
+    "dev": "npx esbuild src/app/app.js --bundle --outfile=public/scripts/bundle.js --format=iife --sourcemap --watch --external:*.test.js",
+    "build": "npx esbuild src/app/app.js --bundle --outfile=public/scripts/bundle.js --format=iife --sourcemap --external:*.test.js",
     "start": "concurrently \"npm:dev\" \"npx http-server public -p 8080\""
   },
   "repository": {

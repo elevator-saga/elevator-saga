@@ -6,6 +6,7 @@ import map from 'lodash/map';
 import merge from 'lodash/merge';
 import parseInt from 'lodash/parseInt';
 import reduce from 'lodash/reduce';
+import { createWorldController, createWorldCreator } from '../models/world';
 import { challenges } from './challenges';
 import {
   clearAll,
@@ -16,8 +17,27 @@ import {
   presentWorld,
 } from './presenters';
 import { typeDeclarations } from './types';
-import { createWorldController, createWorldCreator } from './world';
 
+/**
+ * Asynchronously creates and initializes a Monaco code editor instance with custom configuration,
+ * including loading type declarations, handling code persistence via localStorage, and providing
+ * UI controls for saving, resetting, and undoing code changes. Returns an observable object with
+ * methods for interacting with the editor and code.
+ *
+ * @function
+ * @returns {Promise<Object>} A promise that resolves to an observable object with methods:
+ *   - getCodeObj(): Parses and returns the current code as an object, triggering events on success or error.
+ *   - setCode(code: string): Sets the editor's content to the provided code.
+ *   - getCode(): Returns the current code from the editor.
+ *   - setDevTestCode(): Sets the editor's content to the developer test implementation.
+ *   - Triggers events such as 'change', 'code_success', 'usercode_error', and 'apply_code'.
+ *
+ * @example
+ * createEditorAsync().then(editor => {
+ *   editor.setCode('// new code');
+ *   const codeObj = editor.getCodeObj();
+ * });
+ */
 const createEditorAsync = () =>
   new Promise((resolve, reject) => {
     var lsKey = 'elevatorCrushCode_v5';

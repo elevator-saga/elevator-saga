@@ -1,9 +1,9 @@
 import each from 'lodash/each';
 import map from 'lodash/map';
 import * as riot from 'riot';
+import User from '../models/user';
+import World from '../models/world';
 import Challenge from './challenge';
-import User from './user';
-import World from './world';
 
 /**
  * Removes all child elements from each element in the provided collection.

@@ -1,6 +1,6 @@
 import { jest } from '@jest/globals';
+import { timeForwarder } from '../test-helpers';
 import Movable from './movable';
-import { timeForwarder } from './test-helpers';
 
 describe('Movable object', function () {
   var m = null;
