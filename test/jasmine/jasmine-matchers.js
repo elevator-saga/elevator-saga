@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright © 2013 Jamie Mason, @fold_left,
  * https://github.com/JamieMason
  *
