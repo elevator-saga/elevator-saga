@@ -1,4 +1,4 @@
-import { getCodeObjFromCode } from '../src/base';
+import { getCodeObjFromCode } from './base';
 
 describe('base', function () {
   describe('getCodeObjFromCode', function () {

@@ -1,4 +1,4 @@
-import User from '../src/user';
+import User from './user';
 
 describe('User class', function () {
   var u = null;

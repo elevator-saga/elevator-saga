@@ -1,9 +1,9 @@
 import { jest } from '@jest/globals';
 import random from 'lodash/random';
 import range from 'lodash/range';
-import Elevator from '../src/elevator';
-import ElevatorFacade from '../src/elevator-facade';
-import { timeForwarder } from './helpers';
+import Elevator from './elevator';
+import ElevatorFacade from './elevator-facade';
+import { timeForwarder } from './test-helpers';
 
 describe('API', function () {
   let handlers = null;

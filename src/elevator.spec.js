@@ -1,8 +1,8 @@
 import { jest } from '@jest/globals';
 import each from 'lodash/each';
 import range from 'lodash/range';
-import Elevator from '../src/elevator';
-import { timeForwarder } from './helpers';
+import Elevator from './elevator';
+import { timeForwarder } from './test-helpers';
 
 describe('Elevator object', () => {
   let e;

@@ -3,7 +3,7 @@ import {
   requireUserCountWithinTime,
   requireUserCountWithinTimeWithMaxWaitTime,
   requireUserCountWithMaxWaitTime,
-} from '../src/challenges';
+} from './challenges';
 
 describe('Challenge requirements', () => {
   let fakeWorld;
