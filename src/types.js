@@ -1,4 +1,4 @@
-var typeDeclarations = `interface Solution {
+export const typeDeclarations = `interface Solution {
     init: (elevators: Elevator[], floors: Floor[]) => void;
     update: (dt: number, elevators: Elevator[], floors: Floor[]) => void;
 }
@@ -88,5 +88,3 @@ interface Floor {
      */
     on(event: "down_button_pressed", callback: () => void): Floor;
 }`;
-
-export { typeDeclarations };

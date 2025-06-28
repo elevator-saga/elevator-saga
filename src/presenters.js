@@ -2,27 +2,64 @@ import each from 'lodash/each';
 import map from 'lodash/map';
 import * as riot from 'riot';
 
-function clearAll($elems) {
+/**
+ * Removes all child elements from each element in the provided collection.
+ *
+ * @param {jQuery[]} $elems - An array or collection of jQuery elements to be cleared.
+ */
+export function clearAll($elems) {
   each($elems, function ($elem) {
     $elem.empty();
   });
 }
 
-function setTransformPos(elem, x, y) {
+/**
+ * Sets the CSS transform property of an element to position it at the specified (x, y) coordinates,
+ * including a translateZ(0) for hardware acceleration. Applies vendor prefixes for compatibility.
+ *
+ * @param {HTMLElement} elem - The DOM element to transform.
+ * @param {number} x - The x-coordinate in pixels to translate the element to.
+ * @param {number} y - The y-coordinate in pixels to translate the element to.
+ */
+export function setTransformPos(elem, x, y) {
   var style = 'translate(' + x + 'px,' + y + 'px) translateZ(0)';
   elem.style.transform = style;
   elem.style['-ms-transform'] = style;
   elem.style['-webkit-transform'] = style;
 }
 
-function updateUserState($user, elem_user, user) {
+/**
+ * Updates the visual state of a user element based on the user's current state.
+ *
+ * @param {jQuery} $user - The jQuery-wrapped DOM element representing the user.
+ * @param {HTMLElement} elem_user - The raw DOM element for the user.
+ * @param {Object} user - The user object containing state and position.
+ * @param {number} user.worldX - The X coordinate of the user in the world.
+ * @param {number} user.worldY - The Y coordinate of the user in the world.
+ * @param {boolean} user.done - Whether the user has completed their action.
+ */
+export function updateUserState($user, elem_user, user) {
   setTransformPos(elem_user, user.worldX, user.worldY);
   if (user.done) {
     $user.addClass('leaving');
   }
 }
 
-function presentStats($parent, world) {
+/**
+ * Updates the statistics display elements within the given parent element based on the current state of the world object.
+ *
+ * @param {jQuery} $parent - The jQuery-wrapped parent element containing the stats display elements.
+ * @param {Object} world - The world object that emits 'stats_display_changed' events and contains statistics properties:
+ *   @param {number} world.transportedCounter - The total number of transported passengers.
+ *   @param {number} world.elapsedTime - The elapsed time in seconds.
+ *   @param {number} world.transportedPerSec - The number of passengers transported per second.
+ *   @param {number} world.avgWaitTime - The average wait time in seconds.
+ *   @param {number} world.maxWaitTime - The maximum wait time in seconds.
+ *   @param {number} world.moveCount - The total number of moves made.
+ *   @function world.on - Registers an event listener.
+ *   @function world.trigger - Triggers an event.
+ */
+export function presentStats($parent, world) {
   var elem_transportedcounter = $parent.find('.transportedcounter').get(0),
     elem_elapsedtime = $parent.find('.elapsedtime').get(0),
     elem_transportedpersec = $parent.find('.transportedpersec').get(0),
@@ -41,7 +78,18 @@ function presentStats($parent, world) {
   world.trigger('stats_display_changed');
 }
 
-function presentChallenge($parent, challenge, app, world, worldController, challengeNum, challengeTempl) {
+/**
+ * Renders and initializes the challenge UI in the given parent element.
+ *
+ * @param {jQuery} $parent - The parent jQuery element where the challenge UI will be rendered.
+ * @param {Object} challenge - The challenge data object.
+ * @param {Object} app - The main application object, providing control methods.
+ * @param {Object} world - The current world state object.
+ * @param {Object} worldController - Controller for managing world state and time scale.
+ * @param {number} challengeNum - The current challenge number.
+ * @param {string} challengeTempl - The Riot.js template string for rendering the challenge UI.
+ */
+export function presentChallenge($parent, challenge, app, world, worldController, challengeNum, challengeTempl) {
   var $challenge = $(
     riot.render(challengeTempl, {
       challenge: challenge,
@@ -73,7 +121,19 @@ function presentChallenge($parent, challenge, app, world, worldController, chall
   });
 }
 
-function presentFeedback($parent, feedbackTempl, world, title, message, url) {
+/**
+ * Renders feedback content into the given parent element using a Riot template.
+ *
+ * @param {jQuery} $parent - The jQuery element to render the feedback into.
+ * @param {string} feedbackTempl - The Riot template string for rendering feedback.
+ * @param {Object} world - The world object containing floor information.
+ * @param {Array} world.floors - Array of floor objects.
+ * @param {number} world.floorHeight - The height of each floor.
+ * @param {string} title - The title to display in the feedback.
+ * @param {string} message - The message to display in the feedback.
+ * @param {string} [url] - Optional URL to include in the feedback. If not provided, any anchor tags are removed.
+ */
+export function presentFeedback($parent, feedbackTempl, world, title, message, url) {
   $parent.html(
     riot.render(feedbackTempl, {
       title: title,
@@ -87,7 +147,26 @@ function presentFeedback($parent, feedbackTempl, world, title, message, url) {
   }
 }
 
-function presentWorld($world, world, floorTempl, elevatorTempl, elevatorButtonTempl, userTempl) {
+/**
+ * Renders and manages the interactive world view for the elevator simulation.
+ *
+ * @param {jQuery} $world - The jQuery element representing the world container.
+ * @param {Object} world - The world model containing floors, elevators, and related state.
+ * @param {string} floorTempl - Riot.js template string for rendering a floor.
+ * @param {string} elevatorTempl - Riot.js template string for rendering an elevator.
+ * @param {string} elevatorButtonTempl - Riot.js template string for rendering elevator buttons.
+ * @param {string} userTempl - Riot.js template string for rendering a user.
+ *
+ * @fires floor#buttonstate_change - When a floor's up/down button state changes.
+ * @fires elevator#new_display_state - When an elevator's position should be updated.
+ * @fires elevator#new_current_floor - When an elevator's current floor changes.
+ * @fires elevator#floor_buttons_changed - When an elevator's floor button states change.
+ * @fires elevator#indicatorstate_change - When an elevator's up/down indicator state changes.
+ * @fires world#new_user - When a new user is added to the world.
+ * @fires user#new_display_state - When a user's display state should be updated.
+ * @fires user#removed - When a user is removed from the world.
+ */
+export function presentWorld($world, world, floorTempl, elevatorTempl, elevatorButtonTempl, userTempl) {
   $world.css('height', world.floorHeight * world.floors.length);
 
   $world.append(
@@ -169,7 +248,14 @@ function presentWorld($world, world, floorTempl, elevatorTempl, elevatorButtonTe
   });
 }
 
-function presentCodeStatus($parent, templ, error) {
+/**
+ * Renders the code status (success or error) into the given parent element using the provided template.
+ *
+ * @param {Object} $parent - The parent element (jQuery-like object) where the status will be rendered.
+ * @param {string} templ - The Riot.js template string used for rendering the status.
+ * @param {Error|string|null} error - The error object or message to display. If null or falsy, success is shown.
+ */
+export function presentCodeStatus($parent, templ, error) {
   console.log(error);
   var errorDisplay = error ? 'block' : 'none';
   var successDisplay = error ? 'none' : 'block';
@@ -186,19 +272,12 @@ function presentCodeStatus($parent, templ, error) {
   $parent.html(status);
 }
 
-function makeDemoFullscreen() {
+/**
+ * Sets the demo view to fullscreen by hiding all elements inside the container
+ * except for the element with the class 'world', and adjusts the layout styles
+ * of the HTML, body, container, and 'world' elements to occupy the full viewport.
+ */
+export function makeDemoFullscreen() {
   $('body .container > *').not('.world').css('visibility', 'hidden');
   $('html, body, body .container, .world').css({ width: '100%', margin: '0', padding: 0 });
 }
-
-export {
-  clearAll,
-  makeDemoFullscreen,
-  presentChallenge,
-  presentCodeStatus,
-  presentFeedback,
-  presentStats,
-  presentWorld,
-  setTransformPos,
-  updateUserState,
-};

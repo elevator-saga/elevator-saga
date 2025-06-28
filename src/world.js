@@ -7,8 +7,8 @@ import random from 'lodash/random';
 import range from 'lodash/range';
 import reduce from 'lodash/reduce';
 import Elevator from './elevator';
+import ElevatorFacade from './elevator-facade';
 import Floor from './floor';
-import asElevatorInterface from './interfaces';
 
 var createWorldCreator = function () {
   var creator = {};
@@ -89,7 +89,7 @@ var createWorldCreator = function () {
       options.elevatorCapacities
     );
     world.elevatorInterfaces = map(world.elevators, function (e) {
-      return asElevatorInterface({}, e, options.floorCount, handleUserCodeError);
+      return new ElevatorFacade({}, e, options.floorCount, handleUserCodeError);
     });
     world.users = [];
     world.transportedCounter = 0;

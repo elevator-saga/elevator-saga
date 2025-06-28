@@ -5,15 +5,35 @@ import range from 'lodash/range';
 import times from 'lodash/times';
 import { createFrameRequester, createWorldController, createWorldCreator } from './world';
 
-var requireNothing = function () {
+/**
+ * Creates a requirement object that imposes no constraints.
+ *
+ * @returns {{description: string, evaluate: function(): null}} An object with a description and an evaluate function that always returns null.
+ */
+function requireNothing() {
   return {
     description: 'No requirement',
     evaluate: function () {
       return null;
     },
   };
-};
+}
 
+/**
+ * An array of fitness challenge configurations for the elevator simulation.
+ * Each challenge defines scenario options and a condition function.
+ *
+ * @type {Array<{
+ *   options: {
+ *     description: string,
+ *     floorCount: number,
+ *     elevatorCount: number,
+ *     spawnRate: number,
+ *     elevatorCapacities?: number[]
+ *   },
+ *   condition: Function
+ * }>}
+ */
 var fitnessChallenges = [
   {
     options: { description: 'Small scenario', floorCount: 4, elevatorCount: 2, spawnRate: 0.6 },
@@ -41,8 +61,20 @@ var fitnessChallenges = [
   },
 ];
 
-// Simulation without visualisation
-function calculateFitness(challenge, codeObj, stepSize, stepsToSimulate) {
+/**
+ * Calculates the fitness of a given elevator challenge by simulating the world with the provided user code.
+ *
+ * @param {Object} challenge - The challenge configuration object containing options for the simulation.
+ * @param {Object} codeObj - The user code object to be evaluated during the simulation.
+ * @param {number} stepSize - The time step size for each simulation frame.
+ * @param {number} stepsToSimulate - The total number of simulation steps to run.
+ * @returns {Object} result - The result object containing simulation statistics:
+ * @returns {number} [result.transportedPerSec] - The number of passengers transported per second.
+ * @returns {number} [result.avgWaitTime] - The average wait time for passengers.
+ * @returns {number} [result.transportedCount] - The total number of passengers transported.
+ * @returns {Error} [result.error] - Any error encountered during user code execution.
+ */
+export function calculateFitness(challenge, codeObj, stepSize, stepsToSimulate) {
   var controller = createWorldController(stepSize);
   var result = {};
 
@@ -67,7 +99,13 @@ function calculateFitness(challenge, codeObj, stepSize, stepsToSimulate) {
   return result;
 }
 
-function makeAverageResult(results) {
+/**
+ * Computes the average of each property in the `result` object across an array of result objects.
+ *
+ * @param {Array<Object>} results - An array of objects, each containing an `options` property and a `result` object with numeric properties to average.
+ * @returns {{ options: any, result: Object }} An object containing the `options` from the first result and a `result` object with averaged properties.
+ */
+export function makeAverageResult(results) {
   var averagedResult = {};
   forOwn(results[0].result, function (value, resultProperty) {
     var sum = sum(pluck(pluck(results, 'result'), resultProperty));
@@ -76,7 +114,14 @@ function makeAverageResult(results) {
   return { options: results[0].options, result: averagedResult };
 }
 
-function doFitnessSuite(codeStr, runCount) {
+/**
+ * Runs a suite of fitness tests on the provided code string for a specified number of times.
+ *
+ * @param {string} codeStr - The source code as a string to be tested for fitness.
+ * @param {number} runCount - The number of times to run the fitness suite.
+ * @returns {Array<Object>|Object} An array of averaged fitness results for each challenge, or an error object if an error occurs.
+ */
+export function doFitnessSuite(codeStr, runCount) {
   try {
     var codeObj = getCodeObjFromCode(codeStr);
   } catch (e) {
@@ -112,7 +157,14 @@ function doFitnessSuite(codeStr, runCount) {
   return averagedResults;
 }
 
-function fitnessSuite(codeStr, preferWorker, callback) {
+/**
+ * Runs a fitness suite on the provided code string, optionally using a Web Worker for asynchronous execution.
+ *
+ * @param {string} codeStr - The code to be evaluated for fitness.
+ * @param {boolean} preferWorker - Whether to prefer using a Web Worker if available.
+ * @param {function(Object):void} callback - Callback function to receive the fitness results.
+ */
+export function fitnessSuite(codeStr, preferWorker, callback) {
   if (!!Worker && preferWorker) {
     // Web workers are available, neat.
     try {

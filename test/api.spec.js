@@ -1,9 +1,9 @@
 import { jest } from '@jest/globals';
 import random from 'lodash/random';
 import range from 'lodash/range';
-import Elevator from '../src/elevator.js';
-import asElevatorInterface from '../src/interfaces.js';
-import { timeForwarder } from './helpers.js';
+import Elevator from '../src/elevator';
+import ElevatorFacade from '../src/elevator-facade';
+import { timeForwarder } from './helpers';
 
 describe('API', function () {
   let handlers = null;
@@ -25,7 +25,7 @@ describe('API', function () {
     beforeEach(function () {
       e = new Elevator(1.5, 4, 40);
       e.setFloorPosition(0);
-      elevInterface = asElevatorInterface({}, e, 4);
+      elevInterface = new ElevatorFacade({}, e, 4);
     });
 
     describe('events', function () {
