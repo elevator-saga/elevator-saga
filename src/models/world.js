@@ -95,11 +95,19 @@ export default class World {
 
   /**
    * Create an array of Floor instances.
+   * Floors are positioned from top (highest index) to bottom (lowest index),
+   * so the highest floor appears at the top of the display.
+   *
+   * @param {number} floorCount - The number of floors to create.
+   * @param {number} floorHeight - The height of each floor.
+   * @param {Function} errorHandler - Function to handle errors during event triggering.
+   *
+   * @returns {Array<Floor>} An array of Floor instances.
    */
   static createFloors(floorCount, floorHeight, errorHandler) {
-    return map(range(floorCount), (e, i) => {
+    return map(range(floorCount), (i) => {
       const yPos = (floorCount - 1 - i) * floorHeight;
-      return new Floor({}, i, yPos, errorHandler);
+      return new Floor({ floorLevel: i, yPosition: yPos, errorHandler });
     });
   }
 
@@ -109,8 +117,14 @@ export default class World {
   static createElevators(elevatorCount, floorCount, floorHeight, elevatorCapacities) {
     elevatorCapacities = elevatorCapacities || [4];
     let currentX = 200.0;
+
     return map(range(elevatorCount), (e, i) => {
-      const elevator = new Elevator(2.6, floorCount, floorHeight, elevatorCapacities[i % elevatorCapacities.length]);
+      const elevator = new Elevator({
+        speedFloorsPerSec: 2.6,
+        floorCount,
+        floorHeight,
+        maxUsers: elevatorCapacities[i % elevatorCapacities.length],
+      });
       elevator.moveTo(currentX, null);
       elevator.setFloorPosition(0);
       elevator.updateDisplayPosition();

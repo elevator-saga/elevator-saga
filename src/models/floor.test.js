@@ -11,7 +11,7 @@ describe('Floor', () => {
     Floor.prototype.trigger = function (event, ...args) {
       triggeredEvents.push({ event, args });
     };
-    floor = new Floor({}, 2, 100, errorHandler);
+    floor = new Floor({ floorLevel: 2, yPosition: 100, errorHandler });
   });
 
   afterEach(() => {
@@ -19,7 +19,7 @@ describe('Floor', () => {
     triggeredEvents = [];
   });
 
-  test('constructor initializes properties', () => {
+  it('constructor initializes properties', () => {
     expect(floor.level).toBe(2);
     expect(floor.yPosition).toBe(100);
     expect(floor.buttonStates).toEqual({ up: '', down: '' });
@@ -108,11 +108,11 @@ describe('Floor', () => {
     });
   });
 
-  test('getSpawnPosY returns yPosition + 30', () => {
+  it('getSpawnPosY returns yPosition + 30', () => {
     expect(floor.getSpawnPosY()).toBe(130);
   });
 
-  test('floorNum returns level', () => {
+  it('floorNum returns level', () => {
     expect(floor.floorNum()).toBe(2);
   });
 });

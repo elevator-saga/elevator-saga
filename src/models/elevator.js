@@ -27,21 +27,39 @@ export function newElevStateHandler(elevator) {
  * The elevator can also handle events for when it stops at a floor, when users enter or exit, and when it passes a floor.
  * @class Elevator
  * @extends Movable
- * @param {number} speedFloorsPerSec - The speed of the elevator in floors per second.
- * @param {number} floorCount - The total number of floors the elevator serves.
- * @param {number} floorHeight - The height of each floor in pixels.
- * @param {number} [maxUsers=4] - The maximum number of users the elevator can carry. Defaults to 4.
+ * @param {Object} options - Configuration options for the elevator.
+ * @param {number} options.speedFloorsPerSec - The speed of the elevator in floors per second.
+ * @param {number} options.floorCount - The total number of floors the elevator serves.
+ * @param {number} options.floorHeight - The height of each floor in pixels.
+ * @param {number} [options.maxUsers=4] - The maximum number of users the elevator can carry. Defaults to 4.
+ *
+ * @fires Elevator#new_current_floor - Triggered when the elevator arrives at a new floor.
+ * @fires Elevator#passing_floor - Triggered when the elevator passes a floor (not the destination).
+ * @fires Elevator#stopped - Triggered when the elevator stops at a floor.
+ * @fires Elevator#stopped_at_floor - Triggered when the elevator stops at a specific floor.
+ * @fires Elevator#exit_available - Triggered when users can exit the elevator.
+ * @fires Elevator#entrance_available - Triggered when new users can enter the elevator.
+ * @fires Elevator#floor_button_pressed - Triggered when a floor button is pressed.
  */
 class Elevator extends Movable {
-  constructor(speedFloorsPerSec, floorCount, floorHeight, maxUsers) {
+  /**
+   * Creates an instance of Elevator.
+   * Initializes the elevator with its properties, user slots, and event handlers.
+   * @param {Object} options - Configuration options for the elevator.
+   * @param {number} options.speedFloorsPerSec - The speed of the elevator in floors per second.
+   * @param {number} options.floorCount - The total number of floors the elevator serves.
+   * @param {number} options.floorHeight - The height of each floor in pixels.
+   * @param {number} [options.maxUsers=4] - The maximum number of users the elevator can carry. Defaults to 4.
+   */
+  constructor(options) {
     super();
     newGuard(this, Elevator);
-    this.ACCELERATION = floorHeight * 2.1;
-    this.DECELERATION = floorHeight * 2.6;
-    this.MAXSPEED = floorHeight * speedFloorsPerSec;
-    this.floorCount = floorCount;
-    this.floorHeight = floorHeight;
-    this.maxUsers = maxUsers || 4;
+    this.ACCELERATION = options.floorHeight * 2.1;
+    this.DECELERATION = options.floorHeight * 2.6;
+    this.MAXSPEED = options.floorHeight * options.speedFloorsPerSec;
+    this.floorCount = options.floorCount;
+    this.floorHeight = options.floorHeight;
+    this.maxUsers = options.maxUsers || 4;
     this.destinationY = 0.0;
     this.velocityY = 0.0;
     // isMoving flag is needed when going to same floor again - need to re-raise events

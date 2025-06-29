@@ -24,7 +24,12 @@ describe('API', function () {
     var elevInterface = null;
 
     beforeEach(function () {
-      e = new Elevator(1.5, 4, 40);
+      e = new Elevator({
+        speedFloorsPerSec: 1.5,
+        floorCount: 4,
+        floorHeight: 40,
+        maxUsers: 4,
+      });
       e.setFloorPosition(0);
       elevInterface = new ElevatorFacade({}, e, 4);
     });

@@ -9,7 +9,7 @@
   },
   "scripts": {
     "serve": "npm run dev && npx http-server public -p 8080",
-    "test": "npx jest --runInBand --testEnvironment=jsdom --config=jest.config.js",
+    "test": "npx jest --bail --testEnvironment=jsdom --config=jest.config.js",
     "coverage": "npx jest --coverage --runInBand --testEnvironment=jsdom --config=jest.config.js",
     "lint": "npx eslint . --ext .js",
     "format": "npx prettier --write .",

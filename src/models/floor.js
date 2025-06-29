@@ -5,9 +5,10 @@ import observable from '@riotjs/observable';
  * Handles button states, triggers events, and manages elevator availability.
  *
  * @class Floor
- * @param {number} floorLevel - The floor number/level.
- * @param {number} yPosition - The vertical position of the floor.
- * @param {Function} errorHandler - Function to handle errors during event triggering.
+ * @param {Object} options - Configuration options for the floor.
+ * @param {number} options.floorLevel - The floor number/level.
+ * @param {number} options.yPosition - The vertical position of the floor.
+ * @param {Function} options.errorHandler - Function to handle errors during event triggering.
  *
  * @property {number} level - The floor number/level.
  * @property {number} yPosition - The vertical position of the floor.
@@ -22,13 +23,22 @@ import observable from '@riotjs/observable';
  * @private
  * @method _tryTrigger - Tries to trigger an event and handles errors.
  */
-class Floor {
-  constructor(floorLevel, yPosition, errorHandler) {
-    observable(this);
-    this.level = floorLevel;
-    this.yPosition = yPosition;
+export default class Floor {
+  /**
+   * Creates an instance of Floor.
+   * Initializes the floor with a level, Y position, and an error handler for event triggering.
+   * @param {Object} options - Configuration options for the floor.
+   * @param {number} options.floorLevel - The floor number/level.
+   * @param {number} options.yPosition - The vertical position of the floor.
+   * @param {Function} options.errorHandler - Function to handle errors during event triggering.
+   */
+  constructor(options) {
+    this.level = options.floorLevel;
+    this.yPosition = options.yPosition;
     this.buttonStates = { up: '', down: '' };
-    this._errorHandler = errorHandler;
+    this._errorHandler = options.errorHandler;
+
+    observable(this);
   }
 
   /**
@@ -119,5 +129,3 @@ class Floor {
     return this.level;
   }
 }
-
-export default Floor;

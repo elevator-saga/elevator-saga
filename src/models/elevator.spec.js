@@ -20,7 +20,7 @@ describe('Elevator object', () => {
       handlers[key] = jest.fn();
     }
 
-    e = new Elevator(1.5, floorCount, floorHeight);
+    e = new Elevator({ speedFloorsPerSec: 1.5, floorCount, floorHeight, maxUsers: 4 });
     e.setFloorPosition(0);
   });
 
