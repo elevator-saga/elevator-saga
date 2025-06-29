@@ -7,11 +7,10 @@ describe('Floor', () => {
   beforeEach(() => {
     triggeredEvents = [];
     errorHandler = jest.fn();
-    // Patch observable(this) to add a trigger method
-    Floor.prototype.trigger = function (event, ...args) {
-      triggeredEvents.push({ event, args });
-    };
     floor = new Floor({ floorLevel: 2, yPosition: 100, errorHandler });
+    jest.spyOn(floor, 'trigger').mockImplementation((event, ...args) => {
+      triggeredEvents.push({ event, args });
+    });
   });
 
   afterEach(() => {
