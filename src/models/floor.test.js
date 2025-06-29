@@ -144,8 +144,8 @@ describe('Floor', () => {
       expect(floor.buttonStates.up).toBe('');
       expect(floor.buttonStates.down).toBe('');
       expect(triggeredEvents).toEqual([
-        { event: 'buttonstate_change', args: [{ up: '', down: 'activated' }, undefined, undefined, undefined] },
-        { event: 'buttonstate_change', args: [{ up: '', down: '' }, undefined, undefined, undefined] },
+        { event: 'buttonstate_change', args: [{ up: '', down: '' }] },
+        { event: 'buttonstate_change', args: [{ up: '', down: '' }] },
       ]);
     });
 
@@ -222,8 +222,8 @@ describe('Floor', () => {
       // Assert
       expect(floor.buttonStates).toEqual({ up: '', down: '' });
       expect(triggeredEvents).toEqual([
-        { event: 'buttonstate_change', args: [{ up: '', down: 'activated' }, undefined, undefined, undefined] },
-        { event: 'buttonstate_change', args: [{ up: '', down: '' }, undefined, undefined, undefined] },
+        { event: 'buttonstate_change', args: [{ up: '', down: '' }] },
+        { event: 'buttonstate_change', args: [{ up: '', down: '' }] },
       ]);
     });
 
