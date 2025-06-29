@@ -1,6 +1,6 @@
 {
   "name": "elevator-saga",
-  "version": "1.0.0",
+  "version": "1.6.5",
   "type": "module",
   "description": "The elevator programming game",
   "main": "app.js",
