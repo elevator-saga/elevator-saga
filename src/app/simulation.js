@@ -1,5 +1,6 @@
 import observable from '@riotjs/observable';
-import World, { WorldController } from '../world.js';
+import World from '../models/world';
+import WorldController from '../models/world-controller';
 
 /**
  * Main simulation application controller.
