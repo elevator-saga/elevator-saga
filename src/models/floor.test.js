@@ -114,4 +114,56 @@ describe('Floor', () => {
   it('floorNum returns level', () => {
     expect(floor.floorNum()).toBe(2);
   });
+
+  describe('integration and edge cases', () => {
+    it('pressUpButton then elevatorAvailable going up resets up button', () => {
+      floor.pressUpButton();
+      expect(floor.buttonStates.up).toBe('activated');
+      triggeredEvents = [];
+      floor.elevatorAvailable({ goingUpIndicator: true, goingDownIndicator: false });
+      expect(floor.buttonStates.up).toBe('');
+      expect(triggeredEvents).toEqual([{ event: 'buttonstate_change', args: [{ up: '', down: '' }] }]);
+    });
+
+    it('pressDownButton then elevatorAvailable going down resets down button', () => {
+      floor.pressDownButton();
+      expect(floor.buttonStates.down).toBe('activated');
+      triggeredEvents = [];
+      floor.elevatorAvailable({ goingUpIndicator: false, goingDownIndicator: true });
+      expect(floor.buttonStates.down).toBe('');
+      expect(triggeredEvents).toEqual([{ event: 'buttonstate_change', args: [{ up: '', down: '' }] }]);
+    });
+
+    it('press both buttons, elevatorAvailable going both resets both', () => {
+      floor.pressUpButton();
+      floor.pressDownButton();
+      expect(floor.buttonStates).toEqual({ up: 'activated', down: 'activated' });
+      triggeredEvents = [];
+      floor.elevatorAvailable({ goingUpIndicator: true, goingDownIndicator: true });
+      expect(floor.buttonStates).toEqual({ up: '', down: '' });
+      expect(triggeredEvents).toEqual([
+        { event: 'buttonstate_change', args: [{ up: '', down: 'activated' }] },
+        { event: 'buttonstate_change', args: [{ up: '', down: '' }] },
+      ]);
+    });
+
+    it('elevatorAvailable does not trigger if no buttons pressed', () => {
+      floor.elevatorAvailable({ goingUpIndicator: true, goingDownIndicator: true });
+      expect(triggeredEvents).toEqual([]);
+    });
+
+    it('getSpawnPosY works for negative yPosition', () => {
+      const f = new Floor({ floorLevel: 1, yPosition: -10, errorHandler });
+      expect(f.getSpawnPosY()).toBe(20);
+    });
+
+    it('floorNum returns correct level for different floors', () => {
+      const f = new Floor({ floorLevel: 5, yPosition: 0, errorHandler });
+      expect(f.floorNum()).toBe(5);
+    });
+
+    it('constructor throws if errorHandler is not provided', () => {
+      expect(() => new Floor({ floorLevel: 1, yPosition: 0 })).toThrow();
+    });
+  });
 });

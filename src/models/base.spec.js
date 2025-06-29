@@ -2,7 +2,7 @@ import { getCodeObjFromCode } from './base';
 
 describe('base', function () {
   describe('getCodeObjFromCode', function () {
-    var testCode = '{init: function init() {}, update: function update() {}}';
+    const testCode = '{init: function init() {}, update: function update() {}}';
 
     it('handles trailing whitespace', function () {
       expect(getCodeObjFromCode(testCode + '\n')).toEqual(expect.any(Object));

@@ -25,7 +25,7 @@ export function clearAll($elems) {
  * @param {number} y - The y-coordinate in pixels to translate the element to.
  */
 export function setTransformPos(elem, x, y) {
-  var style = 'translate(' + x + 'px,' + y + 'px) translateZ(0)';
+  const style = 'translate(' + x + 'px,' + y + 'px) translateZ(0)';
   elem.style.transform = style;
   elem.style['-ms-transform'] = style;
   elem.style['-webkit-transform'] = style;
@@ -63,7 +63,7 @@ export function updateUserState($user, elem_user, user) {
  *   @function world.trigger - Triggers an event.
  */
 export function presentStats($parent, world) {
-  var elem_transportedcounter = $parent.find('.transportedcounter').get(0),
+  const elem_transportedcounter = $parent.find('.transportedcounter').get(0),
     elem_elapsedtime = $parent.find('.elapsedtime').get(0),
     elem_transportedpersec = $parent.find('.transportedpersec').get(0),
     elem_avgwaittime = $parent.find('.avgwaittime').get(0),
@@ -93,7 +93,7 @@ export function presentStats($parent, world) {
  * @param {string} challengeTempl - The Riot.js template string for rendering the challenge UI.
  */
 export function presentChallenge($parent, challenge, app, world, worldController, challengeNum, challengeTempl) {
-  var $challenge = $(
+  const $challenge = $(
     riot.render(challengeTempl, {
       challenge: challenge,
       num: challengeNum,
@@ -113,13 +113,13 @@ export function presentChallenge($parent, challenge, app, world, worldController
   $parent.find('.timescale_increase').on('click', function (e) {
     e.preventDefault();
     if (worldController.timeScale < 40) {
-      var timeScale = Math.round(worldController.timeScale * 1.618);
+      const timeScale = Math.round(worldController.timeScale * 1.618);
       worldController.setTimeScale(timeScale);
     }
   });
   $parent.find('.timescale_decrease').on('click', function (e) {
     e.preventDefault();
-    var timeScale = Math.round(worldController.timeScale / 1.618);
+    const timeScale = Math.round(worldController.timeScale / 1.618);
     worldController.setTimeScale(timeScale);
   });
 }
@@ -174,9 +174,9 @@ export function presentWorld($world, world, floorTempl, elevatorTempl, elevatorB
 
   $world.append(
     map(world.floors, function (f) {
-      var $floor = $(riot.render(floorTempl, f));
-      var $up = $floor.find('.up');
-      var $down = $floor.find('.down');
+      const $floor = $(riot.render(floorTempl, f));
+      const $up = $floor.find('.up');
+      const $down = $floor.find('.down');
       f.on('buttonstate_change', function (buttonStates) {
         $up.toggleClass('activated', buttonStates.up !== '');
         $down.toggleClass('activated', buttonStates.down !== '');
@@ -201,13 +201,13 @@ export function presentWorld($world, world, floorTempl, elevatorTempl, elevatorB
   }
 
   function setUpElevator(e) {
-    var $elevator = $(riot.render(elevatorTempl, { e: e }));
-    var elem_elevator = $elevator.get(0);
+    const $elevator = $(riot.render(elevatorTempl, { e: e }));
+    const elem_elevator = $elevator.get(0);
     $elevator.find('.buttonindicator').html(renderElevatorButtons(e.buttonStates));
-    var $buttons = map($elevator.find('.buttonindicator').children(), function (c) {
+    const $buttons = map($elevator.find('.buttonindicator').children(), function (c) {
       return $(c);
     });
-    var elem_floorindicator = $elevator.find('.floorindicator > span').get(0);
+    const elem_floorindicator = $elevator.find('.floorindicator > span').get(0);
 
     $elevator.on('click', '.buttonpress', function () {
       e.pressFloorButton(parseInt($(this).text()));
@@ -238,8 +238,8 @@ export function presentWorld($world, world, floorTempl, elevatorTempl, elevatorB
   );
 
   world.on('new_user', function (user) {
-    var $user = $(riot.render(userTempl, { u: user, state: user.done ? 'leaving' : '' }));
-    var elem_user = $user.get(0);
+    const $user = $(riot.render(userTempl, { u: user, state: user.done ? 'leaving' : '' }));
+    const elem_user = $user.get(0);
 
     user.on('new_display_state', function () {
       updateUserState($user, elem_user, user);
@@ -260,14 +260,14 @@ export function presentWorld($world, world, floorTempl, elevatorTempl, elevatorB
  */
 export function presentCodeStatus($parent, templ, error) {
   console.log(error);
-  var errorDisplay = error ? 'block' : 'none';
-  var successDisplay = error ? 'none' : 'block';
-  var errorMessage = error;
+  const errorDisplay = error ? 'block' : 'none';
+  const successDisplay = error ? 'none' : 'block';
+  const errorMessage = error;
   if (error && error.stack) {
     errorMessage = error.stack;
     errorMessage = errorMessage.replace(/\n/g, '<br>');
   }
-  var status = riot.render(templ, {
+  const status = riot.render(templ, {
     errorMessage: errorMessage,
     errorDisplay: errorDisplay,
     successDisplay: successDisplay,

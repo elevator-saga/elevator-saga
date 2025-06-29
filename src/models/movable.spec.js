@@ -3,7 +3,7 @@ import { timeForwarder } from '../test-helpers';
 import Movable from './movable';
 
 describe('Movable object', function () {
-  var m = null;
+  let movable = null;
   let handlers = null;
 
   beforeEach(function () {
@@ -18,59 +18,59 @@ describe('Movable object', function () {
   });
 
   beforeEach(function () {
-    m = new Movable();
+    movable = new Movable();
   });
 
   it('updates display position when told to', function () {
-    m.moveTo(1.0, 1.0);
-    m.updateDisplayPosition();
-    expect(m.worldX).toBe(1.0);
-    expect(m.worldY).toBe(1.0);
+    movable.moveTo(1.0, 1.0);
+    movable.updateDisplayPosition();
+    expect(movable.worldX).toBe(1.0);
+    expect(movable.worldY).toBe(1.0);
   });
 
   it('does not update display position when moved', function () {
-    m.moveTo(1.0, 1.0);
-    expect(m.worldX).toBe(0.0);
-    expect(m.worldY).toBe(0.0);
+    movable.moveTo(1.0, 1.0);
+    expect(movable.worldX).toBe(0.0);
+    expect(movable.worldY).toBe(0.0);
   });
 
   it('triggers event when moved', function () {
-    m.on('new_state', handlers.someHandler);
-    m.moveTo(1.0, 1.0);
+    movable.on('new_state', handlers.someHandler);
+    movable.moveTo(1.0, 1.0);
     expect(handlers.someHandler).toHaveBeenCalled();
   });
 
   it('retains x pos when moveTo x is null', function () {
-    m.moveTo(1.0, 1.0);
-    m.moveTo(null, 2.0);
-    expect(m.x).toBe(1.0);
+    movable.moveTo(1.0, 1.0);
+    movable.moveTo(null, 2.0);
+    expect(movable.x).toBe(1.0);
   });
 
   it('retains y pos when moveTo y is null', function () {
-    m.moveTo(1.0, 1.0);
-    m.moveTo(2.0, null);
-    expect(m.y).toBe(1.0);
+    movable.moveTo(1.0, 1.0);
+    movable.moveTo(2.0, null);
+    expect(movable.y).toBe(1.0);
   });
 
   it('gets new display position when parent is moved', function () {
-    var mParent = new Movable();
-    m.setParent(mParent);
+    const mParent = new Movable();
+    movable.setParent(mParent);
     mParent.moveTo(2.0, 3.0);
-    m.updateDisplayPosition();
-    expect(m.x).toBe(0.0);
-    expect(m.y).toBe(0.0);
-    expect(m.worldX).toBe(2.0);
-    expect(m.worldY).toBe(3.0);
+    movable.updateDisplayPosition();
+    expect(movable.x).toBe(0.0);
+    expect(movable.y).toBe(0.0);
+    expect(movable.worldX).toBe(2.0);
+    expect(movable.worldY).toBe(3.0);
   });
 
   it('moves to destination over time', function () {
     //obj.moveToOverTime = function(newX, newY, timeToSpend, interpolator, cb) {
-    m.moveToOverTime(2.0, 3.0, 10.0, handlers.someHandler);
+    movable.moveToOverTime(2.0, 3.0, 10.0, handlers.someHandler);
     timeForwarder(10.0, 0.1, function (dt) {
-      m.update(dt);
+      movable.update(dt);
     });
-    expect(m.x).toBe(2.0);
-    expect(m.y).toBe(3.0);
+    expect(movable.x).toBe(2.0);
+    expect(movable.y).toBe(3.0);
     expect(handlers.someHandler).toHaveBeenCalled();
   });
 });

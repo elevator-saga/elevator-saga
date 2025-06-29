@@ -40,7 +40,7 @@ import { typeDeclarations } from './types';
  */
 const createEditorAsync = () =>
   new Promise((resolve, reject) => {
-    var lsKey = 'elevatorCrushCode_v5';
+    const lsKey = 'elevatorCrushCode_v5';
 
     // Load Monaco Editor from CDN
     require.config({
@@ -68,16 +68,16 @@ const createEditorAsync = () =>
       monaco.languages.typescript.javascriptDefaults.addExtraLib(typeDeclarations);
 
       // Original setup code
-      var reset = function () {
+      const reset = function () {
         cm.setValue($('#default-elev-implementation').text().trim());
       };
-      var saveCode = function () {
+      const saveCode = function () {
         localStorage.setItem(lsKey, cm.getValue());
         $('#save_message').text('Code saved ' + new Date().toTimeString());
         returnObj.trigger('change');
       };
 
-      var existingCode = localStorage.getItem(lsKey);
+      const existingCode = localStorage.getItem(lsKey);
       if (existingCode) {
         cm.setValue(existingCode);
       } else {
@@ -104,14 +104,14 @@ const createEditorAsync = () =>
         cm.focus();
       });
 
-      var returnObj = observable({});
-      var autoSaver = debounce(saveCode, 1000);
+      const returnObj = observable({});
+      const autoSaver = debounce(saveCode, 1000);
       cm.onDidChangeModelContent = autoSaver;
 
       returnObj.getCodeObj = function () {
         console.log('Getting code...');
-        var code = cm.getValue();
-        var obj;
+        const code = cm.getValue();
+        let obj;
         try {
           obj = getCodeObjFromCode(code);
           returnObj.trigger('code_success');
@@ -139,7 +139,7 @@ const createEditorAsync = () =>
     });
   });
 
-var createParamsUrl = function (current, overrides) {
+const createParamsUrl = function (current, overrides) {
   return (
     '#' +
     map(merge(current, overrides), function (val, key) {
@@ -149,17 +149,17 @@ var createParamsUrl = function (current, overrides) {
 };
 
 $(function () {
-  var tsKey = 'elevatorTimeScale';
+  const tsKey = 'elevatorTimeScale';
   createEditorAsync().then((editor) => {
-    var params = {};
+    const params = {};
 
-    var $world = $('.innerworld');
-    var $stats = $('.statscontainer');
-    var $feedback = $('.feedbackcontainer');
-    var $challenge = $('.challenge');
-    var $codestatus = $('.codestatus');
+    const $world = $('.innerworld');
+    const $stats = $('.statscontainer');
+    const $feedback = $('.feedbackcontainer');
+    const $challenge = $('.challenge');
+    const $codestatus = $('.codestatus');
 
-    var sim = new Simulation({
+    const sim = new Simulation({
       editor,
       challenges,
       clearAll,
@@ -196,9 +196,9 @@ $(function () {
     });
     editor.on('change', function () {
       $('#fitness_message').addClass('faded');
-      // var codeStr = editor.getCode();
+      // const codeStr = editor.getCode();
       // fitnessSuite(codeStr, true, function(results) {
-      //     var message = "";
+      //     const message = "";
       //     if(!results.error) {
       //         message = "Fitness avg wait times: " + map(results, function(r){ return r.options.description + ": " + r.result.avgWaitTime.toPrecision(3) + "s" }).join("&nbsp&nbsp&nbsp");
       //     } else {
@@ -213,7 +213,7 @@ $(function () {
       params = reduce(
         path.split(','),
         function (result, p) {
-          var match = p.match(/(\w+)=(\w+$)/);
+          const match = p.match(/(\w+)=(\w+$)/);
           if (match) {
             result[match[1]] = match[2];
           }
@@ -221,9 +221,9 @@ $(function () {
         },
         {}
       );
-      var requestedChallenge = 0;
-      var autoStart = false;
-      var timeScale = parseFloat(localStorage.getItem(tsKey)) || 2.0;
+      const requestedChallenge = 0;
+      const autoStart = false;
+      const timeScale = parseFloat(localStorage.getItem(tsKey)) || 2.0;
       each(params, function (val, key) {
         if (key === 'challenge') {
           requestedChallenge = parseInt(val) - 1;

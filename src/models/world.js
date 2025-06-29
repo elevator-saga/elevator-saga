@@ -1,6 +1,4 @@
 import observable from '@riotjs/observable';
-import clone from 'lodash/clone';
-import defaults from 'lodash/defaults';
 import each from 'lodash/each';
 import map from 'lodash/map';
 import random from 'lodash/random';
@@ -9,6 +7,7 @@ import reduce from 'lodash/reduce';
 import Elevator from './elevator';
 import ElevatorFacade from './elevator-facade';
 import Floor from './floor';
+import User from './user';
 
 /**
  * Represents the simulation world for the elevator saga, managing floors, elevators, users, and simulation statistics.
@@ -51,10 +50,9 @@ export default class World {
    * @param {Array<number>} [options.elevatorCapacities]
    */
   constructor(options) {
-    const defaultOptions = { floorHeight: 50, floorCount: 4, elevatorCount: 2, spawnRate: 0.5 };
-    this.options = defaults(clone(options), defaultOptions);
+    const defaultOptions = { ...options, floorHeight: 50, floorCount: 4, elevatorCount: 2, spawnRate: 0.5 };
 
-    this.floorHeight = this.options.floorHeight;
+    this.floorHeight = defaultOptions.floorHeight;
     this.transportedCounter = 0;
     this.transportedPerSec = 0.0;
     this.moveCount = 0;
@@ -68,16 +66,16 @@ export default class World {
 
     this._handleUserCodeError = (e) => this.trigger('usercode_error', e);
 
-    this.floors = World.createFloors(this.options.floorCount, this.floorHeight, this._handleUserCodeError);
-    this.elevators = World.createElevators(
-      this.options.elevatorCount,
-      this.options.floorCount,
+    this.floors = this.createFloors(defaultOptions.floorCount, this.floorHeight, this._handleUserCodeError);
+    this.elevators = this.createElevators(
+      defaultOptions.elevatorCount,
+      defaultOptions.floorCount,
       this.floorHeight,
-      this.options.elevatorCapacities
+      defaultOptions.elevatorCapacities
     );
     this.elevatorInterfaces = map(
       this.elevators,
-      (e) => new ElevatorFacade({}, e, this.options.floorCount, this._handleUserCodeError)
+      (elevator) => new ElevatorFacade({}, elevator, defaultOptions.floorCount, this._handleUserCodeError)
     );
 
     // Bind elevator entrance availability to floors/users
@@ -104,7 +102,7 @@ export default class World {
    *
    * @returns {Array<Floor>} An array of Floor instances.
    */
-  static createFloors(floorCount, floorHeight, errorHandler) {
+  createFloors(floorCount, floorHeight, errorHandler) {
     return map(range(floorCount), (i) => {
       const yPos = (floorCount - 1 - i) * floorHeight;
       return new Floor({ floorLevel: i, yPosition: yPos, errorHandler });
@@ -113,8 +111,16 @@ export default class World {
 
   /**
    * Create an array of Elevator instances.
+   * Elevators are positioned horizontally with a gap of 20 pixels between them.
+   * @param {number} elevatorCount - The number of elevators to create.
+   * @param {number} floorCount - The total number of floors in the building.
+   * @param {number} floorHeight - The height of each floor.
+   * @param {Array<number>} [elevatorCapacities] - Optional array specifying the capacity of each elevator.
+   * If not provided, defaults to a single capacity of 4
+   *
+   * @returns {Array<Elevator>} An array of Elevator instances.
    */
-  static createElevators(elevatorCount, floorCount, floorHeight, elevatorCapacities) {
+  createElevators(elevatorCount, floorCount, floorHeight, elevatorCapacities) {
     elevatorCapacities = elevatorCapacities || [4];
     let currentX = 200.0;
 
@@ -135,8 +141,13 @@ export default class World {
 
   /**
    * Create a random user for the simulation.
+   * The user will have a random weight between 55 and 100 kg.
+   * The display type is randomly assigned
+   * to 'child', 'female', or 'male'.
+   *
+   * @returns {User} A new User instance with random attributes.
    */
-  static createRandomUser() {
+  createRandomUser() {
     const weight = random(55, 100);
     const user = new User(weight);
     if (random(40) === 0) {

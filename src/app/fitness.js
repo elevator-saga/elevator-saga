@@ -34,7 +34,7 @@ function requireNothing() {
  *   condition: Function
  * }>}
  */
-var fitnessChallenges = [
+const fitnessChallenges = [
   {
     options: { description: 'Small scenario', floorCount: 4, elevatorCount: 2, spawnRate: 0.6 },
     condition: requireNothing(),
@@ -75,12 +75,12 @@ var fitnessChallenges = [
  * @returns {Error} [result.error] - Any error encountered during user code execution.
  */
 export function calculateFitness(challenge, codeObj, stepSize, stepsToSimulate) {
-  var controller = createWorldController(stepSize);
-  var result = {};
+  const controller = createWorldController(stepSize);
+  const result = {};
 
-  var worldCreator = createWorldCreator();
-  var world = worldCreator.createWorld(challenge.options);
-  var frameRequester = createFrameRequester(stepSize);
+  const worldCreator = createWorldCreator();
+  const world = worldCreator.createWorld(challenge.options);
+  const frameRequester = createFrameRequester(stepSize);
 
   controller.on('usercode_error', function (e) {
     result.error = e;
@@ -93,7 +93,7 @@ export function calculateFitness(challenge, codeObj, stepSize, stepsToSimulate) 
 
   controller.start(world, codeObj, frameRequester.register, true);
 
-  for (var stepCount = 0; stepCount < stepsToSimulate && !controller.isPaused; stepCount++) {
+  for (const stepCount = 0; stepCount < stepsToSimulate && !controller.isPaused; stepCount++) {
     frameRequester.trigger();
   }
   return result;
@@ -106,9 +106,9 @@ export function calculateFitness(challenge, codeObj, stepSize, stepsToSimulate) 
  * @returns {{ options: any, result: Object }} An object containing the `options` from the first result and a `result` object with averaged properties.
  */
 export function makeAverageResult(results) {
-  var averagedResult = {};
+  const averagedResult = {};
   forOwn(results[0].result, function (value, resultProperty) {
-    var sum = sum(pluck(pluck(results, 'result'), resultProperty));
+    const sum = sum(pluck(pluck(results, 'result'), resultProperty));
     averagedResult[resultProperty] = sum / results.length;
   });
   return { options: results[0].options, result: averagedResult };
@@ -123,17 +123,17 @@ export function makeAverageResult(results) {
  */
 export function doFitnessSuite(codeStr, runCount) {
   try {
-    var codeObj = getCodeObjFromCode(codeStr);
+    const codeObj = getCodeObjFromCode(codeStr);
   } catch (e) {
     return { error: '' + e };
   }
   console.log('Fitness testing code', codeObj);
-  var error = null;
+  const error = null;
 
-  var testruns = [];
+  const testruns = [];
   times(runCount, function () {
-    var results = map(fitnessChallenges, function (challenge) {
-      var fitness = calculateFitness(challenge, codeObj, 1000.0 / 60.0, 12000);
+    const results = map(fitnessChallenges, function (challenge) {
+      const fitness = calculateFitness(challenge, codeObj, 1000.0 / 60.0, 12000);
       if (fitness.error) {
         error = fitness.error;
         return;
@@ -150,7 +150,7 @@ export function doFitnessSuite(codeStr, runCount) {
   }
 
   // Now do averaging over all properties for each challenge's test runs
-  var averagedResults = map(range(testruns[0].length), function (n) {
+  const averagedResults = map(range(testruns[0].length), function (n) {
     return makeAverageResult(pluck(testruns, n));
   });
 
@@ -168,11 +168,11 @@ export function fitnessSuite(codeStr, preferWorker, callback) {
   if (!!Worker && preferWorker) {
     // Web workers are available, neat.
     try {
-      var w = new Worker('fitnessworker.js');
+      const w = new Worker('fitnessworker.js');
       w.postMessage(codeStr);
       w.onmessage = function (msg) {
         console.log('Got message from fitness worker', msg);
-        var results = msg.data;
+        const results = msg.data;
         callback(results);
       };
       return;
@@ -181,6 +181,6 @@ export function fitnessSuite(codeStr, preferWorker, callback) {
     }
   }
   // Fall back do synch calculation without web worker
-  var results = doFitnessSuite(codeStr, 2);
+  const results = doFitnessSuite(codeStr, 2);
   callback(results);
 }

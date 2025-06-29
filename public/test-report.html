@@ -1,277 +1,859 @@
-<html><head><meta charset="utf-8"/><title>Elevator Sage Test Report</title><style type="text/css">:root {
-  --text-primary: #111;
-  --text-secondary: #4f4f4f;
-  --success: #006633;
-  --success-bright: #80ffbf;
-  --danger: #cc071e;
-  --danger-bright: #fbdfe0;
-  --warning: #995c00;
-  --warning-bright: #ffeea8;
-  --panel: #eee;
-  --border: #949494;
-  --disabled: #6b6b6b;
-}
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Elevator Sage Test Report</title>
+    <style type="text/css">
+      :root {
+        --text-primary: #111;
+        --text-secondary: #4f4f4f;
+        --success: #006633;
+        --success-bright: #80ffbf;
+        --danger: #cc071e;
+        --danger-bright: #fbdfe0;
+        --warning: #995c00;
+        --warning-bright: #ffeea8;
+        --panel: #eee;
+        --border: #949494;
+        --disabled: #6b6b6b;
+      }
 
-html,
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 16px;
-  margin: 0;
-  padding: 0;
-  color: var(--text-primary);
-}
-body {
-  padding: 2rem 1rem;
-}
-.jesthtml-content {
-  margin: 0 auto;
-  max-width: 70rem;
-}
-header {
-  display: flex;
-  align-items: center;
-}
-#title {
-  margin: 0;
-  flex-grow: 1;
-}
-#logo {
-  height: 4rem;
-}
-#timestamp {
-  color: var(--text-secondary);
-  margin-top: 0.5rem;
-}
+      html,
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+        color: var(--text-primary);
+      }
+      body {
+        padding: 2rem 1rem;
+      }
+      .jesthtml-content {
+        margin: 0 auto;
+        max-width: 70rem;
+      }
+      header {
+        display: flex;
+        align-items: center;
+      }
+      #title {
+        margin: 0;
+        flex-grow: 1;
+      }
+      #logo {
+        height: 4rem;
+      }
+      #timestamp {
+        color: var(--text-secondary);
+        margin-top: 0.5rem;
+      }
 
-#metadata-container {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  margin-bottom: 2rem;
-}
+      #metadata-container {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
 
-.additional-information-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  color: var(--text-secondary);
-}
+      .additional-information-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        color: var(--text-secondary);
+      }
 
-/** SUMMARY */
-#summary {
-  color: var(--text-primary);
-  display: flex;
-  font-family: monospace;
-  font-size: 1rem;
-}
-#summary > div {
-  margin-right: 0.5rem;
-  background: var(--panel);
-  padding: 1rem;
-  min-width: 15rem;
-}
-#summary > div:last-child {
-  margin-right: 0;
-}
-@media only screen and (max-width: 720px) {
-  #summary {
-    flex-direction: column;
-  }
-  #summary > div {
-    margin-right: 0;
-    margin-top: 1rem;
-  }
-  #summary > div:first-child {
-    margin-top: 0;
-  }
-}
+      /** SUMMARY */
+      #summary {
+        color: var(--text-primary);
+        display: flex;
+        font-family: monospace;
+        font-size: 1rem;
+      }
+      #summary > div {
+        margin-right: 0.5rem;
+        background: var(--panel);
+        padding: 1rem;
+        min-width: 15rem;
+      }
+      #summary > div:last-child {
+        margin-right: 0;
+      }
+      @media only screen and (max-width: 720px) {
+        #summary {
+          flex-direction: column;
+        }
+        #summary > div {
+          margin-right: 0;
+          margin-top: 1rem;
+        }
+        #summary > div:first-child {
+          margin-top: 0;
+        }
+      }
 
-.summary-total {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-.summary-passed {
-  color: var(--success);
-  border-left: 0.4rem solid var(--success);
-  padding-left: 0.5rem;
-  margin-bottom: 0.15rem;
-}
-.summary-failed,
-.summary-obsolete-snapshots {
-  color: var(--danger);
-  border-left: 0.4rem solid var(--danger);
-  padding-left: 0.5rem;
-  margin-bottom: 0.15rem;
-}
-.summary-pending {
-  color: var(--warning);
-  border-left: 0.4rem solid var(--warning);
-  padding-left: 0.5rem;
-  margin-bottom: 0.15rem;
-}
-.summary-empty {
-  color: var(--disabled);
-  border-left: 0.4rem solid var(--disabled);
-  margin-bottom: 0.15rem;
-}
+      .summary-total {
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+      .summary-passed {
+        color: var(--success);
+        border-left: 0.4rem solid var(--success);
+        padding-left: 0.5rem;
+        margin-bottom: 0.15rem;
+      }
+      .summary-failed,
+      .summary-obsolete-snapshots {
+        color: var(--danger);
+        border-left: 0.4rem solid var(--danger);
+        padding-left: 0.5rem;
+        margin-bottom: 0.15rem;
+      }
+      .summary-pending {
+        color: var(--warning);
+        border-left: 0.4rem solid var(--warning);
+        padding-left: 0.5rem;
+        margin-bottom: 0.15rem;
+      }
+      .summary-empty {
+        color: var(--disabled);
+        border-left: 0.4rem solid var(--disabled);
+        margin-bottom: 0.15rem;
+      }
 
-.test-result {
-  padding: 1rem;
-  margin-bottom: 0.25rem;
-}
-.test-result:last-child {
-  border: 0;
-}
-.test-result.passed {
-  background-color: var(--success-bright);
-  color: var(--success);
-}
-.test-result.failed {
-  background-color: var(--danger-bright);
-  color: var(--danger);
-}
-.test-result.pending {
-  background-color: var(--warning-bright);
-  color: var(--warning);
-}
+      .test-result {
+        padding: 1rem;
+        margin-bottom: 0.25rem;
+      }
+      .test-result:last-child {
+        border: 0;
+      }
+      .test-result.passed {
+        background-color: var(--success-bright);
+        color: var(--success);
+      }
+      .test-result.failed {
+        background-color: var(--danger-bright);
+        color: var(--danger);
+      }
+      .test-result.pending {
+        background-color: var(--warning-bright);
+        color: var(--warning);
+      }
 
-.test-info {
-  display: flex;
-  justify-content: space-between;
-}
-.test-suitename {
-  width: 20%;
-  text-align: left;
-  font-weight: bold;
-  word-break: break-word;
-}
-.test-title {
-  width: 40%;
-  text-align: left;
-  font-style: italic;
-}
-.test-status {
-  width: 20%;
-  text-align: right;
-}
-.test-duration {
-  width: 10%;
-  text-align: right;
-  font-size: 0.85rem;
-}
+      .test-info {
+        display: flex;
+        justify-content: space-between;
+      }
+      .test-suitename {
+        width: 20%;
+        text-align: left;
+        font-weight: bold;
+        word-break: break-word;
+      }
+      .test-title {
+        width: 40%;
+        text-align: left;
+        font-style: italic;
+      }
+      .test-status {
+        width: 20%;
+        text-align: right;
+      }
+      .test-duration {
+        width: 10%;
+        text-align: right;
+        font-size: 0.85rem;
+      }
 
-.failureMessages {
-  padding: 0 1rem;
-  margin-top: 1rem;
-  border-top: 1px dashed var(--danger);
-}
-.failureMessages.suiteFailure {
-  border-top: none;
-}
-.failureMsg {
-  white-space: pre-wrap;
-  white-space: -moz-pre-wrap;
-  white-space: -pre-wrap;
-  white-space: -o-pre-wrap;
-  word-wrap: break-word;
-}
+      .failureMessages {
+        padding: 0 1rem;
+        margin-top: 1rem;
+        border-top: 1px dashed var(--danger);
+      }
+      .failureMessages.suiteFailure {
+        border-top: none;
+      }
+      .failureMsg {
+        white-space: pre-wrap;
+        white-space: -moz-pre-wrap;
+        white-space: -pre-wrap;
+        white-space: -o-pre-wrap;
+        word-wrap: break-word;
+      }
 
-.suite-container {
-  margin-bottom: 1rem;
-}
-.suite-info {
-  padding: 1rem;
-  background-color: var(--panel);
-  color: var(--text-secondary);
-  border: 0.15rem solid;
-  border-color: var(--panel);
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.25rem;
-}
-.suite-info:hover {
-  border-color: var(--border);
-  cursor: pointer;
-}
-.suite-info .suite-path {
-  word-break: break-all;
-  flex-grow: 1;
-  font-family: monospace;
-  font-size: 1rem;
-}
-.suite-info .suite-time {
-  margin-left: 1rem;
-  padding: 0.2rem 0.3rem;
-  font-size: 0.85rem;
-}
-.suite-info .suite-time.warn {
-  background-color: var(--danger);
-  color: #fff;
-}
-.suite-info:before {
-  content: "\2303";
-  display: inline-block;
-  margin-right: 1rem;
-  transform: rotate(180deg) translateY(0.15rem);
-}
-.suite-container[open] .suite-info:before {
-  transform: rotate(0deg) translateY(0.15rem);
-}
+      .suite-container {
+        margin-bottom: 1rem;
+      }
+      .suite-info {
+        padding: 1rem;
+        background-color: var(--panel);
+        color: var(--text-secondary);
+        border: 0.15rem solid;
+        border-color: var(--panel);
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.25rem;
+      }
+      .suite-info:hover {
+        border-color: var(--border);
+        cursor: pointer;
+      }
+      .suite-info .suite-path {
+        word-break: break-all;
+        flex-grow: 1;
+        font-family: monospace;
+        font-size: 1rem;
+      }
+      .suite-info .suite-time {
+        margin-left: 1rem;
+        padding: 0.2rem 0.3rem;
+        font-size: 0.85rem;
+      }
+      .suite-info .suite-time.warn {
+        background-color: var(--danger);
+        color: #fff;
+      }
+      .suite-info:before {
+        content: '\2303';
+        display: inline-block;
+        margin-right: 1rem;
+        transform: rotate(180deg) translateY(0.15rem);
+      }
+      .suite-container[open] .suite-info:before {
+        transform: rotate(0deg) translateY(0.15rem);
+      }
 
-/* CONSOLE LOGS */
-.suite-consolelog {
-  margin-bottom: 0.25rem;
-  padding: 1rem;
-  background-color: var(--panel);
-}
-.suite-consolelog-header {
-  font-weight: bold;
-}
-.suite-consolelog-item {
-  padding: 0.5rem;
-}
-.suite-consolelog-item pre {
-  margin: 0.5rem 0;
-  white-space: pre-wrap;
-  white-space: -moz-pre-wrap;
-  white-space: -pre-wrap;
-  white-space: -o-pre-wrap;
-  word-wrap: break-word;
-}
-.suite-consolelog-item-origin {
-  color: var(--text-secondary);
-  font-weight: bold;
-}
-.suite-consolelog-item-message {
-  color: var(--text-primary);
-  font-size: 1rem;
-  padding: 0 0.5rem;
-}
+      /* CONSOLE LOGS */
+      .suite-consolelog {
+        margin-bottom: 0.25rem;
+        padding: 1rem;
+        background-color: var(--panel);
+      }
+      .suite-consolelog-header {
+        font-weight: bold;
+      }
+      .suite-consolelog-item {
+        padding: 0.5rem;
+      }
+      .suite-consolelog-item pre {
+        margin: 0.5rem 0;
+        white-space: pre-wrap;
+        white-space: -moz-pre-wrap;
+        white-space: -pre-wrap;
+        white-space: -o-pre-wrap;
+        word-wrap: break-word;
+      }
+      .suite-consolelog-item-origin {
+        color: var(--text-secondary);
+        font-weight: bold;
+      }
+      .suite-consolelog-item-message {
+        color: var(--text-primary);
+        font-size: 1rem;
+        padding: 0 0.5rem;
+      }
 
-/* OBSOLETE SNAPSHOTS */
-.suite-obsolete-snapshots {
-  margin-bottom: 0.25rem;
-  padding: 1rem;
-  background-color: var(--danger-bright);
-  color: var(--danger);
-}
-.suite-obsolete-snapshots-header {
-  font-weight: bold;
-}
-.suite-obsolete-snapshots-item {
-  padding: 0.5rem;
-}
-.suite-obsolete-snapshots-item pre {
-  margin: 0.5rem 0;
-  white-space: pre-wrap;
-  white-space: -moz-pre-wrap;
-  white-space: -pre-wrap;
-  white-space: -o-pre-wrap;
-  word-wrap: break-word;
-}
-.suite-obsolete-snapshots-item-message {
-  color: var(--text-primary);
-  font-size: 1rem;
-  padding: 0 0.5rem;
-}
-</style></head><body><main class="jesthtml-content"><header><h1 id="title">Elevator Sage Test Report</h1></header><section id="metadata-container"><div id="timestamp">Started: 2025-06-29 19:59:53</div><div id="summary"><div id="suite-summary"><div class="summary-total">Suites (9)</div><div class="summary-passed ">5 passed</div><div class="summary-failed ">1 failed</div><div class="summary-pending  summary-empty">0 pending</div></div><div id="test-summary"><div class="summary-total">Tests (32)</div><div class="summary-passed ">25 passed</div><div class="summary-failed ">7 failed</div><div class="summary-pending  summary-empty">0 pending</div></div></div></section><details id="suite-1" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/Users/thomas.roche/Projects/github/elevator-saga/elevator-saga/src/models/base.spec.js</div><div class="suite-time">0.731s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">base &gt; getCodeObjFromCode</div><div class="test-title">handles trailing whitespace</div><div class="test-status">passed</div><div class="test-duration">0.004s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">base &gt; getCodeObjFromCode</div><div class="test-title">handles prefix whitespace</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">base &gt; getCodeObjFromCode</div><div class="test-title">handles prefix and trailing whitespace</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div></div></details><details id="suite-2" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/Users/thomas.roche/Projects/github/elevator-saga/elevator-saga/src/app/challenges.spec.js</div><div class="suite-time">0.731s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">Challenge requirements &gt; requireUserCountWithinTime</div><div class="test-title">evaluates correctly</div><div class="test-status">passed</div><div class="test-duration">0.005s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Challenge requirements &gt; requireUserCountWithMaxWaitTime</div><div class="test-title">evaluates correctly</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Challenge requirements &gt; requireUserCountWithinMoves</div><div class="test-title">evaluates correctly</div><div class="test-status">passed</div><div class="test-duration">0.002s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Challenge requirements &gt; requireUserCountWithinTimeWithMaxWaitTime</div><div class="test-title">evaluates correctly</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div></div></details><details id="suite-3" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/Users/thomas.roche/Projects/github/elevator-saga/elevator-saga/src/models/user.spec.js</div><div class="suite-time">0.736s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">User class</div><div class="test-title">updates display position when told to</div><div class="test-status">passed</div><div class="test-duration">0.005s</div></div></div></div></details><details id="suite-4" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/Users/thomas.roche/Projects/github/elevator-saga/elevator-saga/src/models/world-controller.spec.js</div><div class="suite-time">0.733s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">World controller</div><div class="test-title">does not update world on first animation frame</div><div class="test-status">passed</div><div class="test-duration">0.006s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">World controller</div><div class="test-title">calls world update with correct delta t</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">World controller</div><div class="test-title">calls world update with scaled delta t</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">World controller</div><div class="test-title">does not update world when paused</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div></div></details><details id="suite-5" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/Users/thomas.roche/Projects/github/elevator-saga/elevator-saga/src/models/movable.spec.js</div><div class="suite-time">0.739s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">Movable object</div><div class="test-title">updates display position when told to</div><div class="test-status">passed</div><div class="test-duration">0.005s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Movable object</div><div class="test-title">does not update display position when moved</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Movable object</div><div class="test-title">triggers event when moved</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Movable object</div><div class="test-title">retains x pos when moveTo x is null</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Movable object</div><div class="test-title">retains y pos when moveTo y is null</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Movable object</div><div class="test-title">gets new display position when parent is moved</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Movable object</div><div class="test-title">moves to destination over time</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div></div></details><details id="suite-6" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/Users/thomas.roche/Projects/github/elevator-saga/elevator-saga/src/models/floor.test.js</div><div class="suite-time">0.777s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">Floor</div><div class="test-title">constructor initializes properties</div><div class="test-status">passed</div><div class="test-duration">0.005s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">Floor &gt; _tryTrigger</div><div class="test-title">calls trigger with correct arguments</div><div class="test-status">failed</div><div class="test-duration">0.004s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">Floor &gt; _tryTrigger</div><div class="test-title">calls errorHandler if trigger throws</div><div class="test-status">failed</div><div class="test-duration"> </div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">Floor &gt; pressUpButton</div><div class="test-title">activates up button and triggers events if not already activated</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Floor &gt; pressUpButton</div><div class="test-title">does not trigger events if up button already activated</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">Floor &gt; pressDownButton</div><div class="test-title">activates down button and triggers events if not already activated</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Floor &gt; pressDownButton</div><div class="test-title">does not trigger events if down button already activated</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">Floor &gt; elevatorAvailable</div><div class="test-title">resets up button and triggers event if elevator going up</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">Floor &gt; elevatorAvailable</div><div class="test-title">resets down button and triggers event if elevator going down</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div></div><div class="test-result failed"><div class="test-info"><div class="test-suitename">Floor &gt; elevatorAvailable</div><div class="test-title">resets both buttons if elevator going both directions</div><div class="test-status">failed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Floor &gt; elevatorAvailable</div><div class="test-title">does nothing if no button is pressed</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Floor</div><div class="test-title">getSpawnPosY returns yPosition + 30</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Floor</div><div class="test-title">floorNum returns level</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div></div></details></main></body></html>
+      /* OBSOLETE SNAPSHOTS */
+      .suite-obsolete-snapshots {
+        margin-bottom: 0.25rem;
+        padding: 1rem;
+        background-color: var(--danger-bright);
+        color: var(--danger);
+      }
+      .suite-obsolete-snapshots-header {
+        font-weight: bold;
+      }
+      .suite-obsolete-snapshots-item {
+        padding: 0.5rem;
+      }
+      .suite-obsolete-snapshots-item pre {
+        margin: 0.5rem 0;
+        white-space: pre-wrap;
+        white-space: -moz-pre-wrap;
+        white-space: -pre-wrap;
+        white-space: -o-pre-wrap;
+        word-wrap: break-word;
+      }
+      .suite-obsolete-snapshots-item-message {
+        color: var(--text-primary);
+        font-size: 1rem;
+        padding: 0 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="jesthtml-content">
+      <header><h1 id="title">Elevator Sage Test Report</h1></header>
+      <section id="metadata-container">
+        <div id="timestamp">Started: 2025-06-29 20:55:12</div>
+        <div id="summary">
+          <div id="suite-summary">
+            <div class="summary-total">Suites (9)</div>
+            <div class="summary-passed">7 passed</div>
+            <div class="summary-failed">2 failed</div>
+            <div class="summary-pending summary-empty">0 pending</div>
+          </div>
+          <div id="test-summary">
+            <div class="summary-total">Tests (58)</div>
+            <div class="summary-passed">45 passed</div>
+            <div class="summary-failed">13 failed</div>
+            <div class="summary-pending summary-empty">0 pending</div>
+          </div>
+        </div>
+      </section>
+      <details id="suite-1" class="suite-container" open="">
+        <summary class="suite-info">
+          <div class="suite-path">
+            /Users/thomas.roche/Projects/github/elevator-saga/elevator-saga/src/models/elevator.spec.js
+          </div>
+          <div class="suite-time">1.39s</div>
+        </summary>
+        <div class="suite-tests">
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">Elevator object</div>
+              <div class="test-title">moves to floors specified</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration">0.005s</div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">Elevator object</div>
+              <div class="test-title">can change direction</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration">0.002s</div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">Elevator object</div>
+              <div class="test-title">is correctly aware of it being on a floor</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">Elevator object</div>
+              <div class="test-title">correctly reports travel suitability</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration">0.001s</div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">Elevator object</div>
+              <div class="test-title">reports pressed floor buttons</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">Elevator object</div>
+              <div class="test-title">reports not approaching floor 0 when going up from floor 0</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">Elevator object</div>
+              <div class="test-title">reports approaching floor 2 when going up from floor 0</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">Elevator object</div>
+              <div class="test-title">reports approaching floor 2 when going down from floor 3</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">Elevator object</div>
+              <div class="test-title">emits no passing floor events when going from floor 0 to 1</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration">0.002s</div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">Elevator object</div>
+              <div class="test-title">emits passing floor event when going from floor 0 to 2</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration">0.002s</div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">Elevator object</div>
+              <div class="test-title">emits passing floor events when going from floor 0 to 3</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration">0.001s</div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">Elevator object</div>
+              <div class="test-title">emits passing floor events when going from floor 3 to 0</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration">0.003s</div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">Elevator object</div>
+              <div class="test-title">doesnt raise unexpected events when told to stop(ish) when passing floor</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration">0.001s</div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">Elevator object</div>
+              <div class="test-title">doesnt seem to overshoot when stopping at floors</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration">0.429s</div>
+            </div>
+          </div>
+        </div>
+      </details>
+      <details id="suite-2" class="suite-container" open="">
+        <summary class="suite-info">
+          <div class="suite-path">
+            /Users/thomas.roche/Projects/github/elevator-saga/elevator-saga/src/models/elevator-facade.spec.js
+          </div>
+          <div class="suite-time">0.152s</div>
+        </summary>
+        <div class="suite-tests">
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">API &gt; Elevator Facade &gt; events</div>
+              <div class="test-title">propagates stopped_at_floor event</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">API &gt; Elevator Facade &gt; events</div>
+              <div class="test-title">does not propagate stopped event</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">API &gt; Elevator Facade &gt; events</div>
+              <div class="test-title">triggers idle event at start</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">API &gt; Elevator Facade &gt; events</div>
+              <div class="test-title">triggers idle event when queue empties</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">API &gt; Elevator Facade</div>
+              <div class="test-title">stops when told told to stop</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration">0.002s</div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">API &gt; Elevator Facade &gt; destination direction</div>
+              <div class="test-title">reports up when going up</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration">0.001s</div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">API &gt; Elevator Facade &gt; destination direction</div>
+              <div class="test-title">reports up when going up</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">API &gt; Elevator Facade &gt; destination direction</div>
+              <div class="test-title">reports down when going down</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">API &gt; Elevator Facade</div>
+              <div class="test-title">stores going up and going down properties</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">API &gt; Elevator Facade</div>
+              <div class="test-title">can chain calls to going up and down indicator functions</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">API &gt; Elevator Facade</div>
+              <div class="test-title">normalizes load factor</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">API &gt; Elevator Facade</div>
+              <div class="test-title">doesnt raise unexpected events when told to stop when passing floor</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration">0.001s</div>
+            </div>
+          </div>
+        </div>
+      </details>
+      <details id="suite-3" class="suite-container" open="">
+        <summary class="suite-info">
+          <div class="suite-path">
+            /Users/thomas.roche/Projects/github/elevator-saga/elevator-saga/src/app/challenges.spec.js
+          </div>
+          <div class="suite-time">0.067s</div>
+        </summary>
+        <div class="suite-tests">
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">Challenge requirements &gt; requireUserCountWithinTime</div>
+              <div class="test-title">evaluates correctly</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration">0.001s</div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">Challenge requirements &gt; requireUserCountWithMaxWaitTime</div>
+              <div class="test-title">evaluates correctly</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">Challenge requirements &gt; requireUserCountWithinMoves</div>
+              <div class="test-title">evaluates correctly</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">Challenge requirements &gt; requireUserCountWithinTimeWithMaxWaitTime</div>
+              <div class="test-title">evaluates correctly</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration">0.002s</div>
+            </div>
+          </div>
+        </div>
+      </details>
+      <details id="suite-4" class="suite-container" open="">
+        <summary class="suite-info">
+          <div class="suite-path">
+            /Users/thomas.roche/Projects/github/elevator-saga/elevator-saga/src/models/world-controller.spec.js
+          </div>
+          <div class="suite-time">0.061s</div>
+        </summary>
+        <div class="suite-tests">
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">World controller</div>
+              <div class="test-title">does not update world on first animation frame</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration">0.001s</div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">World controller</div>
+              <div class="test-title">calls world update with correct delta t</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">World controller</div>
+              <div class="test-title">calls world update with scaled delta t</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration">0.001s</div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">World controller</div>
+              <div class="test-title">does not update world when paused</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+        </div>
+      </details>
+      <details id="suite-5" class="suite-container" open="">
+        <summary class="suite-info">
+          <div class="suite-path">
+            /Users/thomas.roche/Projects/github/elevator-saga/elevator-saga/src/models/user.spec.js
+          </div>
+          <div class="suite-time">0.07s</div>
+        </summary>
+        <div class="suite-tests">
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">User class</div>
+              <div class="test-title">updates display position when told to</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration">0.001s</div>
+            </div>
+          </div>
+        </div>
+      </details>
+      <details id="suite-6" class="suite-container" open="">
+        <summary class="suite-info">
+          <div class="suite-path">
+            /Users/thomas.roche/Projects/github/elevator-saga/elevator-saga/src/models/movable.spec.js
+          </div>
+          <div class="suite-time">0.055s</div>
+        </summary>
+        <div class="suite-tests">
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">Movable object</div>
+              <div class="test-title">updates display position when told to</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">Movable object</div>
+              <div class="test-title">does not update display position when moved</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration">0.001s</div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">Movable object</div>
+              <div class="test-title">triggers event when moved</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">Movable object</div>
+              <div class="test-title">retains x pos when moveTo x is null</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">Movable object</div>
+              <div class="test-title">retains y pos when moveTo y is null</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">Movable object</div>
+              <div class="test-title">gets new display position when parent is moved</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">Movable object</div>
+              <div class="test-title">moves to destination over time</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration">0.001s</div>
+            </div>
+          </div>
+        </div>
+      </details>
+      <details id="suite-7" class="suite-container" open="">
+        <summary class="suite-info">
+          <div class="suite-path">
+            /Users/thomas.roche/Projects/github/elevator-saga/elevator-saga/src/models/base.spec.js
+          </div>
+          <div class="suite-time">0.053s</div>
+        </summary>
+        <div class="suite-tests">
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">base &gt; getCodeObjFromCode</div>
+              <div class="test-title">handles trailing whitespace</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration">0.001s</div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">base &gt; getCodeObjFromCode</div>
+              <div class="test-title">handles prefix whitespace</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result passed">
+            <div class="test-info">
+              <div class="test-suitename">base &gt; getCodeObjFromCode</div>
+              <div class="test-title">handles prefix and trailing whitespace</div>
+              <div class="test-status">passed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+        </div>
+      </details>
+      <details id="suite-8" class="suite-container" open="">
+        <summary class="suite-info">
+          <div class="suite-path">
+            /Users/thomas.roche/Projects/github/elevator-saga/elevator-saga/src/models/world.test.js
+          </div>
+          <div class="suite-time">0.268s</div>
+        </summary>
+        <div class="suite-tests">
+          <div class="test-result failed">
+            <div class="test-info">
+              <div class="test-suitename">World</div>
+              <div class="test-title">should initialize with default options</div>
+              <div class="test-status">failed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result failed">
+            <div class="test-info">
+              <div class="test-suitename">World</div>
+              <div class="test-title">should call observable and bind events in constructor</div>
+              <div class="test-status">failed</div>
+              <div class="test-duration">0.001s</div>
+            </div>
+          </div>
+          <div class="test-result failed">
+            <div class="test-info">
+              <div class="test-suitename">World</div>
+              <div class="test-title">should create floors with correct count and yPos</div>
+              <div class="test-status">failed</div>
+              <div class="test-duration">0.001s</div>
+            </div>
+          </div>
+          <div class="test-result failed">
+            <div class="test-info">
+              <div class="test-suitename">World</div>
+              <div class="test-title">should create elevators with correct count</div>
+              <div class="test-status">failed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result failed">
+            <div class="test-info">
+              <div class="test-suitename">World</div>
+              <div class="test-title">should spawn a user randomly and call appearOnFloor</div>
+              <div class="test-status">failed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result failed">
+            <div class="test-info">
+              <div class="test-suitename">World</div>
+              <div class="test-title">should register a user and wire up events</div>
+              <div class="test-status">failed</div>
+              <div class="test-duration">0.001s</div>
+            </div>
+          </div>
+          <div class="test-result failed">
+            <div class="test-info">
+              <div class="test-suitename">World</div>
+              <div class="test-title">should recalculate stats and trigger stats_changed</div>
+              <div class="test-status">failed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result failed">
+            <div class="test-info">
+              <div class="test-suitename">World</div>
+              <div class="test-title">should handle elevator availability for floors and users</div>
+              <div class="test-status">failed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result failed">
+            <div class="test-info">
+              <div class="test-suitename">World</div>
+              <div class="test-title">should handle button repressing and call goToFloor</div>
+              <div class="test-status">failed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result failed">
+            <div class="test-info">
+              <div class="test-suitename">World</div>
+              <div class="test-title">should update world and spawn users, update elevators and users</div>
+              <div class="test-status">failed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result failed">
+            <div class="test-info">
+              <div class="test-suitename">World</div>
+              <div class="test-title">should update display positions for elevators and users</div>
+              <div class="test-status">failed</div>
+              <div class="test-duration">0.001s</div>
+            </div>
+          </div>
+          <div class="test-result failed">
+            <div class="test-info">
+              <div class="test-suitename">World</div>
+              <div class="test-title">should unwind the world and clear arrays</div>
+              <div class="test-status">failed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+          <div class="test-result failed">
+            <div class="test-info">
+              <div class="test-suitename">World</div>
+              <div class="test-title">should call checkDestinationQueue on init</div>
+              <div class="test-status">failed</div>
+              <div class="test-duration"></div>
+            </div>
+          </div>
+        </div>
+      </details>
+      <details id="suite-9" class="suite-container" open="">
+        <summary class="suite-info">
+          <div class="suite-path">
+            /Users/thomas.roche/Projects/github/elevator-saga/elevator-saga/src/models/floor.test.js
+          </div>
+          <div class="suite-time">0s</div>
+        </summary>
+        <div class="suite-tests" />
+      </details>
+    </main>
+  </body>
+</html>

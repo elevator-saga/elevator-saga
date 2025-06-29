@@ -4,11 +4,11 @@ import { createFrameRequester } from './base';
 import WorldController from './world-controller';
 
 describe('World controller', function () {
-  var controller = null;
-  var fakeWorld = null;
-  var fakeCodeObj = null;
-  var frameRequester = null;
-  var DT_MAX = 1000.0 / 59;
+  let controller = null;
+  let fakeWorld = null;
+  let fakeCodeObj = null;
+  let frameRequester = null;
+  const DT_MAX = 1000.0 / 59;
 
   beforeEach(function () {
     controller = new WorldController(DT_MAX);

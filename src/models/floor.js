@@ -33,6 +33,10 @@ export default class Floor {
    * @param {Function} options.errorHandler - Function to handle errors during event triggering.
    */
   constructor(options) {
+    if (!options || typeof options.errorHandler !== 'function') {
+      throw new Error('errorHandler must be provided and be a function.');
+    }
+
     this.level = options.floorLevel;
     this.yPosition = options.yPosition;
     this.buttonStates = { up: '', down: '' };

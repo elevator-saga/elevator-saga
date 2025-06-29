@@ -80,7 +80,7 @@ const _tmpPosStorage = [0, 0];
  *   @method getWorldPosition(storage) - Computes the object's world position, considering parent hierarchy.
  *   @method setParent(movableParent) - Sets or removes the object's parent, preserving world position.
  */
-class Movable {
+export default class Movable {
   constructor() {
     observable(this);
     newGuard(this, Movable);
@@ -280,5 +280,3 @@ class Movable {
     }
   }
 }
-
-export default Movable;

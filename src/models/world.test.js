@@ -1,3 +1,7 @@
+import MockElevatorFacade from './elevator-facade.mock';
+import MockElevator from './elevator.mock';
+import MockFloor from './floor.mock';
+import MockUser from './user.mock';
 import World from './world';
 const reduce = require('lodash/reduce');
 
@@ -10,7 +14,6 @@ jest.mock('@riotjs/observable', () => {
   });
 });
 jest.mock('lodash/clone', () => jest.fn((obj) => ({ ...obj })));
-jest.mock('lodash/defaults', () => jest.fn((obj, defaults) => ({ ...defaults, ...obj })));
 jest.mock('lodash/each', () => jest.fn((arr, fn) => arr.forEach(fn)));
 jest.mock('lodash/map', () => jest.fn((arr, fn) => Array.prototype.map.call(arr, fn)));
 jest.mock('lodash/random', () => jest.fn(() => 0));
@@ -21,62 +24,25 @@ const mockOn = jest.fn();
 const mockOff = jest.fn();
 const mockTrigger = jest.fn();
 
-class MockFloor {
-  constructor() {
-    this.on = mockOn;
-    this.off = mockOff;
-    this.level = 0;
-    this.elevatorAvailable = jest.fn();
-  }
-}
-class MockElevator {
-  constructor() {
-    this.on = mockOn;
-    this.off = mockOff;
-    this.currentFloor = 0;
-    this.goingUpIndicator = true;
-    this.goingDownIndicator = true;
-    this.isOnAFloor = jest.fn(() => true);
-    this.isMoving = false;
-    this.isFull = jest.fn(() => false);
-    this.moveCount = 0;
-    this.width = 10;
-    this.update = jest.fn();
-    this.updateElevatorMovement = jest.fn();
-    this.setFloorPosition = jest.fn();
-    this.moveTo = jest.fn();
-    this.updateDisplayPosition = jest.fn();
-  }
-}
-class MockElevatorFacade {
-  constructor() {
-    this.goToFloor = jest.fn();
-    this.checkDestinationQueue = jest.fn();
-    this.off = mockOff;
-  }
-}
-class MockUser {
-  constructor() {
-    this.on = jest.fn();
-    this.off = mockOff;
-    this.updateDisplayPosition = jest.fn();
-    this.update = jest.fn();
-    this.currentFloor = 0;
-    this.removeMe = false;
-    this.spawnTimestamp = 0;
-    this.elevatorAvailable = jest.fn();
-    this.moveTo = jest.fn();
-    this.appearOnFloor = jest.fn();
-  }
-}
-
-jest.mock('./floor', () => MockFloor);
-jest.mock('./elevator', () => MockElevator);
-jest.mock('./elevator-facade', () => MockElevatorFacade);
+jest.mock('./floor', () => ({
+  __esModule: true,
+  default: MockFloor,
+}));
+jest.mock('./elevator', () => ({
+  __esModule: true,
+  default: MockElevator,
+}));
+jest.mock('./elevator-facade', () => ({
+  __esModule: true,
+  default: MockElevatorFacade,
+}));
+jest.mock('./user', () => ({
+  __esModule: true,
+  default: MockUser,
+}));
 
 // Patch World.createRandomUser to return a mock user
-const mockUser = new MockUser();
-World.createRandomUser = jest.fn(() => mockUser);
+World.createRandomUser = jest.fn(() => new MockUser());
 
 describe('World', () => {
   beforeEach(() => {
@@ -100,18 +66,33 @@ describe('World', () => {
   });
 
   it('should call observable and bind events in constructor', () => {
+    // Arrange
     new World({});
+
+    // Assert
     expect(mockOn).toHaveBeenCalled();
   });
 
   it('should create floors with correct count and yPos', () => {
-    const floors = World.createFloors(3, 10, jest.fn());
+    // Arrange
+    const world = new World({});
+
+    // Act
+    const floors = world.createFloors(3, 10, jest.fn());
+
+    // Assert
     expect(floors.length).toBe(3);
     expect(floors[0]).toBeInstanceOf(MockFloor);
   });
 
   it('should create elevators with correct count', () => {
-    const elevators = World.createElevators(2, 4, 10, [4, 5]);
+    // Arrange
+    const world = new World({});
+
+    // Act
+    const elevators = world.createElevators(2, 4, 10, [4, 5]);
+
+    // Assert
     expect(elevators.length).toBe(2);
     expect(elevators[0]).toBeInstanceOf(MockElevator);
   });

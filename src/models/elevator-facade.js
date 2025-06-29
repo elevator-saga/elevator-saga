@@ -30,24 +30,24 @@ import { createBoolPassthroughFunction, epsilonEquals, limitNumber } from './bas
  * @method destinationDirection() - Returns the direction the elevator is heading ('up', 'down', or 'stopped').
  */
 export default class ElevatorFacade {
-  constructor(obj, elevator, floorCount, errorHandler) {
-    observable(this);
-    this.elevator = elevator;
-    this.floorCount = floorCount;
-    this.errorHandler = errorHandler;
+  constructor(options) {
+    this.elevator = options.elevator;
+    this.floorCount = options.floorCount;
+    this.errorHandler = options.errorHandler;
     this.destinationQueue = [];
 
     // Bind passthrough indicator methods
-    this.goingUpIndicator = createBoolPassthroughFunction(this, elevator, 'goingUpIndicator');
-    this.goingDownIndicator = createBoolPassthroughFunction(this, elevator, 'goingDownIndicator');
+    this.goingUpIndicator = createBoolPassthroughFunction(this, this.elevator, 'goingUpIndicator');
+    this.goingDownIndicator = createBoolPassthroughFunction(this, this.elevator, 'goingDownIndicator');
 
+    observable(this);
     // Bind elevator events to facade
-    elevator.on('stopped', (position) => {
+    this.elevator.on('stopped', (position) => {
       if (this.destinationQueue.length && epsilonEquals(first(this.destinationQueue), position)) {
         // Reached the destination, so remove element at front of queue
         this.destinationQueue = tail(this.destinationQueue);
-        if (elevator.isOnAFloor()) {
-          elevator.wait(1, () => {
+        if (this.elevator.isOnAFloor()) {
+          this.elevator.wait(1, () => {
             this.checkDestinationQueue();
           });
         } else {
@@ -55,13 +55,13 @@ export default class ElevatorFacade {
         }
       }
     });
-    elevator.on('passing_floor', (floorNum, direction) => {
+    this.elevator.on('passing_floor', (floorNum, direction) => {
       this._tryTrigger('passing_floor', floorNum, direction);
     });
-    elevator.on('stopped_at_floor', (floorNum) => {
+    this.elevator.on('stopped_at_floor', (floorNum) => {
       this._tryTrigger('stopped_at_floor', floorNum);
     });
-    elevator.on('floor_button_pressed', (floorNum) => {
+    this.elevator.on('floor_button_pressed', (floorNum) => {
       this._tryTrigger('floor_button_pressed', floorNum);
     });
   }
@@ -101,7 +101,7 @@ export default class ElevatorFacade {
     floorNum = limitNumber(Number(floorNum), 0, this.floorCount - 1);
     // Auto-prevent immediately duplicate destinations
     if (this.destinationQueue.length) {
-      var adjacentElement = forceNow ? first(this.destinationQueue) : last(this.destinationQueue);
+      const adjacentElement = forceNow ? first(this.destinationQueue) : last(this.destinationQueue);
       if (epsilonEquals(floorNum, adjacentElement)) {
         return;
       }

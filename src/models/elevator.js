@@ -41,7 +41,7 @@ export function newElevStateHandler(elevator) {
  * @fires Elevator#entrance_available - Triggered when new users can enter the elevator.
  * @fires Elevator#floor_button_pressed - Triggered when a floor button is pressed.
  */
-class Elevator extends Movable {
+export default class Elevator extends Movable {
   /**
    * Creates an instance of Elevator.
    * Initializes the elevator with its properties, user slots, and event handlers.
@@ -70,7 +70,7 @@ class Elevator extends Movable {
 
     this.currentFloor = 0;
     this.previousTruncFutureFloorIfStopped = 0;
-    this.buttonStates = map(range(floorCount), function (e, i) {
+    this.buttonStates = map(range(this.floorCount), function (e, i) {
       return false;
     });
     this.moveCount = 0;
@@ -470,5 +470,3 @@ class Elevator extends Movable {
     this.previousTruncFutureFloorIfStopped = futureTruncFloorIfStopped;
   }
 }
-
-export default Elevator;

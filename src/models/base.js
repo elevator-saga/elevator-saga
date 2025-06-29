@@ -1,6 +1,6 @@
 // Console shim
 (function () {
-  var f = function () {};
+  const f = function () {};
   if (!console) {
     console = {
       log: f,
@@ -113,7 +113,7 @@ export function createBoolPassthroughFunction(owner, obj, objPropertyName) {
  */
 export function distanceNeededToAchieveSpeed(currentSpeed, targetSpeed, acceleration) {
   // v² = u² + 2a * d
-  var requiredDistance = (Math.pow(targetSpeed, 2) - Math.pow(currentSpeed, 2)) / (2 * acceleration);
+  const requiredDistance = (Math.pow(targetSpeed, 2) - Math.pow(currentSpeed, 2)) / (2 * acceleration);
   return requiredDistance;
 }
 
@@ -126,7 +126,7 @@ export function distanceNeededToAchieveSpeed(currentSpeed, targetSpeed, accelera
  */
 export function accelerationNeededToAchieveChangeDistance(currentSpeed, targetSpeed, distance) {
   // v² = u² + 2a * d
-  var requiredAcceleration = 0.5 * ((Math.pow(targetSpeed, 2) - Math.pow(currentSpeed, 2)) / distance);
+  const requiredAcceleration = 0.5 * ((Math.pow(targetSpeed, 2) - Math.pow(currentSpeed, 2)) / distance);
   return requiredAcceleration;
 }
 
@@ -138,8 +138,8 @@ export function accelerationNeededToAchieveChangeDistance(currentSpeed, targetSp
  * @returns {Object} - An object with methods to register a callback and trigger it.
  */
 export function createFrameRequester(timeStep) {
-  var currentCb = null;
-  var requester = {};
+  let currentCb = null;
+  let requester = {};
   requester.currentT = 0.0;
   requester.register = function (cb) {
     currentCb = cb;

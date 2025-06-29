@@ -1,16 +1,21 @@
 import User from './user';
 
 describe('User class', function () {
-  var u = null;
+  let user = null;
 
   beforeEach(function () {
-    u = new User();
+    user = new User();
   });
 
   it('updates display position when told to', function () {
-    u.moveTo(1.0, 1.0);
-    u.updateDisplayPosition();
-    expect(u.worldX).toBe(1.0);
-    expect(u.worldY).toBe(1.0);
+    // Arrange
+    user.moveTo(1.0, 1.0);
+
+    // Act
+    user.updateDisplayPosition();
+
+    // Assert
+    expect(user.worldX).toBe(1.0);
+    expect(user.worldY).toBe(1.0);
   });
 });
