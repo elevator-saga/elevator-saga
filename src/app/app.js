@@ -6,7 +6,8 @@ import map from 'lodash/map';
 import merge from 'lodash/merge';
 import parseInt from 'lodash/parseInt';
 import reduce from 'lodash/reduce';
-import { createWorldController, createWorldCreator } from '../models/world';
+import World from '../models/world';
+import WorldController from '../models/world-controller';
 import { challenges } from './challenges';
 import {
   clearAll,
@@ -168,15 +169,13 @@ $(function () {
     var codeStatusTempl = document.getElementById('codestatus-template').innerHTML.trim();
 
     var app = observable({});
-    app.worldController = createWorldController(1.0 / 60.0);
+    app.worldController = new WorldController(1.0 / 60.0);
     app.worldController.on('usercode_error', function (e) {
       console.log('World raised code error', e);
       editor.trigger('usercode_error', e);
     });
 
     console.log(app.worldController);
-    app.worldCreator = createWorldCreator();
-    app.world = undefined;
 
     app.currentChallengeIndex = 0;
 
@@ -194,7 +193,7 @@ $(function () {
         // TODO: Investigate if memory leaks happen here
       }
       app.currentChallengeIndex = challengeIndex;
-      app.world = app.worldCreator.createWorld(challenges[challengeIndex].options);
+      app.world = new World(challenges[challengeIndex].options);
       window.world = app.world;
 
       clearAll([$world, $feedback]);
