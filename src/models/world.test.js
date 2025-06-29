@@ -13,7 +13,7 @@ jest.mock('@riotjs/observable', () => {
     obj.trigger = jest.fn();
   });
 });
-jest.mock('lodash/clone', () => jest.fn((obj) => ({ ...obj })));
+// jest.mock('lodash/clone', () => jest.fn((obj) => ({ ...obj })));
 jest.mock('lodash/each', () => jest.fn((arr, fn) => arr.forEach(fn)));
 jest.mock('lodash/map', () => jest.fn((arr, fn) => Array.prototype.map.call(arr, fn)));
 jest.mock('lodash/random', () => jest.fn(() => 0));
@@ -32,10 +32,6 @@ jest.mock('./elevator-facade', () => {
 jest.mock('./user', () => {
   return { __esModule: true, default: require('./__mocks__/user').default };
 });
-
-// const mockOn = jest.fn();
-// const mockOff = jest.fn();
-// const mockTrigger = jest.fn();
 
 // Patch World.createRandomUser to return a mock user
 const mockUser = new MockUser();

@@ -108,13 +108,7 @@ export default class World {
     return map(range(floorCount), (i) => {
       const yPos = (floorCount - 1 - i) * floorHeight;
 
-      console.log(`Creating floor ${i} at y position ${yPos}`);
-
-      const floor = new Floor({ floorLevel: i, yPosition: yPos, errorHandler });
-
-      console.log(`Floor ${i} created at y position ${yPos}`);
-
-      return floor;
+      return new Floor({ floorLevel: i, yPosition: yPos, errorHandler });
     });
   }
 
