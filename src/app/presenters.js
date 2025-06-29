@@ -3,7 +3,6 @@ import map from 'lodash/map';
 import * as riot from 'riot';
 import User from '../models/user';
 import World from '../models/world';
-import Challenge from './challenge';
 
 /**
  * Removes all child elements from each element in the provided collection.
@@ -85,7 +84,7 @@ export function presentStats($parent, world) {
  * Renders and initializes the challenge UI in the given parent element.
  *
  * @param {jQuery} $parent - The parent jQuery element where the challenge UI will be rendered.
- * @param {Challenge} challenge - The challenge data object.
+ * @param {Object} challenge - The challenge data object.
  * @param {Object} app - The main application object, providing control methods.
  * @param {World} world - The current world state object.
  * @param {Object} worldController - Controller for managing world state and time scale.
@@ -260,9 +259,9 @@ export function presentWorld($world, world, floorTempl, elevatorTempl, elevatorB
  */
 export function presentCodeStatus($parent, templ, error) {
   console.log(error);
-  const errorDisplay = error ? 'block' : 'none';
-  const successDisplay = error ? 'none' : 'block';
-  const errorMessage = error;
+  let errorDisplay = error ? 'block' : 'none';
+  let successDisplay = error ? 'none' : 'block';
+  let errorMessage = error;
   if (error && error.stack) {
     errorMessage = error.stack;
     errorMessage = errorMessage.replace(/\n/g, '<br>');

@@ -151,7 +151,7 @@ const createParamsUrl = function (current, overrides) {
 $(function () {
   const tsKey = 'elevatorTimeScale';
   createEditorAsync().then((editor) => {
-    const params = {};
+    let params = {};
 
     const $world = $('.innerworld');
     const $stats = $('.statscontainer');
@@ -221,9 +221,10 @@ $(function () {
         },
         {}
       );
-      const requestedChallenge = 0;
-      const autoStart = false;
-      const timeScale = parseFloat(localStorage.getItem(tsKey)) || 2.0;
+      let requestedChallenge = 0;
+      let autoStart = false;
+      let timeScale = parseFloat(localStorage.getItem(tsKey)) || 2.0;
+
       each(params, function (val, key) {
         if (key === 'challenge') {
           requestedChallenge = parseInt(val) - 1;
@@ -242,6 +243,7 @@ $(function () {
           makeDemoFullscreen();
         }
       });
+
       sim.worldController.setTimeScale(timeScale);
       sim.startChallenge(requestedChallenge, autoStart);
     });
