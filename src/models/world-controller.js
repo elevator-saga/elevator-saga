@@ -47,7 +47,7 @@ export default class WorldController {
         if (firstUpdate) {
           firstUpdate = false;
           try {
-            codeObj.init(world.elevatorInterfaces, world.floors);
+            codeObj.init(world.facades, world.floors);
             world.init();
           } catch (e) {
             this.handleUserCodeError(e);
@@ -57,7 +57,7 @@ export default class WorldController {
         let scaledDt = dt * 0.001 * this.timeScale;
         scaledDt = Math.min(scaledDt, this.dtMax * 3 * this.timeScale);
         try {
-          codeObj.update(scaledDt, world.elevatorInterfaces, world.floors);
+          codeObj.update(scaledDt, world.facades, world.floors);
         } catch (e) {
           this.handleUserCodeError(e);
         }

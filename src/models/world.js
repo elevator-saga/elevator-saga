@@ -35,7 +35,7 @@ import User from './user';
  * @property {Array<User>} users - The list of users currently in the world.
  * @property {Array<Floor>} floors - The list of floor instances in the world.
  * @property {Array<Elevator>} elevators - The list of elevator instances in the world.
- * @property {Array<ElevatorFacade>} elevatorInterfaces - The list of elevator interface facades.
+ * @property {Array<ElevatorFacade>} facades - The list of elevator interface facades.
  *
  * @example
  * const world = new World({ floorHeight: 60, floorCount: 5, elevatorCount: 3, spawnRate: 0.7 });
@@ -75,7 +75,7 @@ export default class World {
       this.floorHeight,
       defaultOptions.elevatorCapacities
     );
-    this.elevatorInterfaces = map(
+    this.facades = map(
       this.elevators,
       (elevator) => new ElevatorFacade({}, elevator, defaultOptions.floorCount, this._handleUserCodeError)
     );
@@ -256,7 +256,7 @@ export default class World {
           !elevator.isMoving &&
           !elevator.isFull()
         ) {
-          this.elevatorInterfaces[elevIndex].goToFloor(floor.level, true);
+          this.facades[elevIndex].goToFloor(floor.level, true);
           return;
         }
       }
@@ -313,22 +313,19 @@ export default class World {
    */
   unWind() {
     console.log('Unwinding', this);
-    each(
-      this.elevators.concat(this.elevatorInterfaces).concat(this.users).concat(this.floors).concat([this]),
-      (obj) => {
-        obj.off('*');
-      }
-    );
+    each(this.elevators.concat(this.facades).concat(this.users).concat(this.floors).concat([this]), (obj) => {
+      obj.off('*');
+    });
     this.challengeEnded = true;
-    this.elevators = this.elevatorInterfaces = this.users = this.floors = [];
+    this.elevators = this.facades = this.users = this.floors = [];
   }
 
   /**
    * Initialize the world (checks elevator queues).
    */
   init() {
-    for (let i = 0; i < this.elevatorInterfaces.length; ++i) {
-      this.elevatorInterfaces[i].checkDestinationQueue();
+    for (let i = 0; i < this.facades.length; ++i) {
+      this.facades[i].checkDestinationQueue();
     }
   }
 }
