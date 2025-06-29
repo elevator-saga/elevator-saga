@@ -52,6 +52,8 @@ export default class World {
   constructor(options) {
     const defaultOptions = { ...options, floorHeight: 50, floorCount: 4, elevatorCount: 2, spawnRate: 0.5 };
 
+    this.floorCount = defaultOptions.floorCount;
+    this.spawnRate = defaultOptions.spawnRate;
     this.floorHeight = defaultOptions.floorHeight;
     this.transportedCounter = 0;
     this.transportedPerSec = 0.0;
@@ -173,7 +175,7 @@ export default class World {
   spawnUserRandomly() {
     const user = World.createRandomUser();
     user.moveTo(105 + random(40), 0);
-    const floorCount = this.options.floorCount;
+    const floorCount = this.floorCount;
     const currentFloor = random(1) === 0 ? 0 : random(floorCount - 1);
     let destinationFloor;
     if (currentFloor === 0) {
@@ -267,11 +269,11 @@ export default class World {
    */
   update(dt) {
     this.elapsedTime += dt;
-    this._elapsedSinceSpawn = (this._elapsedSinceSpawn || 1.001 / this.options.spawnRate) + dt;
+    this._elapsedSinceSpawn = (this._elapsedSinceSpawn || 1.001 / this.spawnRate) + dt;
     this._elapsedSinceStatsUpdate = (this._elapsedSinceStatsUpdate || 0.0) + dt;
 
-    while (this._elapsedSinceSpawn > 1.0 / this.options.spawnRate) {
-      this._elapsedSinceSpawn -= 1.0 / this.options.spawnRate;
+    while (this._elapsedSinceSpawn > 1.0 / this.spawnRate) {
+      this._elapsedSinceSpawn -= 1.0 / this.spawnRate;
       this.registerUser(this.spawnUserRandomly());
     }
 

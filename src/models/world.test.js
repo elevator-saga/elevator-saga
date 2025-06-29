@@ -1,3 +1,15 @@
+jest.mock('./floor', () => {
+  return { __esModule: true, default: require('./__mocks__/floor').default };
+});
+jest.mock('./elevator', () => {
+  return { __esModule: true, default: require('./__mocks__/elevator').default };
+});
+jest.mock('./elevator-facade', () => {
+  return { __esModule: true, default: require('./__mocks__/elevator-facade').default };
+});
+jest.mock('./user', () => {
+  return { __esModule: true, default: require('./__mocks__/user').default };
+});
 import MockElevator from './__mocks__/elevator';
 import MockElevatorFacade from './__mocks__/elevator-facade';
 import MockFloor from './__mocks__/floor';
@@ -20,17 +32,13 @@ jest.mock('lodash/random', () => jest.fn(() => 0));
 jest.mock('lodash/range', () => jest.fn((n) => Array.from({ length: n }, (_, i) => i)));
 jest.mock('lodash/reduce', () => jest.fn((arr, fn, init) => arr.reduce(fn, init)));
 
-const mockOn = jest.fn();
-const mockOff = jest.fn();
-const mockTrigger = jest.fn();
-
-jest.mock('./floor');
-jest.mock('./elevator');
-jest.mock('./elevator-facade');
-jest.mock('./user');
+// const mockOn = jest.fn();
+// const mockOff = jest.fn();
+// const mockTrigger = jest.fn();
 
 // Patch World.createRandomUser to return a mock user
-World.createRandomUser = jest.fn(() => new MockUser());
+const mockUser = new MockUser();
+World.createRandomUser = jest.fn(() => mockUser);
 
 describe('World', () => {
   beforeEach(() => {
@@ -86,21 +94,31 @@ describe('World', () => {
   });
 
   it('should spawn a user randomly and call appearOnFloor', () => {
+    // Arrange
     const world = new World({});
     world.floors = [new MockFloor(), new MockFloor()];
-    world.options.floorCount = 2;
+    world.floorCount = 2;
+
+    // Act
     const user = world.spawnUserRandomly();
+
+    // Assert
     expect(user).toBe(mockUser);
     expect(user.moveTo).toHaveBeenCalled();
     expect(user.appearOnFloor).toHaveBeenCalled();
   });
 
   it('should register a user and wire up events', () => {
+    // Arrange
     const world = new World({});
     world.elapsedTime = 5;
     world.trigger = jest.fn();
     const user = new MockUser();
+
+    // Act
     world.registerUser(user);
+
+    // Assert
     expect(world.users).toContain(user);
     expect(user.updateDisplayPosition).toHaveBeenCalledWith(true);
     expect(user.spawnTimestamp).toBe(5);
@@ -109,6 +127,7 @@ describe('World', () => {
   });
 
   it('should recalculate stats and trigger stats_changed', () => {
+    // Arrange
     const world = new World({});
     world.transportedCounter = 10;
     world.elapsedTime = 2;
@@ -116,25 +135,35 @@ describe('World', () => {
     world.trigger = jest.fn();
     // Patch reduce to sum moveCounts
     reduce.mockImplementation((arr, fn, init) => arr.reduce(fn, init));
+
+    // Act
     world.recalculateStats();
+
+    // Assert
     expect(world.transportedPerSec).toBe(5);
     expect(world.moveCount).toBe(5);
     expect(world.trigger).toHaveBeenCalledWith('stats_changed');
   });
 
   it('should handle elevator availability for floors and users', () => {
+    // Arrange
     const world = new World({});
     const elevator = new MockElevator();
     elevator.currentFloor = 0;
     world.floors = [new MockFloor()];
     world.users = [new MockUser()];
     world.users[0].currentFloor = 0;
+
+    // Act
     world.handleElevAvailability(elevator);
+
+    // Assert
     expect(world.floors[0].elevatorAvailable).toHaveBeenCalledWith(elevator);
     expect(world.users[0].elevatorAvailable).toHaveBeenCalledWith(elevator, world.floors[0]);
   });
 
   it('should handle button repressing and call goToFloor', () => {
+    // Arrange
     const world = new World({});
     const elevator = new MockElevator();
     elevator.currentFloor = 0;
@@ -144,24 +173,33 @@ describe('World', () => {
     world.elevatorInterfaces = [new MockElevatorFacade()];
     const floor = new MockFloor();
     floor.level = 0;
+
+    // Act
     world.handleButtonRepressing('up_button_pressed', floor);
+
+    // Assert
     expect(world.elevatorInterfaces[0].goToFloor).toHaveBeenCalledWith(0, true);
   });
 
   it('should update world and spawn users, update elevators and users', () => {
+    // Arrange
     const world = new World({});
     world.floors = [new MockFloor()];
     world.elevators = [new MockElevator()];
     world.elevatorInterfaces = [new MockElevatorFacade()];
     world.users = [new MockUser()];
-    world.options.spawnRate = 1;
+    world.spawnRate = 1;
     world.elapsedTime = 0;
     world._elapsedSinceSpawn = 2;
     world._elapsedSinceStatsUpdate = 0;
     world.registerUser = jest.fn();
     world.spawnUserRandomly = jest.fn(() => new MockUser());
     world.recalculateStats = jest.fn();
+
+    // Act
     world.update(1);
+
+    // Assert
     expect(world.registerUser).toHaveBeenCalled();
     expect(world.elevators[0].update).toHaveBeenCalled();
     expect(world.elevators[0].updateElevatorMovement).toHaveBeenCalled();
@@ -170,22 +208,32 @@ describe('World', () => {
   });
 
   it('should update display positions for elevators and users', () => {
+    // Arrange
     const world = new World({});
     world.elevators = [new MockElevator()];
     world.users = [new MockUser()];
+
+    // Act
     world.updateDisplayPositions();
+
+    // Assert
     expect(world.elevators[0].updateDisplayPosition).toHaveBeenCalled();
     expect(world.users[0].updateDisplayPosition).toHaveBeenCalled();
   });
 
   it('should unwind the world and clear arrays', () => {
+    // Arrange
     const world = new World({});
     world.elevators = [new MockElevator()];
     world.elevatorInterfaces = [new MockElevatorFacade()];
     world.users = [new MockUser()];
     world.floors = [new MockFloor()];
-    world.off = mockOff;
+    world.off = jest.fn();
+
+    // Act
     world.unWind();
+
+    // Assert
     expect(world.challengeEnded).toBe(true);
     expect(world.elevators).toEqual([]);
     expect(world.elevatorInterfaces).toEqual([]);
@@ -194,9 +242,14 @@ describe('World', () => {
   });
 
   it('should call checkDestinationQueue on init', () => {
+    // Arrange
     const world = new World({});
     world.elevatorInterfaces = [new MockElevatorFacade(), new MockElevatorFacade()];
+
+    // Act
     world.init();
+
+    // Assert
     expect(world.elevatorInterfaces[0].checkDestinationQueue).toHaveBeenCalled();
     expect(world.elevatorInterfaces[1].checkDestinationQueue).toHaveBeenCalled();
   });
