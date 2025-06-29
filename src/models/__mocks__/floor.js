@@ -1,4 +1,4 @@
-export class MockFloor {
+export default class MockFloor {
   constructor() {
     this.on = jest.fn();
     this.off = jest.fn();

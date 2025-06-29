@@ -1,4 +1,4 @@
-export class MockUser {
+export default class MockUser {
   constructor() {
     this.on = jest.fn();
     this.off = jest.fn();

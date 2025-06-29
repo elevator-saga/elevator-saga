@@ -1,7 +1,7 @@
-import MockElevatorFacade from './elevator-facade.mock';
-import MockElevator from './elevator.mock';
-import MockFloor from './floor.mock';
-import MockUser from './user.mock';
+import MockElevator from './__mocks__/elevator';
+import MockElevatorFacade from './__mocks__/elevator-facade';
+import MockFloor from './__mocks__/floor';
+import MockUser from './__mocks__/user';
 import World from './world';
 const reduce = require('lodash/reduce');
 
@@ -24,22 +24,10 @@ const mockOn = jest.fn();
 const mockOff = jest.fn();
 const mockTrigger = jest.fn();
 
-jest.mock('./floor', () => ({
-  __esModule: true,
-  default: MockFloor,
-}));
-jest.mock('./elevator', () => ({
-  __esModule: true,
-  default: MockElevator,
-}));
-jest.mock('./elevator-facade', () => ({
-  __esModule: true,
-  default: MockElevatorFacade,
-}));
-jest.mock('./user', () => ({
-  __esModule: true,
-  default: MockUser,
-}));
+jest.mock('./floor');
+jest.mock('./elevator');
+jest.mock('./elevator-facade');
+jest.mock('./user');
 
 // Patch World.createRandomUser to return a mock user
 World.createRandomUser = jest.fn(() => new MockUser());
