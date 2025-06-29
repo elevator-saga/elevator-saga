@@ -6,8 +6,6 @@ import map from 'lodash/map';
 import merge from 'lodash/merge';
 import parseInt from 'lodash/parseInt';
 import reduce from 'lodash/reduce';
-import World from '../models/world';
-import WorldController from '../models/world-controller';
 import { challenges } from './challenges';
 import {
   clearAll,
@@ -17,6 +15,7 @@ import {
   presentStats,
   presentWorld,
 } from './presenters';
+import Simulation from './simulation';
 import { typeDeclarations } from './types';
 
 /**
@@ -160,102 +159,34 @@ $(function () {
     var $challenge = $('.challenge');
     var $codestatus = $('.codestatus');
 
-    var floorTempl = document.getElementById('floor-template').innerHTML.trim();
-    var elevatorTempl = document.getElementById('elevator-template').innerHTML.trim();
-    var elevatorButtonTempl = document.getElementById('elevatorbutton-template').innerHTML.trim();
-    var userTempl = document.getElementById('user-template').innerHTML.trim();
-    var challengeTempl = document.getElementById('challenge-template').innerHTML.trim();
-    var feedbackTempl = document.getElementById('feedback-template').innerHTML.trim();
-    var codeStatusTempl = document.getElementById('codestatus-template').innerHTML.trim();
-
-    var app = observable({});
-    app.worldController = new WorldController(1.0 / 60.0);
-    app.worldController.on('usercode_error', function (e) {
-      console.log('World raised code error', e);
-      editor.trigger('usercode_error', e);
+    var sim = new Simulation({
+      editor,
+      challenges,
+      clearAll,
+      presentStats,
+      presentChallenge,
+      presentWorld,
+      presentFeedback,
+      templates: {
+        floorTempl: document.getElementById('floor-template').innerHTML.trim(),
+        elevatorTempl: document.getElementById('elevator-template').innerHTML.trim(),
+        elevatorButtonTempl: document.getElementById('elevatorbutton-template').innerHTML.trim(),
+        userTempl: document.getElementById('user-template').innerHTML.trim(),
+        challengeTempl: document.getElementById('challenge-template').innerHTML.trim(),
+        feedbackTempl: document.getElementById('feedback-template').innerHTML.trim(),
+        codeStatusTempl: document.getElementById('codestatus-template').innerHTML.trim(),
+      },
+      params,
+      createParamsUrl,
+      tsKey,
+      $world,
+      $feedback,
+      $stats,
+      $challenge,
     });
 
-    console.log(app.worldController);
-
-    app.currentChallengeIndex = 0;
-
-    app.startStopOrRestart = function () {
-      if (app.world.challengeEnded) {
-        app.startChallenge(app.currentChallengeIndex);
-      } else {
-        app.worldController.setPaused(!app.worldController.isPaused);
-      }
-    };
-
-    app.startChallenge = function (challengeIndex, autoStart) {
-      if (typeof app.world !== 'undefined') {
-        app.world.unWind();
-        // TODO: Investigate if memory leaks happen here
-      }
-      app.currentChallengeIndex = challengeIndex;
-      app.world = new World(challenges[challengeIndex].options);
-      window.world = app.world;
-
-      clearAll([$world, $feedback]);
-      presentStats($stats, app.world);
-      presentChallenge(
-        $challenge,
-        challenges[challengeIndex],
-        app,
-        app.world,
-        app.worldController,
-        challengeIndex + 1,
-        challengeTempl
-      );
-      presentWorld($world, app.world, floorTempl, elevatorTempl, elevatorButtonTempl, userTempl);
-
-      app.worldController.on('timescale_changed', function () {
-        localStorage.setItem(tsKey, app.worldController.timeScale);
-        presentChallenge(
-          $challenge,
-          challenges[challengeIndex],
-          app,
-          app.world,
-          app.worldController,
-          challengeIndex + 1,
-          challengeTempl
-        );
-      });
-
-      app.world.on('stats_changed', function () {
-        var challengeStatus = challenges[challengeIndex].condition.evaluate(app.world);
-        if (challengeStatus !== null) {
-          app.world.challengeEnded = true;
-          app.worldController.setPaused(true);
-          if (challengeStatus) {
-            presentFeedback(
-              $feedback,
-              feedbackTempl,
-              app.world,
-              'Success!',
-              'Challenge completed',
-              createParamsUrl(params, { challenge: challengeIndex + 2 })
-            );
-          } else {
-            presentFeedback(
-              $feedback,
-              feedbackTempl,
-              app.world,
-              'Challenge failed',
-              'Maybe your program needs an improvement?',
-              ''
-            );
-          }
-        }
-      });
-
-      var codeObj = editor.getCodeObj();
-      console.log('Starting...');
-      app.worldController.start(app.world, codeObj, window.requestAnimationFrame, autoStart);
-    };
-
     editor.on('apply_code', function () {
-      app.startChallenge(app.currentChallengeIndex, true);
+      sim.startChallenge(sim.currentChallengeIndex, true);
     });
     editor.on('code_success', function () {
       presentCodeStatus($codestatus, codeStatusTempl);
@@ -265,7 +196,7 @@ $(function () {
     });
     editor.on('change', function () {
       $('#fitness_message').addClass('faded');
-      var codeStr = editor.getCode();
+      // var codeStr = editor.getCode();
       // fitnessSuite(codeStr, true, function(results) {
       //     var message = "";
       //     if(!results.error) {
@@ -311,8 +242,8 @@ $(function () {
           makeDemoFullscreen();
         }
       });
-      app.worldController.setTimeScale(timeScale);
-      app.startChallenge(requestedChallenge, autoStart);
+      sim.worldController.setTimeScale(timeScale);
+      sim.startChallenge(requestedChallenge, autoStart);
     });
   });
 });
