@@ -2,39 +2,51 @@
   "name": "elevator-saga",
   "version": "1.6.5",
   "type": "module",
-  "description": "The elevator programming game",
+  "description": "The Elevator Saga programming game",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elevator-saga/elevator-saga.git"
+  },
+  "homepage": "https://github.com/elevator-saga/elevator-saga#readme",
+  "bugs": {
+    "url": "https://github.com/elevator-saga/elevator-saga/issues"
+  },
+  "author": "",
+  "license": "MIT",
   "main": "app.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "serve": "npm run dev && npx http-server public -p 8080",
-    "test": "npx jest --runInBand --testEnvironment=jsdom --config=jest.config.js",
+    "build": "npx esbuild src/app/app.js --bundle --outfile=public/scripts/bundle.js --format=iife --sourcemap --external:*.test.js",
     "coverage": "npx jest --coverage --runInBand --testEnvironment=jsdom --config=jest.config.js",
-    "lint": "npx eslint . --ext .js",
-    "format": "npx prettier --write .",
-    "prepare": "lefthook install",
     "deploy": "npx gh-pages -d public",
     "dev": "npx esbuild src/app/app.js --bundle --outfile=public/scripts/bundle.js --format=iife --sourcemap --watch --external:*.test.js",
-    "build": "npx esbuild src/app/app.js --bundle --outfile=public/scripts/bundle.js --format=iife --sourcemap --external:*.test.js",
-    "start": "concurrently \"npm:dev\" \"npx http-server public -p 8080\""
+    "fmt": "npx prettier --check .",
+    "fmt:fix": "npx prettier --write .",
+    "knip": "npx knip",
+    "knip:fix": "npx knip --fix",
+    "lint": "npx eslint . --ext .js",
+    "lockfile:lint": "npx lockfile-lint --path package-lock.json --quiet",
+    "md:lint": "npx markdownlint-cli2 '**/*.md'",
+    "md:toc": "npx doctoc --maxlevel 2 --notitle '**/*.md'",
+    "prepare": "lefthook install",
+    "serve": "npm run dev && npx http-server public -p 8080",
+    "start": "concurrently \"npm:dev\" \"npx http-server public -p 8080\"",
+    "test": "npx jest --runInBand --testEnvironment=jsdom --config=jest.config.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/elevator-saga/elevator-saga.git"
+  "dependencies": {
+    "@riotjs/observable": "^4.1.1",
+    "@riotjs/route": "^9.2.2",
+    "lodash": "^4.17.21",
+    "riot": "^9.4.9",
+    "typescript": "^5.8.3"
   },
-  "author": "",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/elevator-saga/elevator-saga/issues"
-  },
-  "homepage": "https://github.com/elevator-saga/elevator-saga#readme",
   "devDependencies": {
     "@babel/core": "^7.27.7",
     "@babel/preset-env": "^7.27.2",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.0.4",
-    "@typescript-eslint/parser": "^8.35.0",
     "babel-jest": "^30.0.2",
     "concurrently": "^8.2.2",
     "doctoc": "^2.2.1",
@@ -45,18 +57,12 @@
     "gh-pages": "^6.3.0",
     "jest": "^30.0.3",
     "jest-environment-jsdom": "^30.0.2",
+    "knip": "^5.61.3",
     "lefthook": "^1.11.14",
     "lockfile-lint": "^4.14.1",
     "markdownlint-cli2": "^0.18.1",
     "prettier": "^3.6.2",
-    "ts-jest": "^29.4.0",
-    "ts-node": "^10.9.2"
-  },
-  "dependencies": {
-    "@riotjs/observable": "^4.1.1",
-    "@riotjs/route": "^9.2.2",
-    "lodash": "^4.17.21",
-    "riot": "^9.4.9",
-    "typescript": "^5.8.3"
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "prettier-plugin-pkg": "^0.21.1"
   }
 }

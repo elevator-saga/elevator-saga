@@ -16,7 +16,7 @@ import Movable from './movable';
  *
  * @param {Elevator} elevator - The elevator instance to handle the new state for.
  */
-export function newElevStateHandler(elevator) {
+function newElevStateHandler(elevator) {
   elevator.handleNewState();
 }
 

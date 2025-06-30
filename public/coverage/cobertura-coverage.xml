@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage lines-valid="869" lines-covered="447" line-rate="0.5143" branches-valid="306" branches-covered="158" branch-rate="0.5163" timestamp="1751265899891" complexity="0" version="0.1">
+<coverage lines-valid="869" lines-covered="447" line-rate="0.5143" branches-valid="306" branches-covered="158" branch-rate="0.5163" timestamp="1751266118184" complexity="0" version="0.1">
   <sources>
     <source>/Users/thomas.roche/Projects/github/elevator-saga/elevator-saga</source>
   </sources>
@@ -1270,8 +1270,8 @@
             <line number="110" hits="56" branch="false"/>
             <line number="121" hits="20" branch="false"/>
             <line number="122" hits="20" branch="false"/>
-            <line number="123" hits="69" branch="false"/>
-            <line number="124" hits="69" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="123" hits="74" branch="false"/>
+            <line number="124" hits="74" branch="true" condition-coverage="100% (2/2)"/>
             <line number="125" hits="4" branch="false"/>
             <line number="126" hits="4" branch="false"/>
             <line number="129" hits="16" branch="false"/>

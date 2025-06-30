@@ -4,28 +4,43 @@ pre-commit:
     '1. lint code':
       glob: '*.{ts,js}'
       # interactive: true
-      run: npx eslint . --fix
+      run: ./node_modules/.bin/eslint . --fix
       stage_fixed: true
 
     '2. format code, docs and config':
       glob: '*.{ts,js,json,md,yaml}'
       # interactive: true
-      run: npx prettier {staged_files} --write
+      run: ./node_modules/.bin/prettier {staged_files} --write
       stage_fixed: true
 
     '3. lint docs':
       glob: '*.md'
       # interactive: true
-      run: npx markdownlint-cli2 --fix {staged_files}
+      run: ./node_modules/.bin/markdownlint-cli2 --fix {staged_files}
       stage_fixed: true
 
     '4. generate markdown TOC':
       glob: '*.md'
       # interactive: true
-      run: npx doctoc {staged_files}
+      run: ./node_modules/.bin/doctoc {staged_files}
       stage_fixed: true
 
 pre-push:
   commands:
-    '1. Run unit tests':
-      run: npm run test
+    '1. list unused dependencies':
+      glob: '*.{ts,js}'
+      interactive: true
+      run: |
+        ./node_modules/.bin/knip --fix && \
+        LEFTHOOK=0 \
+        git add package.json package-lock.json --force && \
+        git commit -m "ci: update dependencies" --no-verify
+
+    '2. Run unit tests':
+      glob: '*.{ts,js}'
+      interactive: true
+      run: |
+        npm run test && \
+        LEFTHOOK=0 \
+        git add public/coverage --force && \
+        git commit -m "ci: update coverage report" --no-verify

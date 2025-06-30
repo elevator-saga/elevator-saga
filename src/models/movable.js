@@ -24,7 +24,7 @@ export function linearInterpolate(value0, value1, x) {
  * @param {number} a - The exponent that controls the interpolation curve.
  * @returns {number} The interpolated value between value0 and value1.
  */
-export function powInterpolate(value0, value1, x, a) {
+function powInterpolate(value0, value1, x, a) {
   return value0 + ((value1 - value0) * Math.pow(x, a)) / (Math.pow(x, a) + Math.pow(1 - x, a));
 }
 
@@ -36,7 +36,7 @@ export function powInterpolate(value0, value1, x, a) {
  * @param {number} x - The interpolation factor, typically between 0 and 1.
  * @returns {number} The interpolated value between value0 and value1.
  */
-export function coolInterpolate(value0, value1, x) {
+function coolInterpolate(value0, value1, x) {
   return powInterpolate(value0, value1, x, 1.3);
 }
 
@@ -45,7 +45,7 @@ export function coolInterpolate(value0, value1, x) {
  * @type {Function}
  * @see coolInterpolate
  */
-export const DEFAULT_INTERPOLATOR = coolInterpolate;
+const DEFAULT_INTERPOLATOR = coolInterpolate;
 
 const _tmpPosStorage = [0, 0];
 

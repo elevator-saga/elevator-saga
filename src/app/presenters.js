@@ -23,7 +23,7 @@ export function clearAll($elems) {
  * @param {number} x - The x-coordinate in pixels to translate the element to.
  * @param {number} y - The y-coordinate in pixels to translate the element to.
  */
-export function setTransformPos(elem, x, y) {
+function setTransformPos(elem, x, y) {
   const style = 'translate(' + x + 'px,' + y + 'px) translateZ(0)';
   elem.style.transform = style;
   elem.style['-ms-transform'] = style;
@@ -40,7 +40,7 @@ export function setTransformPos(elem, x, y) {
  * @param {number} user.worldY - The Y coordinate of the user in the world.
  * @param {boolean} user.done - Whether the user has completed their action.
  */
-export function updateUserState($user, elem_user, user) {
+function updateUserState($user, elem_user, user) {
   setTransformPos(elem_user, user.worldX, user.worldY);
   if (user.done) {
     $user.addClass('leaving');
@@ -279,7 +279,7 @@ export function presentCodeStatus($parent, templ, error) {
  * except for the element with the class 'world', and adjusts the layout styles
  * of the HTML, body, container, and 'world' elements to occupy the full viewport.
  */
-export function makeDemoFullscreen() {
+function makeDemoFullscreen() {
   $('body .container > *').not('.world').css('visibility', 'hidden');
   $('html, body, body .container, .world').css({ width: '100%', margin: '0', padding: 0 });
 }
