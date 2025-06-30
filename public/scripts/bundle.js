@@ -3669,7 +3669,7 @@
   var ElementProto = typeof Element === "undefined" ? {} : Element.prototype;
   var isNativeHtmlProperty = memoize(
     (name) => ElementProto.hasOwnProperty(name)
-    // eslint-disable-line
+     
   );
   function setAllAttributes(node, attributes) {
     Object.keys(attributes).forEach(
