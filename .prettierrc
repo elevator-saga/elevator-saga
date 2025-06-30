@@ -6,7 +6,9 @@
   "printWidth": 120,
   "overrides": [
     {
-      "files": ["*.md"],
+      "files": [
+        "*.md"
+      ],
       "options": {
         "printWidth": 120,
         "proseWrap": "always",
@@ -16,5 +18,9 @@
       }
     }
   ],
-  "plugins": ["prettier-plugin-pkg", "prettier-plugin-organize-imports"]
+  "plugins": [
+    "prettier-plugin-pkg",
+    "prettier-plugin-sh",
+    "prettier-plugin-organize-imports"
+  ]
 }
