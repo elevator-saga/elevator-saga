@@ -306,7 +306,6 @@ export default class World {
    * Unwind the world, removing all event listeners and clearing arrays.
    */
   unWind() {
-    console.log('Unwinding', this);
     each(this.elevators.concat(this.facades).concat(this.users).concat(this.floors).concat([this]), (obj) => {
       obj.off('*');
     });
