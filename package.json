@@ -19,7 +19,7 @@
   },
   "scripts": {
     "build": "npx esbuild src/app/app.js --bundle --outfile=public/scripts/bundle.js --format=iife --sourcemap --external:*.test.js",
-    "coverage": "npx jest --coverage --runInBand --testEnvironment=jsdom --config=jest.config.js",
+    "coverage": "npx jest --coverage --runInBand --config=jest.config.js",
     "deploy": "npx gh-pages -d public",
     "dev": "npx esbuild src/app/app.js --bundle --outfile=public/scripts/bundle.js --format=iife --sourcemap --watch --external:*.test.js",
     "fmt": "npx prettier --check .",
@@ -33,7 +33,7 @@
     "prepare": "lefthook install",
     "serve": "npm run dev && npx http-server public -p 8080",
     "start": "concurrently \"npm:dev\" \"npx http-server public -p 8080\"",
-    "test": "npx jest --runInBand --testEnvironment=jsdom --config=jest.config.js"
+    "test": "npx jest --runInBand --config=jest.config.js"
   },
   "dependencies": {
     "@riotjs/observable": "^4.1.1",
@@ -57,6 +57,7 @@
     "gh-pages": "^6.3.0",
     "jest": "^30.0.3",
     "jest-environment-jsdom": "^30.0.2",
+    "jquery": "^3.7.1",
     "knip": "^5.61.3",
     "lefthook": "^1.11.14",
     "lockfile-lint": "^4.14.1",
