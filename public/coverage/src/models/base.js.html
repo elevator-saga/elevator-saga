@@ -1,61 +1,68 @@
+
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <title>Code coverage report for src/models/base.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
     <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style type="text/css">
-      .coverage-summary .sorter {
-        background-image: url(../../sort-arrow-sprite.png);
-      }
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
     </style>
-  </head>
-
-  <body>
-    <div class="wrapper">
-      <div class="pad1">
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
         <h1><a href="../../index.html">All files</a> / <a href="index.html">src/models</a> base.js</h1>
-        <div class="clearfix">
-          <div class="fl pad1y space-right2">
-            <span class="strong">76.74% </span>
-            <span class="quiet">Statements</span>
-            <span class="fraction">33/43</span>
-          </div>
-
-          <div class="fl pad1y space-right2">
-            <span class="strong">46.15% </span>
-            <span class="quiet">Branches</span>
-            <span class="fraction">12/26</span>
-          </div>
-
-          <div class="fl pad1y space-right2">
-            <span class="strong">80% </span>
-            <span class="quiet">Functions</span>
-            <span class="fraction">12/15</span>
-          </div>
-
-          <div class="fl pad1y space-right2">
-            <span class="strong">76.74% </span>
-            <span class="quiet">Lines</span>
-            <span class="fraction">33/43</span>
-          </div>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">76.74% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>33/43</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">46.15% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>12/26</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">80% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>12/15</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">76.74% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>33/43</span>
+            </div>
+        
+            
         </div>
         <p class="quiet">
-          Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the
-          previous block.
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
         <template id="filterTemplate">
-          <div class="quiet">
-            Filter:
-            <input type="search" id="fileSearch" />
-          </div>
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
         </template>
-      </div>
-      <div class="status-line medium"></div>
-      <pre><table class="coverage">
+    </div>
+    <div class='status-line medium'></div>
+    <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
 <a name='L3'></a><a href='#L3'>3</a>
@@ -234,9 +241,9 @@
 <a name='L176'></a><a href='#L176'>176</a>
 <a name='L177'></a><a href='#L177'>177</a>
 <a name='L178'></a><a href='#L178'>178</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -295,7 +302,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -464,7 +471,7 @@ export function epsilonEquals(a, b) {
  * Math.sign(0); // returns 0
  * Math.sign(NaN); // returns NaN
  */
-export function <span class="fstat-no" title="function not covered" >sign(</span>x) {
+function <span class="fstat-no" title="function not covered" >sign(</span>x) {
 <span class="cstat-no" title="statement not covered" >  x = +x; </span>// convert to a number
 <span class="cstat-no" title="statement not covered" >  if (x === 0 || isNaN(x)) {</span>
 <span class="cstat-no" title="statement not covered" >    return x;</span>
@@ -479,7 +486,7 @@ export function <span class="fstat-no" title="function not covered" >sign(</span
 /** Logs a deprecation warning to the console.
  * @param {string} name - The name of the deprecated feature.
  */
-export function <span class="fstat-no" title="function not covered" >deprecationWarning(</span>name) {
+function <span class="fstat-no" title="function not covered" >deprecationWarning(</span>name) {
 <span class="cstat-no" title="statement not covered" >  console.warn('You are using a deprecated feature scheduled for removal: ' + name);</span>
 }
 &nbsp;
@@ -589,22 +596,21 @@ export function getCodeObjFromCode(code) {
 }
 &nbsp;</pre></td></tr></table></pre>
 
-      <div class="push"></div>
-      <!-- for sticky footer -->
-    </div>
-    <!-- /wrapper -->
-    <div class="footer quiet pad2 space-top1 center small">
-      Code coverage generated by
-      <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-      at 2025-06-30T06:48:38.147Z
-    </div>
-    <script src="../../prettify.js"></script>
-    <script>
-      window.onload = function () {
-        prettyPrint();
-      };
-    </script>
-    <script src="../../sorter.js"></script>
-    <script src="../../block-navigation.js"></script>
-  </body>
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2025-07-01T06:28:53.314Z
+            </div>
+        <script src="../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../sorter.js"></script>
+        <script src="../../block-navigation.js"></script>
+    </body>
 </html>
+    

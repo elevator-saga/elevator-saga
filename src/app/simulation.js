@@ -153,7 +153,6 @@ export default class Simulation {
     });
 
     const codeObj = this.editor.getCodeObj();
-    console.log('Starting...');
     this.worldController.start(this.world, codeObj, window.requestAnimationFrame, autoStart);
   }
 }

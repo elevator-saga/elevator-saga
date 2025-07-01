@@ -21,16 +21,28 @@ jest.mock('lodash/range', () => jest.fn((n) => Array.from({ length: n }, (_, i) 
 jest.mock('lodash/reduce', () => jest.fn((arr, fn, init) => arr.reduce(fn, init)));
 
 jest.mock('./floor', () => {
-  return { __esModule: true, default: require('./__mocks__/floor').default };
+  return {
+    __esModule: true,
+    default: require('./__mocks__/floor').default,
+  };
 });
 jest.mock('./elevator', () => {
-  return { __esModule: true, default: require('./__mocks__/elevator').default };
+  return {
+    __esModule: true,
+    default: require('./__mocks__/elevator').default,
+  };
 });
 jest.mock('./elevator-facade', () => {
-  return { __esModule: true, default: require('./__mocks__/elevator-facade').default };
+  return {
+    __esModule: true,
+    default: require('./__mocks__/elevator-facade').default,
+  };
 });
 jest.mock('./user', () => {
-  return { __esModule: true, default: require('./__mocks__/user').default };
+  return {
+    __esModule: true,
+    default: require('./__mocks__/user').default,
+  };
 });
 
 // Patch World.createRandomUser to return a mock user
