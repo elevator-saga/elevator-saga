@@ -1,4 +1,6 @@
-import Movable, { linearInterpolate } from './movable.js';
+import Elevator from './elevator';
+import Floor from './floor';
+import Movable, { linearInterpolate } from './movable';
 import { newGuard } from './utils';
 
 /**
@@ -45,7 +47,7 @@ export default class User extends Movable {
   /**
    * Makes the user appear on a specified floor and sets their destination floor.
    *
-   * @param {Object} floor - The floor object where the user will appear.
+   * @param {Floor} floor - The floor object where the user will appear.
    * @param {number} destinationFloorNum - The number of the floor the user wants to go to.
    */
   appearOnFloor(floor, destinationFloorNum) {
@@ -78,7 +80,7 @@ export default class User extends Movable {
    * and cleans up event listeners.
    *
    * @param {number} floorNum - The floor number where the exit is attempted.
-   * @param {Object} elevator - The elevator instance the user is exiting from.
+   * @param {Elevator} elevator - The elevator instance the user is exiting from.
    */
   handleExit(floorNum, elevator) {
     if (elevator.currentFloor === this.destinationFloor) {
@@ -90,11 +92,10 @@ export default class User extends Movable {
       this.trigger('exited_elevator', elevator);
       this.trigger('new_state');
       this.trigger('new_display_state');
-      const self = this;
-      this.moveToOverTime(destination, null, 1 + Math.random() * 0.5, linearInterpolate, function lastMove() {
-        self.removeMe = true;
-        self.trigger('removed');
-        self.off('*');
+      this.moveToOverTime(destination, null, 1 + Math.random() * 0.5, linearInterpolate, () => {
+        this.removeMe = true;
+        this.trigger('removed');
+        this.off('*');
       });
       elevator.off('exit_available', this.exitAvailableHandler);
     }
@@ -109,7 +110,7 @@ export default class User extends Movable {
    *   and sets up handlers for exiting.
    * - If not available, the user presses the floor button to request the elevator.
    *
-   * @param {Object} elevator - The elevator instance being considered.
+   * @param {Elevator} elevator - The elevator instance being considered.
    * @param {number} floor - The floor number where the elevator is available.
    */
   elevatorAvailable(elevator, floor) {
@@ -119,16 +120,16 @@ export default class User extends Movable {
     if (!elevator.isSuitableForTravelBetween(this.currentFloor, this.destinationFloor)) {
       return;
     }
-    const pos = elevator.userEntering(this);
-    if (pos) {
+    const position = elevator.userEntering(this);
+    if (position) {
       this.setParent(elevator);
       this.trigger('entered_elevator', elevator);
-      const self = this;
-      this.moveToOverTime(pos[0], pos[1], 1, undefined, function () {
-        elevator.pressFloorButton(self.destinationFloor);
+      this.moveToOverTime(position[0], position[1], 1, undefined, () => {
+        elevator.pressFloorButton(this.destinationFloor);
+        elevator.on('exit_available', this.exitAvailableHandler);
       });
-      this.exitAvailableHandler = function (floorNum, elevator) {
-        self.handleExit(elevator.currentFloor, elevator);
+      this.exitAvailableHandler = (floorNum, elevator) => {
+        this.handleExit(elevator.currentFloor, elevator);
       };
       elevator.on('exit_available', this.exitAvailableHandler);
     } else {
