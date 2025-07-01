@@ -1,43 +1,48 @@
-import { createFrameRequester } from '../../models/__mocks__/utils/create-frame-requester';
+import { createFrameRequester } from '../../models/utils';
 import World from '../../models/world';
 import WorldController from '../../models/world-controller';
 import { calculateFitness } from './calculate-fitness';
 
-jest.mock('../../models/world', () => {
-  return {
-    __esModule: true,
-    default: require('../../models/__mocks__/world').default,
-  };
-});
-jest.mock('../../models/world-controller', () => {
-  return {
-    __esModule: true,
-    default: require('../../models/__mocks__/world-controller').default,
-  };
-});
-jest.mock('../../models/utils', () => {
-  return {
-    __esModule: true,
-    createFrameRequester: require('../../models/__mocks__/utils/create-frame-requester').createFrameRequester,
-  };
-});
+jest.mock('../../models/world', () => jest.fn());
+jest.mock('../../models/world-controller', () => jest.fn());
+jest.mock('../../models/utils', () => ({
+  createFrameRequester: jest.fn(),
+}));
 
 describe('calculateFitness', () => {
   let mockWorld, mockController, mockFrameRequester, challenge, codeObj;
 
-  beforeAll(() => {
-    mockWorld = new World();
-    mockController = new WorldController();
-    mockFrameRequester = createFrameRequester();
+  beforeEach(() => {
+    // Mock World
+    mockWorld = {
+      on: jest.fn(),
+      transportedPerSec: 2.5,
+      avgWaitTime: 10,
+      transportedCounter: 42,
+    };
+    World.mockImplementation(() => mockWorld);
+
+    // Mock WorldController
+    mockController = {
+      on: jest.fn(),
+      start: jest.fn(),
+      isPaused: false,
+    };
+    WorldController.mockImplementation(() => mockController);
+
+    // Mock frameRequester
+    mockFrameRequester = {
+      register: jest.fn(),
+      trigger: jest.fn(),
+    };
+    createFrameRequester.mockReturnValue(mockFrameRequester);
 
     challenge = { options: { foo: 'bar' } };
-    codeObj = { code: 'some code' };
+    codeObj = { code: 'user code' };
   });
 
-  beforeEach(() => {
+  afterEach(() => {
     jest.clearAllMocks();
-    // Ensure trigger is a Jest mock function for each test
-    mockFrameRequester.trigger = jest.fn();
   });
 
   it('should return stats after simulation', () => {
@@ -47,21 +52,26 @@ describe('calculateFitness', () => {
       if (event === 'stats_changed') statsChangedHandler = handler;
     });
 
-    // Simulate frameRequester.trigger calling stats_changed
+    // Simulate usercode_error event (not triggered in this test)
+    mockController.on.mockImplementation(() => {});
+
+    // Simulate frameRequester.trigger calling stats_changed at step 2
+    let triggerCount = 0;
     mockFrameRequester.trigger.mockImplementation(() => {
-      if (statsChangedHandler) statsChangedHandler();
+      triggerCount++;
+      if (triggerCount === 2 && statsChangedHandler) statsChangedHandler();
     });
 
-    const result = calculateFitness(challenge, codeObj, 100, 3);
+    const result = calculateFitness(challenge, codeObj, 100, 5);
 
-    expect(mockWorld).toHaveBeenCalledWith(challenge.options);
-    expect(mockController).toHaveBeenCalledWith(100);
+    expect(World).toHaveBeenCalledWith(challenge.options);
+    expect(WorldController).toHaveBeenCalledWith(100);
     expect(mockController.start).toHaveBeenCalledWith(mockWorld, codeObj, mockFrameRequester.register, true);
-    expect(mockFrameRequester.trigger).toHaveBeenCalledTimes(3);
+    expect(mockFrameRequester.trigger).toHaveBeenCalledTimes(5);
 
     expect(result.transportedPerSec).toBe(2.5);
     expect(result.avgWaitTime).toBe(10);
-    expect(result.transportedCount).toBe(5);
+    expect(result.transportedCount).toBe(42);
     expect(result.error).toBeUndefined();
   });
 
@@ -70,38 +80,48 @@ describe('calculateFitness', () => {
     mockController.on.mockImplementation((event, handler) => {
       if (event === 'usercode_error') usercodeErrorHandler = handler;
     });
+    mockWorld.on.mockImplementation(() => {});
 
-    // Simulate error emission before any stats
     mockFrameRequester.trigger.mockImplementation(() => {
       if (usercodeErrorHandler) usercodeErrorHandler(new Error('User code failed'));
     });
 
-    const result = calculateFitness(challenge, codeObj, 100, 2);
+    const result = calculateFitness(challenge, codeObj, 100, 3);
 
     expect(result.error).toBeInstanceOf(Error);
     expect(result.error.message).toBe('User code failed');
   });
 
-  it('should stop simulation if controller is paused', () => {
-    let callCount = 0;
+  it('should wrap non-Error usercode_error as Error', () => {
+    let usercodeErrorHandler;
+    mockController.on.mockImplementation((event, handler) => {
+      if (event === 'usercode_error') usercodeErrorHandler = handler;
+    });
+    mockWorld.on.mockImplementation(() => {});
 
+    mockFrameRequester.trigger.mockImplementation(() => {
+      if (usercodeErrorHandler) usercodeErrorHandler('string error');
+    });
+
+    const result = calculateFitness(challenge, codeObj, 100, 2);
+
+    expect(result.error).toBeInstanceOf(Error);
+    expect(result.error.message).toBe('string error');
+  });
+
+  it('should stop simulation if controller.isPaused becomes true', () => {
+    mockWorld.on.mockImplementation(() => {});
+    mockController.on.mockImplementation(() => {});
+
+    let callCount = 0;
     mockFrameRequester.trigger.mockImplementation(() => {
       callCount++;
       if (callCount === 2) mockController.isPaused = true;
     });
 
-    calculateFitness(challenge, codeObj, 100, 5);
+    const result = calculateFitness(challenge, codeObj, 100, 10);
+
     expect(mockFrameRequester.trigger).toHaveBeenCalledTimes(2);
-  });
-
-  it('should not set stats if stats_changed is never emitted', () => {
-    // No stats_changed handler called
-    mockFrameRequester.trigger.mockImplementation(() => {});
-
-    const result = calculateFitness(challenge, codeObj, 100, 2);
-
-    expect(result.transportedPerSec).toBeUndefined();
-    expect(result.avgWaitTime).toBeUndefined();
-    expect(result.transportedCount).toBeUndefined();
+    expect(result).toEqual({});
   });
 });
