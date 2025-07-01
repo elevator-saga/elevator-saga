@@ -2,9 +2,19 @@ global.importScripts = jest.fn();
 global.onmessage = jest.fn();
 global.postMessage = jest.fn();
 
-describe('fitnessworker', () => {
+global.Worker = class {
+  constructor() {}
+  postMessage() {}
+  onmessage() {}
+};
+
+describe('fitness-worker', () => {
+  afterAll(() => {
+    delete global.Worker;
+  });
+
   it('should load without error', () => {
-    require('../app/fitnessworker.js');
+    require('./fitness-worker.js');
     expect(global.importScripts).toHaveBeenCalled();
   });
 });

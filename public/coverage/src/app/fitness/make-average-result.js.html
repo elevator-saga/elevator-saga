@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/app/presenters/render-elevator-buttons.js</title>
+    <title>Code coverage report for src/app/fitness/make-average-result.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/app/presenters</a> render-elevator-buttons.js</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/app/fitness</a> make-average-result.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
@@ -92,36 +92,36 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { map } from 'lodash';
-import * as riot from 'riot';
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { forOwn, sum } from 'lodash';
 &nbsp;
 /**
- * Renders the HTML for elevator buttons based on the provided states.
+ * Computes the average of each property in the `result` object across an array of result objects.
  *
- * @param {Array} states - An array representing the state of each elevator button.
- *                         Each element can be a boolean or any value that indicates the button's state.
- * @param {string} elevatorButtonTempl - The Riot.js template string for rendering an elevator button.
- *                                       It should accept an object with a `floorNum` property.
- *                                       This template is used to generate the HTML for each button.
- *
- * @returns {string} The concatenated HTML string for all elevator buttons.
+ * @param {Array&lt;Object&gt;} results - An array of objects, each containing an `options` property and a `result` object with numeric properties to average.
+ * @returns {{ options: any, result: Object }} An object containing the `options` from the first result and a `result` object with averaged properties.
  */
-export function renderElevatorButtons(states, elevatorButtonTempl) {
-  // This is a rarely executed inner-inner loop, does not need efficiency
-  return map(states, function (b, i) {
-    return riot.render(elevatorButtonTempl, { floorNum: i });
-  }).join('');
+export function makeAverageResult(results) {
+  const averagedResult = {};
+  forOwn(results[0].result, function (value, resultProperty) {
+    const values = results.map((r) =&gt; r.result[resultProperty]);
+    if (values.some((v) =&gt; typeof v === 'undefined')) {
+      averagedResult[resultProperty] = NaN;
+    } else {
+      averagedResult[resultProperty] = sum(values) / results.length;
+    }
+  });
+  return { options: results[0].options, result: averagedResult };
 }
 &nbsp;</pre></td></tr></table></pre>
 

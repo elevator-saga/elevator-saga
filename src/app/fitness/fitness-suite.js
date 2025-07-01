@@ -8,10 +8,10 @@ import { doFitnessSuite } from './do-fitness-suite';
  * @param {function(Object):void} callback - Callback function to receive the fitness results.
  */
 export function fitnessSuite(codeStr, preferWorker, callback) {
-  if (!!Worker && preferWorker) {
+  if (typeof Worker !== 'undefined' && preferWorker) {
     // Web workers are available, neat.
     try {
-      const w = new Worker('fitnessworker.js');
+      const w = new Worker('fitness-worker.js');
       w.postMessage(codeStr);
       w.onmessage = function (msg) {
         console.log('Got message from fitness worker', msg);

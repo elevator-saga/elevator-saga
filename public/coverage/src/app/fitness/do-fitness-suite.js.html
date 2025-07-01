@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/app/presenters/set-up-elevator.js</title>
+    <title>Code coverage report for src/app/fitness/do-fitness-suite.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/app/presenters</a> set-up-elevator.js</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/app/fitness</a> do-fitness-suite.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -32,14 +32,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>10/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>7/7</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
@@ -114,14 +114,7 @@
 <a name='L49'></a><a href='#L49'>49</a>
 <a name='L50'></a><a href='#L50'>50</a>
 <a name='L51'></a><a href='#L51'>51</a>
-<a name='L52'></a><a href='#L52'>52</a>
-<a name='L53'></a><a href='#L53'>53</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L52'></a><a href='#L52'>52</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -139,85 +132,89 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { map } from 'lodash';
-import * as riot from 'riot';
-import { renderElevatorButtons } from './render-elevator-buttons';
-import { setTransformPosition } from './set-transform-position';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { map, pluck, range, times } from 'lodash';
+import { getCodeObjFromCode } from '../../models/utils';
+import { calculateFitness } from './calculate-fitness';
+import { fitnessChallenges } from './index';
+import { makeAverageResult } from './make-average-result';
 &nbsp;
 /**
- * Sets up the DOM representation and event bindings for an elevator.
+ * Runs a suite of fitness tests on the provided code string for a specified number of times.
  *
- * @param {Object} elevator - The elevator object containing state and event methods.
- * @param {string} elevatorTempl - The Riot.js template string for rendering the elevator.
- *                                 It should accept an object with an `e` property representing the elevator.
- * @param {string} elevatorButtonTempl - The Riot.js template string for rendering elevator buttons.
- *                                       It should accept an object with a `floorNum` property.
- * @returns {jQuery} The jQuery-wrapped DOM element representing the elevator.
- *
- * @fires elevator#new_display_state - Updates the elevator's position in the DOM.
- * @fires elevator#new_current_floor - Updates the displayed current floor.
- * @fires elevator#floor_buttons_changed - Updates the state of floor buttons.
- * @fires elevator#indicatorstate_change - Updates the up/down indicator lights.
- * @fires elevator#new_state - Triggers initial state rendering.
+ * @param {string} codeStr - The source code as a string to be tested for fitness.
+ * @param {number} runCount - The number of times to run the fitness suite.
+ * @returns {Array&lt;Object&gt;|Object} An array of averaged fitness results for each challenge, or an error object if an error occurs.
  */
-export function setUpElevator(elevator, elevatorTempl, elevatorButtonTempl) {
-  const $elevator = $(riot.render(elevatorTempl, { e: elevator }));
-  const elem_elevator = $elevator.get(0);
-  $elevator.find('.buttonindicator').html(renderElevatorButtons(elevator.buttonStates, elevatorButtonTempl));
-  const $buttons = map($elevator.find('.buttonindicator').children(), function (c) {
-    return $(c);
-  });
-  const elem_floorindicator = $elevator.find('.floorindicator &gt; span').get(0);
+export function doFitnessSuite(codeStr, runCount) {
+  let codeObj;
 &nbsp;
-  $elevator.on('click', '.buttonpress', function () {
-    elevator.pressFloorButton(parseInt($(this).text()));
-  });
-  elevator.on('new_display_state', function updateElevatorPosition() {
-    setTransformPosition(elem_elevator, elevator.worldX, elevator.worldY);
-  });
-  elevator.on('new_current_floor', function update_current_floor(floor) {
-    elem_floorindicator.textContent = floor;
-  });
-  elevator.on('floor_buttons_changed', function update_floor_buttons(states, indexChanged) {
-    $buttons[indexChanged].toggleClass('activated', states[indexChanged]);
-  });
-  elevator.on('indicatorstate_change', function indicatorstate_change(indicatorStates) {
-    $elevator.find('.up').toggleClass('activated', indicatorStates.up);
-    $elevator.find('.down').toggleClass('activated', indicatorStates.down);
-  });
-  elevator.trigger('new_state', elevator);
-  elevator.trigger('new_display_state', elevator);
-  elevator.trigger('new_current_floor', elevator.currentFloor);
+  try {
+    codeObj = getCodeObjFromCode(codeStr);
+  } catch (e) {
+    return { error: '' + e };
+  }
 &nbsp;
-  return $elevator;
+  console.log('Fitness testing code', codeObj);
+  let error = null;
+&nbsp;
+  const testruns = [];
+  times(runCount, function () {
+    const results = map(fitnessChallenges, function (challenge) {
+      const fitness = calculateFitness(challenge, codeObj, 1000.0 / 60.0, 12000);
+      if (!fitness || fitness.error) {
+        error = fitness ? fitness.error : 'fitness error';
+        return;
+      }
+      return { options: challenge.options, result: fitness };
+    });
+    if (error) {
+      return;
+    }
+    testruns.push(results);
+  });
+  if (error) {
+    return { error: '' + error };
+  }
+&nbsp;
+  // Now do averaging over all properties for each challenge's test runs
+  const averagedResults = map(range(testruns[0].length), function (n) {
+    return makeAverageResult(pluck(testruns, n));
+  });
+&nbsp;
+  return averagedResults;
 }
 &nbsp;</pre></td></tr></table></pre>
 

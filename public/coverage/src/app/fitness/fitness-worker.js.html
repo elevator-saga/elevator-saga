@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/app/presenters/render-elevator-buttons.js</title>
+    <title>Code coverage report for src/app/fitness/fitness-worker.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/app/presenters</a> render-elevator-buttons.js</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/app/fitness</a> fitness-worker.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>2/6</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>2/6</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -83,7 +83,9 @@
 <a name='L18'></a><a href='#L18'>18</a>
 <a name='L19'></a><a href='#L19'>19</a>
 <a name='L20'></a><a href='#L20'>20</a>
-<a name='L21'></a><a href='#L21'>21</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -98,31 +100,35 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { map } from 'lodash';
-import * as riot from 'riot';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">importScripts(
+  '../../models/base.js',
+  '../../models/movable.js',
+  '../../models/floor.js',
+  '../../models/user.js',
+  '../../models/elevator.js',
+  '../../models/interfaces.js',
+  '../../models/world.js',
+  './calculate-fitness.js',
+  './do-fitness-suite.js',
+  './fitness-suite.js',
+  './make-average-result.js',
+  './require-nothing.js'
+);
 &nbsp;
-/**
- * Renders the HTML for elevator buttons based on the provided states.
- *
- * @param {Array} states - An array representing the state of each elevator button.
- *                         Each element can be a boolean or any value that indicates the button's state.
- * @param {string} elevatorButtonTempl - The Riot.js template string for rendering an elevator button.
- *                                       It should accept an object with a `floorNum` property.
- *                                       This template is used to generate the HTML for each button.
- *
- * @returns {string} The concatenated HTML string for all elevator buttons.
- */
-export function renderElevatorButtons(states, elevatorButtonTempl) {
-  // This is a rarely executed inner-inner loop, does not need efficiency
-  return map(states, function (b, i) {
-    return riot.render(elevatorButtonTempl, { floorNum: i });
-  }).join('');
-}
+export const onmessage = <span class="fstat-no" title="function not covered" >fu</span>nction (msg) {
+  // Assume it is a code object that should be fitness-tested
+  const codeStr = <span class="cstat-no" title="statement not covered" >msg.data;</span>
+  const results = <span class="cstat-no" title="statement not covered" >doFitnessSuite(codeStr, 6);</span>
+<span class="cstat-no" title="statement not covered" >  console.log('Posting message back', results);</span>
+<span class="cstat-no" title="statement not covered" >  postMessage(results);</span>
+};
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->

@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/app/presenters/render-elevator-buttons.js</title>
+    <title>Code coverage report for src/app/fitness/fitness-suite.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/app/presenters</a> render-elevator-buttons.js</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/app/fitness</a> fitness-suite.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>12/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>12/12</span>
             </div>
         
             
@@ -83,13 +83,16 @@
 <a name='L18'></a><a href='#L18'>18</a>
 <a name='L19'></a><a href='#L19'>19</a>
 <a name='L20'></a><a href='#L20'>20</a>
-<a name='L21'></a><a href='#L21'>21</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -100,28 +103,52 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { map } from 'lodash';
-import * as riot from 'riot';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { doFitnessSuite } from './do-fitness-suite';
 &nbsp;
 /**
- * Renders the HTML for elevator buttons based on the provided states.
+ * Runs a fitness suite on the provided code string, optionally using a Web Worker for asynchronous execution.
  *
- * @param {Array} states - An array representing the state of each elevator button.
- *                         Each element can be a boolean or any value that indicates the button's state.
- * @param {string} elevatorButtonTempl - The Riot.js template string for rendering an elevator button.
- *                                       It should accept an object with a `floorNum` property.
- *                                       This template is used to generate the HTML for each button.
- *
- * @returns {string} The concatenated HTML string for all elevator buttons.
+ * @param {string} codeStr - The code to be evaluated for fitness.
+ * @param {boolean} preferWorker - Whether to prefer using a Web Worker if available.
+ * @param {function(Object):void} callback - Callback function to receive the fitness results.
  */
-export function renderElevatorButtons(states, elevatorButtonTempl) {
-  // This is a rarely executed inner-inner loop, does not need efficiency
-  return map(states, function (b, i) {
-    return riot.render(elevatorButtonTempl, { floorNum: i });
-  }).join('');
+export function fitnessSuite(codeStr, preferWorker, callback) {
+  if (typeof Worker !== 'undefined' &amp;&amp; preferWorker) {
+    // Web workers are available, neat.
+    try {
+      const w = new Worker('fitness-worker.js');
+      w.postMessage(codeStr);
+      w.onmessage = function (msg) {
+        console.log('Got message from fitness worker', msg);
+        const results = msg.data;
+        callback(results);
+      };
+      return;
+    } catch (e) {
+      console.log('Fitness worker creation failed, falling back to normal', e);
+    }
+  }
+  // Fall back do synch calculation without web worker
+  const results = doFitnessSuite(codeStr, 2);
+  callback(results);
 }
 &nbsp;</pre></td></tr></table></pre>
 
