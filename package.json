@@ -25,7 +25,7 @@
     "fmt": "npx prettier --check .",
     "fmt:fix": "npx prettier --write .",
     "knip": "npx knip",
-    "knip:fix": "npx knip --fix",
+    "knip:fix": "npx knip --fix --no-exit-code",
     "lint": "npx eslint . --ext .js",
     "lockfile:lint": "npx lockfile-lint --path package-lock.json --quiet",
     "md:lint": "npx markdownlint-cli2 '**/*.md'",
