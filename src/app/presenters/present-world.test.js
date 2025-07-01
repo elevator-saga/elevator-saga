@@ -1,10 +1,11 @@
-import * as riot from 'riot';
+import render from '@riotjs/ssr';
 import { presentWorld } from './present-world';
 import { setUpElevator } from './set-up-elevator';
 import { updateUserState } from './update-user-state';
 
-jest.mock('riot', () => ({
-  render: jest.fn((templ, data) => templ),
+jest.mock('@riotjs/ssr', () => ({
+  __esModule: true,
+  default: jest.fn((templ, data) => templ),
 }));
 jest.mock('./set-up-elevator');
 jest.mock('./update-user-state');
@@ -23,8 +24,8 @@ describe('presentWorld', () => {
     elevatorButtonTempl = '<button class="elevator-btn"></button>';
     userTempl = '<div class="user"></div>';
 
-    // Mock riot.render
-    riot.render.mockImplementation((templ, data) => templ);
+    // Mock render
+    render.mockImplementation((templ, data) => templ);
 
     // Mock world, floors, elevators
     world = {

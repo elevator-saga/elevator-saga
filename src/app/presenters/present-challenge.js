@@ -1,4 +1,4 @@
-import * as riot from 'riot';
+import render from '@riotjs/ssr';
 import World from '../../models/world';
 
 /**
@@ -14,7 +14,7 @@ import World from '../../models/world';
  */
 export function presentChallenge($parent, challenge, app, world, worldController, challengeNum, challengeTempl) {
   const $challenge = $(
-    riot.render(challengeTempl, {
+    render(challengeTempl, {
       challenge: challenge,
       num: challengeNum,
       timeScale: worldController.timeScale.toFixed(0) + 'x',

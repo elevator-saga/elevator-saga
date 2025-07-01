@@ -1,5 +1,6 @@
+import render from '@riotjs/ssr';
 import { map } from 'lodash';
-import * as riot from 'riot';
+
 import { renderElevatorButtons } from './render-elevator-buttons';
 import { setTransformPosition } from './set-transform-position';
 
@@ -20,7 +21,7 @@ import { setTransformPosition } from './set-transform-position';
  * @fires elevator#new_state - Triggers initial state rendering.
  */
 export function setUpElevator(elevator, elevatorTempl, elevatorButtonTempl) {
-  const $elevator = $(riot.render(elevatorTempl, { e: elevator }));
+  const $elevator = $(render(elevatorTempl, { e: elevator }));
   const elem_elevator = $elevator.get(0);
   $elevator.find('.buttonindicator').html(renderElevatorButtons(elevator.buttonStates, elevatorButtonTempl));
   const $buttons = map($elevator.find('.buttonindicator').children(), function (c) {

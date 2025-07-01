@@ -1,4 +1,5 @@
-import * as riot from 'riot';
+import render from '@riotjs/ssr';
+
 import World from '../../models/world';
 
 /**
@@ -15,7 +16,7 @@ import World from '../../models/world';
  */
 export function presentFeedback($parent, feedbackTempl, world, title, message, url) {
   $parent.html(
-    riot.render(feedbackTempl, {
+    render(feedbackTempl, {
       title: title,
       message: message,
       url: url,

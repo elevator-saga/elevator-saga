@@ -1,5 +1,6 @@
+import render from '@riotjs/ssr';
 import { map } from 'lodash';
-import * as riot from 'riot';
+
 import World from '../../models/world';
 import { setUpElevator } from './set-up-elevator';
 import { updateUserState } from './update-user-state';
@@ -28,7 +29,7 @@ export function presentWorld($world, world, floorTempl, elevatorTempl, elevatorB
 
   $world.append(
     map(world.floors, function (f) {
-      const $floor = $(riot.render(floorTempl, f));
+      const $floor = $(render(floorTempl, f));
       const $up = $floor.find('.up');
       const $down = $floor.find('.down');
       f.on('buttonstate_change', function (buttonStates) {
@@ -54,7 +55,7 @@ export function presentWorld($world, world, floorTempl, elevatorTempl, elevatorB
   );
 
   world.on('new_user', function (user) {
-    const $user = $(riot.render(userTempl, { u: user, state: user.done ? 'leaving' : '' }));
+    const $user = $(render(userTempl, { u: user, state: user.done ? 'leaving' : '' }));
     const elem_user = $user.get(0);
 
     user.on('new_display_state', function () {

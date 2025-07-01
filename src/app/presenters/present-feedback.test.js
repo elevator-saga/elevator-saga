@@ -1,8 +1,9 @@
-import * as riot from 'riot';
+import render from '@riotjs/ssr';
 import { presentFeedback } from './present-feedback';
 
-jest.mock('riot', () => ({
-  render: jest.fn(),
+jest.mock('@riotjs/ssr', () => ({
+  __esModule: true,
+  default: jest.fn((templ, data) => templ),
 }));
 
 describe('presentFeedback', () => {
@@ -21,7 +22,7 @@ describe('presentFeedback', () => {
       floors: [{}, {}, {}],
       floorHeight: 10,
     };
-    riot.render.mockClear();
+    render.mockClear();
     $parent.html.mockClear();
     $parent.find.mockClear();
     $parent.remove.mockClear();
@@ -29,13 +30,13 @@ describe('presentFeedback', () => {
 
   it('renders feedback with correct parameters and calls html', () => {
     // Arrange
-    riot.render.mockReturnValue('<div>output</div>');
+    render.mockReturnValue('<div>output</div>');
 
     // Act
     presentFeedback($parent, feedbackTempl, world, 'Test Title', 'Test Message', 'http://example.com');
 
     // Assert
-    expect(riot.render).toHaveBeenCalledWith(feedbackTempl, {
+    expect(render).toHaveBeenCalledWith(feedbackTempl, {
       title: 'Test Title',
       message: 'Test Message',
       url: 'http://example.com',
@@ -47,13 +48,13 @@ describe('presentFeedback', () => {
 
   it('removes anchor tags if url is not provided', () => {
     // Arrange
-    riot.render.mockReturnValue('<div>output</div>');
+    render.mockReturnValue('<div>output</div>');
 
     // Act
     presentFeedback($parent, feedbackTempl, world, 'No URL', 'No URL Message');
 
     // Assert
-    expect(riot.render).toHaveBeenCalledWith(feedbackTempl, {
+    expect(render).toHaveBeenCalledWith(feedbackTempl, {
       title: 'No URL',
       message: 'No URL Message',
       url: undefined,
@@ -68,13 +69,13 @@ describe('presentFeedback', () => {
   it('handles empty floors array', () => {
     // Arrange
     world.floors = [];
-    riot.render.mockReturnValue('<div>output</div>');
+    render.mockReturnValue('<div>output</div>');
 
     // Act
     presentFeedback($parent, feedbackTempl, world, 'Empty', 'No Floors', 'http://example.com');
 
     // Assert
-    expect(riot.render).toHaveBeenCalledWith(feedbackTempl, {
+    expect(render).toHaveBeenCalledWith(feedbackTempl, {
       title: 'Empty',
       message: 'No Floors',
       url: 'http://example.com',

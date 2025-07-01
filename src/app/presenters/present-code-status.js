@@ -1,4 +1,4 @@
-import * as riot from 'riot';
+import render from '@riotjs/ssr';
 
 /**
  * Renders the code status (success or error) into the given parent element using the provided template.
@@ -19,7 +19,7 @@ export function presentCodeStatus($parent, templ, error) {
     errorMessage = error.stack;
     errorMessage = errorMessage.replace(/\n/g, '<br>');
   }
-  const status = riot.render(templ, {
+  const status = render(templ, {
     errorMessage: errorMessage,
     errorDisplay: errorDisplay,
     successDisplay: successDisplay,

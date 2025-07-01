@@ -1,14 +1,9 @@
+import render from '@riotjs/ssr';
 import { presentChallenge } from './present-challenge';
 
-jest.mock('riot', () => ({
-  render: jest.fn(
-    () =>
-      '<div>' +
-      '<button class="startstop"></button>' +
-      '<button class="timescale_increase"></button>' +
-      '<button class="timescale_decrease"></button>' +
-      '</div>'
-  ),
+jest.mock('@riotjs/ssr', () => ({
+  __esModule: true,
+  default: jest.fn((templ, data) => templ),
 }));
 
 describe('presentChallenge', () => {
@@ -26,6 +21,16 @@ describe('presentChallenge', () => {
     };
     challengeNum = 1;
     challengeTempl = '<div></div>';
+
+    // Mock render to return expected HTML for tests
+    render.mockImplementation(
+      () =>
+        `<div>
+        <div class="startstop"></div>
+        <div class="timescale_increase"></div>
+        <div class="timescale_decrease"></div>
+      </div>`
+    );
   });
 
   it('renders the challenge UI into the parent', () => {
