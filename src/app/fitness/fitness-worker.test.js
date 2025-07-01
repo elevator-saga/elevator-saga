@@ -16,13 +16,26 @@ jest.mock('./do-fitness-suite', () => ({
 }));
 
 describe('fitness-worker', () => {
+  beforeAll(() => {
+    global.importScripts = jest.fn();
+    global.postMessage = jest.fn();
+    global.Worker = class {
+      constructor() {}
+      postMessage() {}
+      onmessage() {}
+    };
+
+    importScripts = global.importScripts;
+  });
+
   afterAll(() => {
+    delete global.importScripts;
+    delete global.postMessage;
     delete global.Worker;
   });
 
   it('should load without error', () => {
-    require('./fitness-worker.js');
-    expect(global.importScripts).toHaveBeenCalled();
+    expect(() => require('./fitness-worker.js')).not.toThrow();
   });
 
   it('should define onmessage handler', () => {

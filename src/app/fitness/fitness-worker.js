@@ -1,7 +1,10 @@
 import { doFitnessSuite } from './do-fitness-suite.js';
 
-if (typeof importScripts === 'function') {
-  importScripts(
+if (
+  typeof importScripts === 'function' ||
+  (typeof globalThis !== 'undefined' && typeof globalThis.importScripts === 'function')
+) {
+  (typeof importScripts === 'function' ? importScripts : globalThis.importScripts)(
     '../../models/base.js',
     '../../models/movable.js',
     '../../models/floor.js',
