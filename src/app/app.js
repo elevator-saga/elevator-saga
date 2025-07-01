@@ -6,6 +6,7 @@ import map from 'lodash/map';
 import merge from 'lodash/merge';
 import parseInt from 'lodash/parseInt';
 import reduce from 'lodash/reduce';
+import { getCodeObjFromCode } from '../models/utils';
 import { challenges } from './challenges';
 import {
   clearAll,

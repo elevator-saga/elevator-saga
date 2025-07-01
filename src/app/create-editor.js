@@ -1,5 +1,6 @@
 import observable from '@riotjs/observable';
 import debounce from 'lodash/debounce';
+import { getCodeObjFromCode } from '../models/utils';
 import { typeDeclarations } from './types';
 
 /**

@@ -2,7 +2,7 @@ import observable from '@riotjs/observable';
 import first from 'lodash/first';
 import last from 'lodash/last';
 import tail from 'lodash/tail';
-import { createBoolPassthroughFunction, epsilonEquals, limitNumber } from './base.js';
+import { createBoolPassthroughFunction, epsilonEquals, limitNumber } from './utils';
 
 /**
  * Facade class for controlling and interacting with an elevator instance.

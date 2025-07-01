@@ -1,5 +1,5 @@
-import { newGuard } from './base.js';
 import Movable, { linearInterpolate } from './movable.js';
+import { newGuard } from './utils';
 
 /**
  * Represents a user in the elevator simulation.

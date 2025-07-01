@@ -1,4 +1,3 @@
-import { jest } from '@jest/globals';
 import { timeForwarder } from '../test-helpers';
 import Movable from './movable';
 

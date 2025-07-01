@@ -3,7 +3,8 @@ import map from 'lodash/map';
 import pluck from 'lodash/pluck';
 import range from 'lodash/range';
 import times from 'lodash/times';
-import { createFrameRequester, createWorldController, createWorldCreator } from './world';
+import { createFrameRequester, getCodeObjFromCode } from '../models/utils';
+import { createWorldController, createWorldCreator } from '../models/world';
 
 /**
  * Creates a requirement object that imposes no constraints.

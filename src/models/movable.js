@@ -1,5 +1,5 @@
 import observable from '@riotjs/observable';
-import { newGuard } from './base';
+import { newGuard } from './utils';
 
 const EPSILON = 0.00001;
 

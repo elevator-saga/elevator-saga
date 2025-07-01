@@ -1,4 +1,3 @@
-import { jest } from '@jest/globals';
 import random from 'lodash/random';
 import range from 'lodash/range';
 import { timeForwarder } from '../test-helpers';

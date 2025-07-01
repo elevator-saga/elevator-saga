@@ -2,14 +2,14 @@ import map from 'lodash/map';
 import random from 'lodash/random';
 import range from 'lodash/range';
 import reduce from 'lodash/reduce';
+import Movable from './movable';
 import {
   accelerationNeededToAchieveChangeDistance,
   distanceNeededToAchieveSpeed,
   epsilonEquals,
   limitNumber,
   newGuard,
-} from './base';
-import Movable from './movable';
+} from './utils';
 
 /**
  * Handles the transition to a new state for the given elevator.
