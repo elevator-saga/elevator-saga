@@ -36,7 +36,6 @@
     "test": "npx jest --runInBand --config=jest.config.js"
   },
   "dependencies": {
-    "@riotjs/compiler": "^9.4.9",
     "@riotjs/observable": "^4.1.1",
     "@riotjs/route": "^9.2.2",
     "@riotjs/ssr": "^9.0.0",

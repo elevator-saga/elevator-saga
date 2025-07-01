@@ -1,0 +1,16 @@
+extends: eslint-config-riot
+
+parserOptions:
+  ecmaVersion: 2018
+  sourceType: 'module'
+
+globals:
+  sinon: true
+  chai: true
+  expect: true
+  observable: true
+
+rules:
+  fp/no-mutating-methods: 'off'
+  fp/no-rest-parameters: 'off'
+  fp/no-proxy: 'off'

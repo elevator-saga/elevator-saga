@@ -1,0 +1,8 @@
+exclude_paths:
+  - "test"
+  - "dist"
+
+ratings:
+  paths:
+  - "lib/index.js"
+
