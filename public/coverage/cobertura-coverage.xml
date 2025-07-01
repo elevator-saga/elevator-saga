@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage lines-valid="921" lines-covered="694" line-rate="0.7535" branches-valid="324" branches-covered="230" branch-rate="0.7098" timestamp="1751381620446" complexity="0" version="0.1">
+<coverage lines-valid="922" lines-covered="698" line-rate="0.757" branches-valid="331" branches-covered="234" branch-rate="0.7069" timestamp="1751382674129" complexity="0" version="0.1">
   <sources>
     <source>/Users/thomas.roche/Projects/github/elevator-saga/elevator-saga</source>
   </sources>
@@ -603,7 +603,7 @@
         </class>
       </classes>
     </package>
-    <package name="src.app.fitness" line-rate="0.9365000000000001" branch-rate="1">
+    <package name="src.app.fitness" line-rate="0.9843000000000001" branch-rate="0.8887999999999999">
       <classes>
         <class name="calculate-fitness.js" filename="src/app/fitness/calculate-fitness.js" line-rate="1" branch-rate="1">
           <methods>
@@ -715,21 +715,22 @@
             <line number="28" hits="2" branch="false"/>
           </lines>
         </class>
-        <class name="fitness-worker.js" filename="src/app/fitness/fitness-worker.js" line-rate="0.3333" branch-rate="1">
+        <class name="fitness-worker.js" filename="src/app/fitness/fitness-worker.js" line-rate="0.8571" branch-rate="0.5714">
           <methods>
-            <method name="(anonymous_0)" hits="0" signature="()V">
+            <method name="(anonymous_0)" hits="1" signature="()V">
               <lines>
-                <line number="16" hits="0"/>
+                <line number="23" hits="1"/>
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="1" hits="1" branch="false"/>
-            <line number="16" hits="1" branch="false"/>
-            <line number="18" hits="0" branch="false"/>
-            <line number="19" hits="0" branch="false"/>
-            <line number="20" hits="0" branch="false"/>
-            <line number="21" hits="0" branch="false"/>
+            <line number="3" hits="1" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="7" hits="0" branch="true" condition-coverage="0% (0/2)"/>
+            <line number="23" hits="1" branch="false"/>
+            <line number="25" hits="1" branch="false"/>
+            <line number="26" hits="1" branch="false"/>
+            <line number="27" hits="1" branch="false"/>
+            <line number="28" hits="1" branch="false"/>
           </lines>
         </class>
         <class name="index.js" filename="src/app/fitness/index.js" line-rate="1" branch-rate="1">
@@ -1459,8 +1460,8 @@
             <line number="110" hits="56" branch="false"/>
             <line number="121" hits="20" branch="false"/>
             <line number="122" hits="20" branch="false"/>
-            <line number="123" hits="72" branch="false"/>
-            <line number="124" hits="72" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="123" hits="71" branch="false"/>
+            <line number="124" hits="71" branch="true" condition-coverage="100% (2/2)"/>
             <line number="125" hits="4" branch="false"/>
             <line number="126" hits="4" branch="false"/>
             <line number="129" hits="16" branch="false"/>
