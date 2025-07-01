@@ -1,8 +1,3 @@
-export { calculateFitness } from './calculate-fitness';
-export { doFitnessSuite } from './do-fitness-suite';
-export { fitnessSuite } from './fitness-suite';
-export { makeAverageResult } from './make-average-result';
-
 import { requireNothing } from './require-nothing';
 
 /**
