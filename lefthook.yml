@@ -26,7 +26,7 @@ pre-commit:
       stage_fixed: true
 
 pre-push:
-  scripts:
+  commands:
     '1. list unused dependencies':
       glob: '*.{ts,js}'
       interactive: true
