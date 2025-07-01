@@ -1,7 +1,7 @@
 export default class MockWorldController {
-  constructor(dtMax) {
+  constructor() {
     this.on = jest.fn();
-    this.dtMax = dtMax;
+    this.dtMax = 100;
     this.timeScale = 1.0;
     this.isPaused = true;
     this.handleUserCodeError = jest.fn();

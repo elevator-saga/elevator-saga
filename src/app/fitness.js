@@ -7,20 +7,6 @@ import { createFrameRequester, getCodeObjFromCode } from '../models/utils';
 import { createWorldController, createWorldCreator } from '../models/world';
 
 /**
- * Creates a requirement object that imposes no constraints.
- *
- * @returns {{description: string, evaluate: function(): null}} An object with a description and an evaluate function that always returns null.
- */
-function requireNothing() {
-  return {
-    description: 'No requirement',
-    evaluate: function () {
-      return null;
-    },
-  };
-}
-
-/**
  * An array of fitness challenge configurations for the elevator simulation.
  * Each challenge defines scenario options and a condition function.
  *

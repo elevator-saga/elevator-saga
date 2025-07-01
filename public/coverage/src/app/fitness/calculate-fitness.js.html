@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/app/presenters/present-stats.js</title>
+    <title>Code coverage report for src/app/fitness/calculate-fitness.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/app/presenters</a> present-stats.js</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/app/fitness</a> calculate-fitness.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>14/14</span>
+                <span class='fraction'>10/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
-                <span class="quiet">Functions</span>
                 <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">33.33% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>1/3</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">64.28% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>14/14</span>
+                <span class='fraction'>9/14</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -97,7 +97,13 @@
 <a name='L32'></a><a href='#L32'>32</a>
 <a name='L33'></a><a href='#L33'>33</a>
 <a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -114,56 +120,68 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import World from '../../models/world';
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { createFrameRequester } from '../../models/utils';
+import World from '../../models/world';
+import WorldController from '../../models/world-controller';
 &nbsp;
 /**
- * Updates the statistics display elements within the given parent element based on the current state of the world object.
+ * Calculates the fitness of a given elevator challenge by simulating the world with the provided user code.
  *
- * @param {jQuery} $parent - The jQuery-wrapped parent element containing the stats display elements.
- * @param {World} world - The world object that emits 'stats_display_changed' events and contains statistics properties:
- *   @param {number} world.transportedCounter - The total number of transported passengers.
- *   @param {number} world.elapsedTime - The elapsed time in seconds.
- *   @param {number} world.transportedPerSec - The number of passengers transported per second.
- *   @param {number} world.avgWaitTime - The average wait time in seconds.
- *   @param {number} world.maxWaitTime - The maximum wait time in seconds.
- *   @param {number} world.moveCount - The total number of moves made.
- *   @function world.on - Registers an event listener.
- *   @function world.trigger - Triggers an event.
+ * @param {Object} challenge - The challenge configuration object containing options for the simulation.
+ * @param {Object} codeObj - The user code object to be evaluated during the simulation.
+ * @param {number} stepSize - The time step size for each simulation frame.
+ * @param {number} stepsToSimulate - The total number of simulation steps to run.
+ * @returns {Object} result - The result object containing simulation statistics:
+ * @returns {number} [result.transportedPerSec] - The number of passengers transported per second.
+ * @returns {number} [result.avgWaitTime] - The average wait time for passengers.
+ * @returns {number} [result.transportedCount] - The total number of passengers transported.
+ * @returns {Error} [result.error] - Any error encountered during user code execution.
  */
-export function presentStats($parent, world) {
-  const elem_transportedcounter = $parent.find('.transportedcounter').get(0),
-    elem_elapsedtime = $parent.find('.elapsedtime').get(0),
-    elem_transportedpersec = $parent.find('.transportedpersec').get(0),
-    elem_avgwaittime = $parent.find('.avgwaittime').get(0),
-    elem_maxwaittime = $parent.find('.maxwaittime').get(0),
-    elem_movecount = $parent.find('.movecount').get(0);
+export function calculateFitness(challenge, codeObj, stepSize, stepsToSimulate) {
+  const controller = new WorldController(stepSize);
+  const result = {};
 &nbsp;
-  world.on('stats_display_changed', function updateStats() {
-    elem_transportedcounter.textContent = world.transportedCounter;
-    elem_elapsedtime.textContent = world.elapsedTime.toFixed(0) + 's';
-    elem_transportedpersec.textContent = world.transportedPerSec.toPrecision(3);
-    elem_avgwaittime.textContent = world.avgWaitTime.toFixed(1) + 's';
-    elem_maxwaittime.textContent = world.maxWaitTime.toFixed(1) + 's';
-    elem_movecount.textContent = world.moveCount;
+  const world = new World(challenge.options);
+  const frameRequester = createFrameRequester(stepSize);
+&nbsp;
+  controller.on('usercode_error', <span class="fstat-no" title="function not covered" >fu</span>nction (e) {
+<span class="cstat-no" title="statement not covered" >    result.error = e;</span>
   });
-  world.trigger('stats_display_changed');
+  world.on('stats_changed', <span class="fstat-no" title="function not covered" >fu</span>nction () {
+<span class="cstat-no" title="statement not covered" >    result.transportedPerSec = world.transportedPerSec;</span>
+<span class="cstat-no" title="statement not covered" >    result.avgWaitTime = world.avgWaitTime;</span>
+<span class="cstat-no" title="statement not covered" >    result.transportedCount = world.transportedCounter;</span>
+  });
+&nbsp;
+  controller.start(world, codeObj, frameRequester.register, true);
+&nbsp;
+  for (const stepCount = 0; stepCount &lt; stepsToSimulate &amp;&amp; !controller.isPaused; stepCount++) {
+<span class="cstat-no" title="statement not covered" >    frameRequester.trigger();</span>
+  }
+  return result;
 }
 &nbsp;</pre></td></tr></table></pre>
 

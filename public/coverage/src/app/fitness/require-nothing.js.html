@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/models/utils/acceleration-needed-to-achieve-change-distance.js</title>
+    <title>Code coverage report for src/app/fitness/require-nothing.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/models/utils</a> acceleration-needed-to-achieve-change-distance.js</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/app/fitness</a> require-nothing.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -39,7 +39,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
@@ -75,29 +75,32 @@
 <a name='L10'></a><a href='#L10'>10</a>
 <a name='L11'></a><a href='#L11'>11</a>
 <a name='L12'></a><a href='#L12'>12</a>
-<a name='L13'></a><a href='#L13'>13</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1653x</span>
-<span class="cline-any cline-yes">1653x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
- * Calculates the acceleration needed to achieve a change in speed over a given distance.
- * @param {number} currentSpeed - The current speed of the object.
- * @param {number} targetSpeed - The target speed to achieve.
- * @param {number} distance - The distance over which the speed change should occur.
- * @returns {number} - The required acceleration to achieve the speed change.
+ * Creates a requirement object that imposes no constraints.
+ *
+ * @returns {{description: string, evaluate: function(): null}} An object with a description and an evaluate function that always returns null.
  */
-export function accelerationNeededToAchieveChangeDistance(currentSpeed, targetSpeed, distance) {
-  // v² = u² + 2a * d
-  const requiredAcceleration = 0.5 * ((Math.pow(targetSpeed, 2) - Math.pow(currentSpeed, 2)) / distance);
-  return requiredAcceleration;
+export function requireNothing() {
+  return {
+    description: 'No requirement',
+    evaluate: function () {
+      return null;
+    },
+  };
 }
 &nbsp;</pre></td></tr></table></pre>
 
