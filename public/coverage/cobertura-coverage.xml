@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage lines-valid="935" lines-covered="649" line-rate="0.6940999999999999" branches-valid="318" branches-covered="212" branch-rate="0.6666" timestamp="1751371201084" complexity="0" version="0.1">
+<coverage lines-valid="935" lines-covered="649" line-rate="0.6940999999999999" branches-valid="320" branches-covered="212" branch-rate="0.6625" timestamp="1751378176276" complexity="0" version="0.1">
   <sources>
     <source>/Users/thomas.roche/Projects/github/elevator-saga/elevator-saga</source>
   </sources>
@@ -736,9 +736,9 @@
         </class>
       </classes>
     </package>
-    <package name="src.app.fitness" line-rate="0.6875" branch-rate="1">
+    <package name="src.app.fitness" line-rate="0.6875" branch-rate="0.5">
       <classes>
-        <class name="calculate-fitness.js" filename="src/app/fitness/calculate-fitness.js" line-rate="0.6428" branch-rate="1">
+        <class name="calculate-fitness.js" filename="src/app/fitness/calculate-fitness.js" line-rate="0.6428" branch-rate="0.5">
           <methods>
             <method name="calculateFitness" hits="4" signature="()V">
               <lines>
@@ -762,7 +762,7 @@
             <line number="22" hits="4" branch="false"/>
             <line number="23" hits="4" branch="false"/>
             <line number="25" hits="4" branch="false"/>
-            <line number="26" hits="0" branch="false"/>
+            <line number="26" hits="0" branch="true" condition-coverage="0% (0/2)"/>
             <line number="28" hits="4" branch="false"/>
             <line number="29" hits="0" branch="false"/>
             <line number="30" hits="0" branch="false"/>
@@ -1466,8 +1466,8 @@
             <line number="110" hits="56" branch="false"/>
             <line number="121" hits="20" branch="false"/>
             <line number="122" hits="20" branch="false"/>
-            <line number="123" hits="70" branch="false"/>
-            <line number="124" hits="70" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="123" hits="72" branch="false"/>
+            <line number="124" hits="72" branch="true" condition-coverage="100% (2/2)"/>
             <line number="125" hits="4" branch="false"/>
             <line number="126" hits="4" branch="false"/>
             <line number="129" hits="16" branch="false"/>

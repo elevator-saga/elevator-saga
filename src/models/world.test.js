@@ -45,11 +45,15 @@ jest.mock('./user', () => {
   };
 });
 
-// Patch World.createRandomUser to return a mock user
-const mockUser = new MockUser();
-World.createRandomUser = jest.fn(() => mockUser);
-
 describe('World', () => {
+  let mockUser;
+
+  beforeAll(() => {
+    // Patch World.createRandomUser to return a mock user
+    mockUser = new MockUser();
+    World.createRandomUser = jest.fn(() => mockUser);
+  });
+
   beforeEach(() => {
     jest.clearAllMocks();
   });

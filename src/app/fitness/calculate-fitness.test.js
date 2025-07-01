@@ -1,6 +1,6 @@
-import MockWorld from '../../models/__mocks__/world';
-import MockWorldController from '../../models/__mocks__/world-controller';
-import { createFrameRequester } from '../../models/utils';
+import { createFrameRequester } from '../../models/__mocks__/utils/create-frame-requester';
+import World from '../../models/world';
+import WorldController from '../../models/world-controller';
 import { calculateFitness } from './calculate-fitness';
 
 jest.mock('../../models/world', () => {
@@ -18,23 +18,26 @@ jest.mock('../../models/world-controller', () => {
 jest.mock('../../models/utils', () => {
   return {
     __esModule: true,
-    createFrameRequester: jest.fn().mockImplementation(() => ({
-      trigger: jest.fn(),
-      register: jest.fn(),
-    })),
+    createFrameRequester: require('../../models/__mocks__/utils/create-frame-requester').createFrameRequester,
   };
 });
 
 describe('calculateFitness', () => {
   let mockWorld, mockController, mockFrameRequester, challenge, codeObj;
 
-  beforeEach(() => {
-    mockWorld = new MockWorld();
-    mockController = new MockWorldController();
+  beforeAll(() => {
+    mockWorld = new World();
+    mockController = new WorldController();
     mockFrameRequester = createFrameRequester();
 
     challenge = { options: { foo: 'bar' } };
     codeObj = { code: 'some code' };
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    // Ensure trigger is a Jest mock function for each test
+    mockFrameRequester.trigger = jest.fn();
   });
 
   it('should return stats after simulation', () => {
@@ -88,8 +91,6 @@ describe('calculateFitness', () => {
     });
 
     calculateFitness(challenge, codeObj, 100, 5);
-
-    // Should only call trigger twice due to pause
     expect(mockFrameRequester.trigger).toHaveBeenCalledTimes(2);
   });
 

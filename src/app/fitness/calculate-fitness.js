@@ -23,7 +23,7 @@ export function calculateFitness(challenge, codeObj, stepSize, stepsToSimulate) 
   const frameRequester = createFrameRequester(stepSize);
 
   controller.on('usercode_error', function (e) {
-    result.error = e;
+    result.error = e instanceof Error ? e : new Error(e);
   });
   world.on('stats_changed', function () {
     result.transportedPerSec = world.transportedPerSec;
