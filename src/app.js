@@ -6,8 +6,7 @@ import map from 'lodash/map';
 import merge from 'lodash/merge';
 import parseInt from 'lodash/parseInt';
 import reduce from 'lodash/reduce';
-import { getCodeObjFromCode } from '../models/utils';
-import { challenges } from './challenges';
+import { challenges } from './app/challenges';
 import {
   clearAll,
   presentChallenge,
@@ -15,9 +14,10 @@ import {
   presentFeedback,
   presentStats,
   presentWorld,
-} from './presenters';
-import Simulation from './simulation';
-import { typeDeclarations } from './types';
+} from './app/presenters';
+import Simulation from './app/simulation';
+import { typeDeclarations } from './app/types';
+import { getCodeObjFromCode } from './models/utils';
 
 /**
  * Asynchronously creates and initializes a Monaco code editor instance with custom configuration,

@@ -1,8 +1,8 @@
 jest.mock('@riotjs/route', () => jest.fn());
-jest.mock('./create-editor', () => ({
+jest.mock('./app/create-editor', () => ({
   createEditorAsync: jest.fn(() => Promise.resolve({ on: jest.fn(), trigger: jest.fn() })),
 }));
-jest.mock('./simulation', () =>
+jest.mock('./app/simulation', () =>
   jest.fn(() => ({ startChallenge: jest.fn(), worldController: { setTimeScale: jest.fn() } }))
 );
 

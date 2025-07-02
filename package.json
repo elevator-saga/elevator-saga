@@ -18,10 +18,10 @@
     "test": "test"
   },
   "scripts": {
-    "build": "vite build",
+    "build": "npx vite build",
     "coverage": "npx jest --coverage --runInBand --config=jest.config.js",
     "deploy": "npx gh-pages -d public",
-    "dev": "vite",
+    "dev": "npx vite",
     "fmt": "npx prettier --check .",
     "fmt:fix": "npx prettier --write .",
     "knip": "npx knip",
@@ -31,7 +31,6 @@
     "md:lint": "npx markdownlint-cli2 '**/*.md'",
     "md:toc": "npx doctoc --maxlevel 2 --notitle '**/*.md'",
     "prepare": "lefthook install",
-    "start": "concurrently \"npm:dev\" \"npx http-server public -p 8080\"",
     "test": "npx jest --runInBand --config=jest.config.js"
   },
   "dependencies": {
@@ -47,7 +46,6 @@
     "@types/jest": "^30.0.0",
     "@types/node": "^24.0.4",
     "babel-jest": "^30.0.2",
-    "concurrently": "^8.2.2",
     "doctoc": "^2.2.1",
     "eslint": "^9.29.0",
     "eslint-config-prettier": "^10.1.5",

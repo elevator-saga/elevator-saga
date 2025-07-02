@@ -1,4 +1,5 @@
 .DS_Store
-node_modules/
-public/scripts/
+node_modules
+public/scripts
+.github
 !.github/workflows/*.yml

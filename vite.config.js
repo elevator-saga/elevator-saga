@@ -3,7 +3,8 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   base: '/elevator-saga/',
-  root: 'public',
+  root: '.',
+  publicDir: 'public',
   build: {
     outDir: '.',
     emptyOutDir: false,
@@ -12,7 +13,7 @@ export default defineConfig({
         main: resolve(__dirname, 'public/index.html'),
       },
       output: {
-        entryFileNames: 'scripts/bundle.js',
+        entryFileNames: 'app.js',
         assetFileNames: 'styles/[name][extname]',
       },
     },
@@ -20,5 +21,9 @@ export default defineConfig({
   server: {
     open: '/index.html',
     port: 8080,
+    watch: {
+      usePolling: true,
+      ignored: ['**/node_modules/**', '**/.git/**', '**/public/coverage/**'],
+    },
   },
 });
