@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events';
+import observable from '@riotjs/observable';
 import Elevator from './elevator';
 import ElevatorFacade from './elevator-facade';
 import Floor from './floor';
@@ -35,7 +35,7 @@ import User from './user';
  * @example
  * const world = new World({ floorHeight: 60, floorCount: 5, elevatorCount: 3, spawnRate: 0.7 });
  */
-export default class World extends EventEmitter {
+export default class World {
   /**
    * @param {Object} options - World configuration options.
    * @param {number} options.floorHeight
@@ -45,7 +45,7 @@ export default class World extends EventEmitter {
    * @param {Array<number>} [options.elevatorCapacities]
    */
   constructor(options) {
-    super();
+    observable(this);
     const defaultOptions = { ...options, floorHeight: 50, floorCount: 4, elevatorCount: 2, spawnRate: 0.5 };
 
     console.log('World: Creating world with options:', defaultOptions);
@@ -195,7 +195,7 @@ export default class World extends EventEmitter {
     this.users.push(user);
     user.updateDisplayPosition(true);
     user.spawnTimestamp = this.elapsedTime;
-    this.emit('new_user', user);
+    this.trigger('new_user', user);
     user.on('exited_elevator', () => {
       this.transportedCounter++;
       this.maxWaitTime = Math.max(this.maxWaitTime, this.elapsedTime - user.spawnTimestamp);
@@ -213,7 +213,7 @@ export default class World extends EventEmitter {
   recalculateStats() {
     this.transportedPerSec = this.transportedCounter / this.elapsedTime;
     this.moveCount = this.elevators.reduce((sum, elevator) => sum + elevator.moveCount, 0);
-    this.emit('stats_changed');
+    this.trigger('stats_changed');
   }
 
   /**

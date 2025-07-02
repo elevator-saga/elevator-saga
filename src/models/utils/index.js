@@ -7,4 +7,5 @@ export { epsilonEquals } from './epsilon-equals';
 export { getCodeObjFromCode } from './get-code-obj-from-code';
 export { limitNumber } from './limit-number';
 
+export { deprecationWarning } from './deprecation-warning';
 export { newGuard } from './new-guard';

@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events';
+import observable from '@riotjs/observable';
 
 /**
  * Represents a floor in the elevator simulation.
@@ -23,7 +23,7 @@ import { EventEmitter } from 'events';
  * @private
  * @method _tryTrigger - Tries to emit an event and handles errors.
  */
-export default class Floor extends EventEmitter {
+export default class Floor {
   /**
    * Creates an instance of Floor.
    * Initializes the floor with a level, Y position, and an error handler for event triggering.
@@ -33,7 +33,7 @@ export default class Floor extends EventEmitter {
    * @param {Function} options.errorHandler - Function to handle errors during event triggering.
    */
   constructor(options) {
-    super();
+    observable(this);
 
     if (!options || typeof options.errorHandler !== 'function') {
       throw new Error('errorHandler must be provided and be a function.');
@@ -46,10 +46,10 @@ export default class Floor extends EventEmitter {
   }
 
   /**
-   * Attempts to emit a specified event with up to four arguments.
-   * If an error occurs during the emit, it is handled by the internal error handler.
+   * Attempts to trigger a specified event with up to four arguments.
+   * If an error occurs during the trigger, it is handled by the internal error handler.
    *
-   * @param {string} event - The name of the event to emit.
+   * @param {string} event - The name of the event to trigger.
    * @param {*} [arg1] - The first argument to pass to the event handler.
    * @param {*} [arg2] - The second argument to pass to the event handler.
    * @param {*} [arg3] - The third argument to pass to the event handler.
@@ -57,7 +57,7 @@ export default class Floor extends EventEmitter {
    */
   _tryTrigger(event, arg1, arg2, arg3, arg4) {
     try {
-      this.emit(event, arg1, arg2, arg3, arg4);
+      this.trigger(event, arg1, arg2, arg3, arg4);
     } catch (e) {
       this._errorHandler(e);
     }

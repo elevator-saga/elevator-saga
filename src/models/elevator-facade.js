@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events';
+import observable from '@riotjs/observable';
 import Elevator from './elevator';
 import { createBoolPassthroughFunction, epsilonEquals, limitNumber } from './utils';
 
@@ -27,9 +27,9 @@ import { createBoolPassthroughFunction, epsilonEquals, limitNumber } from './uti
  * @method loadFactor() - Returns the current load factor of the elevator.
  * @method destinationDirection() - Returns the direction the elevator is heading ('up', 'down', or 'stopped').
  */
-export default class ElevatorFacade extends EventEmitter {
+export default class ElevatorFacade {
   constructor(options) {
-    super();
+    observable(this);
     console.log('ElevatorFacade: Creating facade with options:', options);
 
     if (!options.elevator) {
@@ -72,7 +72,7 @@ export default class ElevatorFacade extends EventEmitter {
 
   _tryTrigger(event, arg1, arg2, arg3, arg4) {
     try {
-      this.emit(event, arg1, arg2, arg3, arg4);
+      this.trigger(event, arg1, arg2, arg3, arg4);
     } catch (e) {
       this.errorHandler(e);
     }

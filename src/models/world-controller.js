@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events';
+import observable from '@riotjs/observable';
 import World from './world';
 
 /**
@@ -20,12 +20,12 @@ import World from './world';
  * const controller = new WorldController(0.1);
  * controller.start(world, userCode, requestAnimationFrame, true);
  */
-export default class WorldController extends EventEmitter {
+export default class WorldController {
   /**
    * @param {number} dtMax - Maximum delta time per update.
    */
   constructor(dtMax) {
-    super();
+    observable(this);
     this.dtMax = dtMax;
     this.timeScale = 1.0;
     this.isPaused = true;
@@ -88,7 +88,7 @@ export default class WorldController extends EventEmitter {
   handleUserCodeError(e) {
     this.setPaused(true);
     console.log('Usercode error on update', e);
-    this.emit('usercode_error', e);
+    this.trigger('usercode_error', e);
   }
 
   /**
@@ -97,7 +97,7 @@ export default class WorldController extends EventEmitter {
    */
   setPaused(paused) {
     this.isPaused = paused;
-    this.emit('timescale_changed');
+    this.trigger('timescale_changed');
   }
 
   /**
@@ -106,6 +106,6 @@ export default class WorldController extends EventEmitter {
    */
   setTimeScale(timeScale) {
     this.timeScale = timeScale;
-    this.emit('timescale_changed');
+    this.trigger('timescale_changed');
   }
 }

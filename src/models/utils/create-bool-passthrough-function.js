@@ -9,7 +9,7 @@ export function createBoolPassthroughFunction(owner, obj, objPropertyName) {
   return function (val) {
     if (typeof val !== 'undefined') {
       obj[objPropertyName] = val ? true : false;
-      obj.emit('change:' + objPropertyName, obj[objPropertyName]);
+      obj.trigger('change:' + objPropertyName, obj[objPropertyName]);
       return owner;
     } else {
       return obj[objPropertyName];

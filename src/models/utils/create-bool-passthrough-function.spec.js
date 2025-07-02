@@ -11,7 +11,7 @@ describe('createBoolPassthroughFunction', () => {
     triggerMock = jest.fn();
     obj = {
       testProp: false,
-      emit: triggerMock,
+      trigger: triggerMock,
     };
     fn = createBoolPassthroughFunction(owner, obj, 'testProp');
   });
@@ -40,7 +40,7 @@ describe('createBoolPassthroughFunction', () => {
     expect(result).toBe(owner);
   });
 
-  it('should call emit with correct arguments when value changes', () => {
+  it('should call trigger with correct arguments when value changes', () => {
     fn(true);
     expect(triggerMock).toHaveBeenCalledWith('change:testProp', true);
     fn(false);

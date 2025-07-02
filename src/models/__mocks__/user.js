@@ -2,6 +2,7 @@ export default class MockUser {
   constructor() {
     this.on = jest.fn();
     this.off = jest.fn();
+    this.trigger = jest.fn();
     this.updateDisplayPosition = jest.fn();
     this.update = jest.fn();
     this.currentFloor = 0;

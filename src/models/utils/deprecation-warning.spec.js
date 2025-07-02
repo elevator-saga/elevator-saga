@@ -1,4 +1,4 @@
-import { deprecationWarning } from './depracation-warning';
+import { deprecationWarning } from './deprecation-warning';
 
 describe('deprecationWarning', () => {
   beforeEach(() => {
