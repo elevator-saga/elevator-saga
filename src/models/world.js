@@ -1,9 +1,4 @@
 import { EventEmitter } from 'events';
-import each from 'lodash/each';
-import map from 'lodash/map';
-import random from 'lodash/random';
-import range from 'lodash/range';
-import reduce from 'lodash/reduce';
 import Elevator from './elevator';
 import ElevatorFacade from './elevator-facade';
 import Floor from './floor';
@@ -82,10 +77,9 @@ export default class World extends EventEmitter {
       this.elevators.map((e) => e && typeof e.on)
     );
     if (this.elevators.some((e) => !e)) {
-      throw new Error('World: One or more elevators are undefined after createElevators.');
+      throw new Error('World: Failed to create all elevators');
     }
-    this.facades = map(
-      this.elevators,
+    this.facades = this.elevators.map(
       (elevator) =>
         new ElevatorFacade({
           elevator,
@@ -93,18 +87,12 @@ export default class World extends EventEmitter {
           errorHandler: this._handleUserCodeError,
         })
     );
-
-    // Bind elevator entrance availability to floors/users
-    for (let i = 0; i < this.elevators.length; ++i) {
-      this.elevators[i].on('entrance_available', (elevator) => this.handleElevAvailability(elevator));
-    }
-
-    // Bind floor button presses to elevator queueing
-    for (let i = 0; i < this.floors.length; ++i) {
-      this.floors[i].on('up_button_pressed down_button_pressed', (eventName, floor) =>
-        this.handleButtonRepressing(eventName, floor)
-      );
-    }
+    this.floors.forEach((floor) => {
+      floor.on('usercode_error', this._handleUserCodeError);
+    });
+    this.facades.forEach((facade) => {
+      facade.on('usercode_error', this._handleUserCodeError);
+    });
   }
 
   /**
@@ -119,7 +107,7 @@ export default class World extends EventEmitter {
    * @returns {Array<Floor>} An array of Floor instances.
    */
   createFloors(floorCount, floorHeight, errorHandler) {
-    return map(range(floorCount), (i) => {
+    return Array.from({ length: floorCount }, (_, i) => {
       const yPos = (floorCount - 1 - i) * floorHeight;
 
       return new Floor({ floorLevel: i, yPosition: yPos, errorHandler });
@@ -141,7 +129,7 @@ export default class World extends EventEmitter {
     elevatorCapacities = elevatorCapacities || [4];
     let currentX = 200.0;
 
-    return map(range(elevatorCount), (e, i) => {
+    return Array.from({ length: elevatorCount }, (_, i) => {
       const elevator = new Elevator({
         speedFloorsPerSec: 2.6,
         floorCount,
@@ -165,11 +153,11 @@ export default class World extends EventEmitter {
    * @returns {User} A new User instance with random attributes.
    */
   createRandomUser() {
-    const weight = random(55, 100);
+    const weight = Math.floor(Math.random() * (100 - 55 + 1)) + 55;
     const user = new User(weight);
-    if (random(40) === 0) {
+    if (Math.random() < 0.025) {
       user.displayType = 'child';
-    } else if (random(1) === 0) {
+    } else if (Math.random() < 0.5) {
       user.displayType = 'female';
     } else {
       user.displayType = 'male';
@@ -182,15 +170,15 @@ export default class World extends EventEmitter {
    */
   spawnUserRandomly() {
     const user = World.createRandomUser();
-    user.moveTo(105 + random(40), 0);
+    user.moveTo(105 + Math.floor(Math.random() * 41), 0);
     const floorCount = this.floorCount;
-    const currentFloor = random(1) === 0 ? 0 : random(floorCount - 1);
+    const currentFloor = Math.random() < 0.5 ? 0 : Math.floor(Math.random() * floorCount);
     let destinationFloor;
     if (currentFloor === 0) {
-      destinationFloor = random(1, floorCount - 1);
+      destinationFloor = Math.floor(Math.random() * (floorCount - 1)) + 1;
     } else {
-      if (random(10) === 0) {
-        destinationFloor = (currentFloor + random(1, floorCount - 1)) % floorCount;
+      if (Math.random() < 0.1) {
+        destinationFloor = (currentFloor + Math.floor(Math.random() * (floorCount - 1)) + 1) % floorCount;
       } else {
         destinationFloor = 0;
       }
@@ -224,7 +212,7 @@ export default class World extends EventEmitter {
    */
   recalculateStats() {
     this.transportedPerSec = this.transportedCounter / this.elapsedTime;
-    this.moveCount = reduce(this.elevators, (sum, elevator) => sum + elevator.moveCount, 0);
+    this.moveCount = this.elevators.reduce((sum, elevator) => sum + elevator.moveCount, 0);
     this.emit('stats_changed');
   }
 
@@ -251,7 +239,7 @@ export default class World extends EventEmitter {
    * Handle button repressing logic for floors and elevators.
    */
   handleButtonRepressing(eventName, floor) {
-    for (let i = 0, len = this.elevators.length, offset = random(len - 1); i < len; ++i) {
+    for (let i = 0, len = this.elevators.length, offset = Math.floor(Math.random() * len); i < len; ++i) {
       const elevIndex = (i + offset) % len;
       const elevator = this.elevators[elevIndex];
       if (
@@ -320,9 +308,14 @@ export default class World extends EventEmitter {
    * Unwind the world, removing all event listeners and clearing arrays.
    */
   unWind() {
-    each(this.elevators.concat(this.facades).concat(this.users).concat(this.floors).concat([this]), (obj) => {
-      obj.off('*');
-    });
+    this.elevators
+      .concat(this.facades)
+      .concat(this.users)
+      .concat(this.floors)
+      .concat([this])
+      .forEach((obj) => {
+        obj.off('*');
+      });
     this.challengeEnded = true;
     this.elevators = this.facades = this.users = this.floors = [];
   }

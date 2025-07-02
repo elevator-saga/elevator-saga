@@ -1,4 +1,3 @@
-import { map } from 'lodash';
 import { renderTemplate } from './render-template';
 
 /**
@@ -14,7 +13,9 @@ import { renderTemplate } from './render-template';
  */
 export function renderElevatorButtons(states, elevatorButtonTempl) {
   // This is a rarely executed inner-inner loop, does not need efficiency
-  return map(states, function (b, i) {
-    return renderTemplate(elevatorButtonTempl, { floorNum: i });
-  }).join('');
+  return states
+    .map(function (b, i) {
+      return renderTemplate(elevatorButtonTempl, { floorNum: i });
+    })
+    .join('');
 }

@@ -1,4 +1,3 @@
-import { map, pluck, range, times } from 'lodash';
 import { getCodeObjFromCode } from '../../models/utils';
 import { calculateFitness } from './calculate-fitness';
 import { doFitnessSuite } from './do-fitness-suite';
@@ -6,15 +5,6 @@ import { fitnessChallenges } from './index';
 import { makeAverageResult } from './make-average-result';
 
 // Mock dependencies
-jest.mock('lodash', () => ({
-  map: jest.fn((arr, fn) => (Array.isArray(arr) ? arr.map(fn) : [])),
-  pluck: jest.fn((arr, key) => arr.map((obj) => obj[key])),
-  range: jest.fn((n) => Array.from({ length: n }, (_, i) => i)),
-  times: jest.fn((n, fn) => {
-    for (let i = 0; i < n; i++) fn(i);
-  }),
-}));
-
 jest.mock('../../models/utils', () => ({
   getCodeObjFromCode: jest.fn(),
 }));
@@ -57,15 +47,6 @@ describe('doFitnessSuite', () => {
     // No error in fitness
     calculateFitness.mockImplementation((challenge) => ({ score: challenge.options.id * 10 }));
     // Simulate two runs
-    let timesCb;
-    times.mockImplementation((n, cb) => {
-      timesCb = cb;
-      for (let i = 0; i < n; i++) cb(i);
-    });
-    // map and pluck behave as normal
-    map.mockImplementation((arr, fn) => (Array.isArray(arr) ? arr.map(fn) : []));
-    pluck.mockImplementation((arr, key) => arr.map((obj) => obj[key]));
-    range.mockImplementation((n) => Array.from({ length: n }, (_, i) => i));
     makeAverageResult.mockImplementation((results) => ({ averaged: true, results }));
 
     const result = doFitnessSuite('good code', 2);
@@ -85,5 +66,48 @@ describe('doFitnessSuite', () => {
     getCodeObjFromCode.mockReturnValue({ code: 'obj' });
     const result = doFitnessSuite('good code', 1);
     expect(result).toEqual([]);
+  });
+
+  it('returns error object if calculateFitness returns falsy', () => {
+    getCodeObjFromCode.mockReturnValue({ code: 'obj' });
+    // Simulate calculateFitness returning undefined (falsy)
+    calculateFitness.mockReturnValueOnce(undefined);
+    const result = doFitnessSuite('good code', 1);
+    expect(result).toEqual({ error: 'fitness error' });
+  });
+
+  it('returns error object if calculateFitness returns null', () => {
+    getCodeObjFromCode.mockReturnValue({ code: 'obj' });
+    // Simulate calculateFitness returning null (falsy)
+    calculateFitness.mockReturnValueOnce(null);
+    const result = doFitnessSuite('good code', 1);
+    expect(result).toEqual({ error: 'fitness error' });
+  });
+
+  it('calls calculateFitness with correct arguments', () => {
+    getCodeObjFromCode.mockReturnValue({ code: 'obj' });
+    calculateFitness.mockImplementation((challenge) => ({ score: challenge.options.id * 10 }));
+    doFitnessSuite('good code', 2);
+    expect(calculateFitness).toHaveBeenCalledWith(fitnessChallenges[0], { code: 'obj' }, 1000.0 / 60.0, 12000);
+    expect(calculateFitness).toHaveBeenCalledWith(fitnessChallenges[1], { code: 'obj' }, 1000.0 / 60.0, 12000);
+  });
+
+  it('returns error if error occurs on second run', () => {
+    getCodeObjFromCode.mockReturnValue({ code: 'obj' });
+    // First run is fine, second run returns error
+    calculateFitness
+      .mockReturnValueOnce({ score: 10 })
+      .mockReturnValueOnce({ score: 20 })
+      .mockReturnValueOnce({ error: 'fail' });
+    const result = doFitnessSuite('good code', 2);
+    expect(result).toEqual({ error: 'fail' });
+  });
+
+  it('returns error if error occurs on second challenge in first run', () => {
+    getCodeObjFromCode.mockReturnValue({ code: 'obj' });
+    // First challenge ok, second challenge returns error
+    calculateFitness.mockReturnValueOnce({ score: 10 }).mockReturnValueOnce({ error: 'fail' });
+    const result = doFitnessSuite('good code', 1);
+    expect(result).toEqual({ error: 'fail' });
   });
 });

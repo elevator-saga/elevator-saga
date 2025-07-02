@@ -1,5 +1,3 @@
-import random from 'lodash/random';
-import range from 'lodash/range';
 import { timeForwarder } from '../test-helpers';
 import Elevator from './elevator';
 import ElevatorFacade from './elevator-facade';
@@ -129,13 +127,13 @@ describe('API', function () {
 
     it('normalizes load factor', function () {
       const fnNewUser = function () {
-          return { weight: random(55, 100) };
+          return { weight: Math.random() * (100 - 55) + 55 };
         },
         fnEnterElevator = function (user) {
           elevator.userEntering(user);
         };
 
-      range(20).map(fnNewUser).forEach(fnEnterElevator);
+      Array.from({ length: 20 }, (_, i) => fnNewUser(i)).forEach(fnEnterElevator);
       const load = facade.loadFactor();
       expect(load >= 0 && load <= 1).toBeTruthy();
     });

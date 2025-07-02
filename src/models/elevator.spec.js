@@ -1,5 +1,3 @@
-import each from 'lodash/each';
-import range from 'lodash/range';
 import { timeForwarder } from '../test-helpers';
 import Elevator from './elevator';
 
@@ -179,7 +177,7 @@ describe('Elevator object', () => {
   });
 
   it('doesnt seem to overshoot when stopping at floors', function () {
-    each(range(60, 120, 2.32133), function (updatesPerSecond) {
+    for (let updatesPerSecond = 60; updatesPerSecond < 120; updatesPerSecond += 2.32133) {
       const STEPSIZE = 1.0 / updatesPerSecond;
       elevator.setFloorPosition(1);
       elevator.goToFloor(3);
@@ -194,6 +192,6 @@ describe('Elevator object', () => {
         // console.log('(STEPSIZE is ' + STEPSIZE + ')'
       });
       expect(elevator.getExactCurrentFloor()).toEqual(3.0);
-    });
+    }
   });
 });

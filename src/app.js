@@ -1,10 +1,4 @@
 import { route } from '@riotjs/route';
-import debounce from 'lodash/debounce';
-import each from 'lodash/each';
-import map from 'lodash/map';
-import merge from 'lodash/merge';
-import parseInt from 'lodash/parseInt';
-import reduce from 'lodash/reduce';
 import { challenges } from './app/challenges';
 import {
   clearAll,
@@ -105,7 +99,10 @@ const createEditorAsync = () =>
       });
 
       const returnObj = observable({});
-      const autoSaver = debounce(saveCode, 1000);
+      const autoSaver = function (...args) {
+        clearTimeout(autoSaver._timeout);
+        autoSaver._timeout = setTimeout(() => saveCode.apply(this, args), 1000);
+      };
       cm.onDidChangeModelContent = autoSaver;
 
       returnObj.getCodeObj = function () {
@@ -142,9 +139,9 @@ const createEditorAsync = () =>
 const createParamsUrl = function (current, overrides) {
   return (
     '#' +
-    map(merge(current, overrides), function (val, key) {
-      return key + '=' + val;
-    }).join(',')
+    Object.entries({ ...current, ...overrides })
+      .map(([key, val]) => key + '=' + val)
+      .join(',')
   );
 };
 
@@ -210,22 +207,18 @@ $(function () {
     editor.emit('change');
 
     route(function (path) {
-      params = reduce(
-        path.split(','),
-        function (result, p) {
-          const match = p.match(/(\w+)=(\w+$)/);
-          if (match) {
-            result[match[1]] = match[2];
-          }
-          return result;
-        },
-        {}
-      );
+      params = path.split(',').reduce(function (result, p) {
+        const match = p.match(/(\w+)=(\w+$)/);
+        if (match) {
+          result[match[1]] = match[2];
+        }
+        return result;
+      }, {});
       let requestedChallenge = 0;
       let autoStart = false;
       let timeScale = parseFloat(localStorage.getItem(tsKey)) || 2.0;
 
-      each(params, function (val, key) {
+      Object.entries(params).forEach(([key, val]) => {
         if (key === 'challenge') {
           requestedChallenge = parseInt(val) - 1;
           if (requestedChallenge < 0 || requestedChallenge >= challenges.length) {

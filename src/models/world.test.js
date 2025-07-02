@@ -3,15 +3,6 @@ import MockElevatorFacade from './__mocks__/elevator-facade';
 import MockFloor from './__mocks__/floor';
 import MockUser from './__mocks__/user';
 import World from './world';
-const reduce = require('lodash/reduce');
-
-// Mocks for dependencies
-
-jest.mock('lodash/each', () => jest.fn((arr, fn) => arr.forEach(fn)));
-jest.mock('lodash/map', () => jest.fn((arr, fn) => Array.prototype.map.call(arr, fn)));
-jest.mock('lodash/random', () => jest.fn(() => 0));
-jest.mock('lodash/range', () => jest.fn((n) => Array.from({ length: n }, (_, i) => i)));
-jest.mock('lodash/reduce', () => jest.fn((arr, fn, init) => arr.reduce(fn, init)));
 
 jest.mock('./floor', () => {
   return {
@@ -137,7 +128,6 @@ describe('World', () => {
     world.elevators = [{ moveCount: 2 }, { moveCount: 3 }];
     world.emit = jest.fn();
     // Patch reduce to sum moveCounts
-    reduce.mockImplementation((arr, fn, init) => arr.reduce(fn, init));
 
     // Act
     world.recalculateStats();

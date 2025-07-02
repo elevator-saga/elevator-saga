@@ -1,7 +1,5 @@
 import { EventEmitter } from 'events';
-import first from 'lodash/first';
-import last from 'lodash/last';
-import tail from 'lodash/tail';
+import Elevator from './elevator';
 import { createBoolPassthroughFunction, epsilonEquals, limitNumber } from './utils';
 
 /**
@@ -10,7 +8,7 @@ import { createBoolPassthroughFunction, epsilonEquals, limitNumber } from './uti
  *
  * @class ElevatorFacade
  * @param {Object} obj - The observable object to extend.
- * @param {Object} elevator - The underlying elevator instance to wrap.
+ * @param {Elevator} elevator - The underlying elevator instance to wrap.
  * @param {number} floorCount - The total number of floors in the building.
  * @param {Function} errorHandler - Callback to handle errors thrown during event triggering.
  *
@@ -49,9 +47,9 @@ export default class ElevatorFacade extends EventEmitter {
 
     // Bind elevator events to facade
     this.elevator.on('stopped', (position) => {
-      if (this.destinationQueue.length && epsilonEquals(first(this.destinationQueue), position)) {
+      if (this.destinationQueue.length && Math.abs(this.destinationQueue[0] - position) < 1e-6) {
         // Reached the destination, so remove element at front of queue
-        this.destinationQueue = tail(this.destinationQueue);
+        this.destinationQueue = this.destinationQueue.slice(1);
         if (this.elevator.isOnAFloor()) {
           this.elevator.wait(1, () => {
             this.checkDestinationQueue();
@@ -89,7 +87,7 @@ export default class ElevatorFacade extends EventEmitter {
   checkDestinationQueue() {
     if (!this.elevator.isBusy()) {
       if (this.destinationQueue.length) {
-        this.elevator.goToFloor(first(this.destinationQueue));
+        this.elevator.goToFloor(this.destinationQueue[0]);
       } else {
         this._tryTrigger('idle');
       }
@@ -107,7 +105,9 @@ export default class ElevatorFacade extends EventEmitter {
     floorNum = limitNumber(Number(floorNum), 0, this.floorCount - 1);
     // Auto-prevent immediately duplicate destinations
     if (this.destinationQueue.length) {
-      const adjacentElement = forceNow ? first(this.destinationQueue) : last(this.destinationQueue);
+      const adjacentElement = forceNow
+        ? this.destinationQueue[0]
+        : this.destinationQueue[this.destinationQueue.length - 1];
       if (epsilonEquals(floorNum, adjacentElement)) {
         return;
       }

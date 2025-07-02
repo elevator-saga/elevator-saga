@@ -1,5 +1,4 @@
 import observable from '@riotjs/observable';
-import debounce from 'lodash/debounce';
 import { getCodeObjFromCode } from '../models/utils';
 import { typeDeclarations } from './types';
 
@@ -90,6 +89,14 @@ export function createEditorAsync() {
       });
 
       const returnObj = observable({});
+      // Inline debounce function
+      function debounce(func, wait) {
+        let timeout;
+        return function (...args) {
+          clearTimeout(timeout);
+          timeout = setTimeout(() => func.apply(this, args), wait);
+        };
+      }
       const autoSaver = debounce(saveCode, 1000);
       cm.onDidChangeModelContent = autoSaver;
 

@@ -35,7 +35,6 @@
   },
   "dependencies": {
     "@riotjs/route": "^9.2.2",
-    "lodash": "^4.17.21",
     "typescript": "^5.8.3"
   },
   "devDependencies": {

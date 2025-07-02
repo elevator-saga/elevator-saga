@@ -1,4 +1,3 @@
-import { map } from 'lodash';
 import { renderTemplate } from './render-template';
 
 import World from '../../models/world';
@@ -28,7 +27,7 @@ export function presentWorld($world, world, floorTempl, elevatorTempl, elevatorB
   $world.css('height', world.floorHeight * world.floors.length);
 
   $world.append(
-    map(world.floors, function (f) {
+    world.floors.map(function (f) {
       const $floor = $(renderTemplate(floorTempl, f));
       const $up = $floor.find('.up');
       const $down = $floor.find('.down');
@@ -49,7 +48,7 @@ export function presentWorld($world, world, floorTempl, elevatorTempl, elevatorB
   $world.find('.floor').last().find('.up').addClass('invisible');
 
   $world.append(
-    map(world.elevators, function (e) {
+    world.elevators.map(function (e) {
       return setUpElevator(e, elevatorTempl, elevatorButtonTempl);
     })
   );

@@ -1,10 +1,7 @@
-import map from 'lodash/map';
-import random from 'lodash/random';
-import range from 'lodash/range';
-import reduce from 'lodash/reduce';
 import Movable from './movable';
 import {
   accelerationNeededToAchieveChangeDistance,
+  deprecationWarning,
   distanceNeededToAchieveSpeed,
   epsilonEquals,
   limitNumber,
@@ -70,14 +67,10 @@ export default class Elevator extends Movable {
 
     this.currentFloor = 0;
     this.previousTruncFutureFloorIfStopped = 0;
-    this.buttonStates = map(range(this.floorCount), function (e, i) {
-      return false;
-    });
+    this.buttonStates = Array.from({ length: this.floorCount }, () => false);
     this.moveCount = 0;
     this.removed = false;
-    this.userSlots = map(range(this.maxUsers), function (user, i) {
-      return { pos: [2 + i * 10, 30], user: null };
-    });
+    this.userSlots = Array.from({ length: this.maxUsers }, (_, i) => ({ pos: [2 + i * 10, 30], user: null }));
     this.width = this.maxUsers * 10;
     this.destinationY = this.getYPosOfFloor(this.currentFloor);
 
@@ -118,7 +111,7 @@ export default class Elevator extends Movable {
    * @returns {(Object|boolean)} The position of the assigned slot if successful, or false if no slots are available.
    */
   userEntering(user) {
-    const randomOffset = random(this.userSlots.length - 1);
+    const randomOffset = Math.floor(Math.random() * this.userSlots.length);
     for (let i = 0; i < this.userSlots.length; i++) {
       const slot = this.userSlots[(i + randomOffset) % this.userSlots.length];
       if (slot.user === null) {
@@ -401,13 +394,11 @@ export default class Elevator extends Movable {
    * @returns {number} The load factor as a decimal between 0 and 1.
    */
   getLoadFactor() {
-    const load = reduce(
-      this.userSlots,
-      function (sum, slot) {
-        return sum + (slot.user ? slot.user.weight : 0);
-      },
-      0
-    );
+    let load = 0;
+    for (let i = 0; i < this.userSlots.length; i++) {
+      const user = this.userSlots[i].user;
+      load += user ? user.weight : 0;
+    }
     return load / (this.maxUsers * 100);
   }
 

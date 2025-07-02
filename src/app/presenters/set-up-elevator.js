@@ -1,4 +1,3 @@
-import { map } from 'lodash';
 import { renderTemplate } from './render-template';
 
 import { renderElevatorButtons } from './render-elevator-buttons';
@@ -24,7 +23,7 @@ export function setUpElevator(elevator, elevatorTempl, elevatorButtonTempl) {
   const $elevator = $(renderTemplate(elevatorTempl, { e: elevator }));
   const elem_elevator = $elevator.get(0);
   $elevator.find('.buttonindicator').html(renderElevatorButtons(elevator.buttonStates, elevatorButtonTempl));
-  const $buttons = map($elevator.find('.buttonindicator').children(), function (c) {
+  const $buttons = Array.from($elevator.find('.buttonindicator').children()).map(function (c) {
     return $(c);
   });
   const elem_floorindicator = $elevator.find('.floorindicator > span').get(0);
