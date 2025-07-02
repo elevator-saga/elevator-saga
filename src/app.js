@@ -75,7 +75,7 @@ const createEditorAsync = () =>
       const saveCode = function () {
         localStorage.setItem(lsKey, cm.getValue());
         $('#save_message').text('Code saved ' + new Date().toTimeString());
-        returnObj.trigger('change');
+        returnObj.emit('change');
       };
 
       const existingCode = localStorage.getItem(lsKey);
@@ -115,9 +115,9 @@ const createEditorAsync = () =>
         let obj;
         try {
           obj = getCodeObjFromCode(code);
-          returnObj.trigger('code_success');
+          returnObj.emit('code_success');
         } catch (e) {
-          returnObj.trigger('usercode_error', e);
+          returnObj.emit('usercode_error', e);
           return null;
         }
         return obj;
@@ -133,7 +133,7 @@ const createEditorAsync = () =>
       };
 
       $('#button_apply').click(function () {
-        returnObj.trigger('apply_code');
+        returnObj.emit('apply_code');
       });
 
       resolve(returnObj);
@@ -208,7 +208,7 @@ $(function () {
       //     $("#fitness_message").html(message).removeClass("faded");
       // });
     });
-    editor.trigger('change');
+    editor.emit('change');
 
     route(function (path) {
       params = reduce(

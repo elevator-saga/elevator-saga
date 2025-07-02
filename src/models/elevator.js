@@ -84,14 +84,14 @@ export default class Elevator extends Movable {
     this.on('new_state', newElevStateHandler);
 
     this.on('change:goingUpIndicator', () => {
-      this.trigger('indicatorstate_change', {
+      this.emit('indicatorstate_change', {
         up: this.goingUpIndicator,
         down: this.goingDownIndicator,
       });
     });
 
     this.on('change:goingDownIndicator', () => {
-      this.trigger('indicatorstate_change', {
+      this.emit('indicatorstate_change', {
         up: this.goingUpIndicator,
         down: this.goingDownIndicator,
       });
@@ -142,8 +142,8 @@ export default class Elevator extends Movable {
     const prev = this.buttonStates[floorNumber];
     this.buttonStates[floorNumber] = true;
     if (!prev) {
-      this.trigger('floor_button_pressed', floorNumber);
-      this.trigger('floor_buttons_changed', this.buttonStates, floorNumber);
+      this.emit('floor_button_pressed', floorNumber);
+      this.emit('floor_buttons_changed', this.buttonStates, floorNumber);
     }
   }
 
@@ -235,16 +235,16 @@ export default class Elevator extends Movable {
    * - Triggers 'entrance_available' to allow new passengers to enter.
    */
   handleDestinationArrival() {
-    this.trigger('stopped', this.getExactCurrentFloor());
+    this.emit('stopped', this.getExactCurrentFloor());
 
     if (this.isOnAFloor()) {
       this.buttonStates[this.currentFloor] = false;
-      this.trigger('floor_buttons_changed', this.buttonStates, this.currentFloor);
-      this.trigger('stopped_at_floor', this.currentFloor);
+      this.emit('floor_buttons_changed', this.buttonStates, this.currentFloor);
+      this.emit('stopped_at_floor', this.currentFloor);
       // Need to allow users to get off first, so that new ones
       // can enter on the same floor
-      this.trigger('exit_available', this.currentFloor, this);
-      this.trigger('entrance_available', this);
+      this.emit('exit_available', this.currentFloor, this);
+      this.emit('entrance_available', this);
     }
   }
 
@@ -456,7 +456,7 @@ export default class Elevator extends Movable {
     if (currentFloor !== this.currentFloor) {
       this.moveCount++;
       this.currentFloor = currentFloor;
-      this.trigger('new_current_floor', this.currentFloor);
+      this.emit('new_current_floor', this.currentFloor);
     }
 
     const futureTruncFloorIfStopped = Math.trunc(this.getExactFutureFloorIfStopped());
@@ -464,7 +464,7 @@ export default class Elevator extends Movable {
       const floorBeingPassed = Math.round(this.getExactFutureFloorIfStopped());
       if (this.getDestinationFloor() !== floorBeingPassed && this.isApproachingFloor(floorBeingPassed)) {
         const direction = this.velocityY > 0.0 ? 'down' : 'up';
-        this.trigger('passing_floor', floorBeingPassed, direction);
+        this.emit('passing_floor', floorBeingPassed, direction);
       }
     }
     this.previousTruncFutureFloorIfStopped = futureTruncFloorIfStopped;

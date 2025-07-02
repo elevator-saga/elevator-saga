@@ -23,7 +23,7 @@ describe('User', () => {
     user.moveTo = mockMoveTo;
     user.moveToOverTime = mockMoveToOverTime;
     user.setParent = mockSetParent;
-    user.trigger = mockTrigger;
+    user.emit = mockTrigger;
     user.off = mockOff;
     user.isBusy = mockIsBusy;
     user.x = 10;
@@ -159,7 +159,7 @@ describe('User', () => {
       user.elevatorAvailable(elevator, floor);
 
       expect(user.setParent).toHaveBeenCalledWith(elevator);
-      expect(user.trigger).toHaveBeenCalledWith('entered_elevator', elevator);
+      expect(user.emit).toHaveBeenCalledWith('entered_elevator', elevator);
       expect(user.moveToOverTime).toHaveBeenCalledWith(1, 2, 1, undefined, expect.any(Function));
       expect(elevator.pressFloorButton).toHaveBeenCalledWith(user.destinationFloor);
       expect(elevator.on).toHaveBeenCalledWith('exit_available', expect.any(Function));

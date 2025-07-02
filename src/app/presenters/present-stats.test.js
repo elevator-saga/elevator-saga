@@ -48,7 +48,7 @@ describe('presentStats', () => {
       on: jest.fn((event, cb) => {
         listeners[event] = cb;
       }),
-      trigger: jest.fn((event) => {
+      emit: jest.fn((event) => {
         if (listeners[event]) listeners[event]();
       }),
     };
@@ -87,12 +87,12 @@ describe('presentStats', () => {
     expect(elements.movecount.textContent).toBe(1234);
   });
 
-  it('should register event listener and trigger stats_display_changed', () => {
+  it('should register event listener and emit stats_display_changed', () => {
     // Act
     presentStats($parent, world);
 
     // Assert
     expect(world.on).toHaveBeenCalledWith('stats_display_changed', expect.any(Function));
-    expect(world.trigger).toHaveBeenCalledWith('stats_display_changed');
+    expect(world.emit).toHaveBeenCalledWith('stats_display_changed');
   });
 });

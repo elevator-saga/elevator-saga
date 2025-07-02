@@ -12,7 +12,7 @@ import World from '../../models/world';
  *   @param {number} world.maxWaitTime - The maximum wait time in seconds.
  *   @param {number} world.moveCount - The total number of moves made.
  *   @function world.on - Registers an event listener.
- *   @function world.trigger - Triggers an event.
+ *   @function world.emit - Triggers an event.
  */
 export function presentStats($parent, world) {
   const elem_transportedcounter = $parent.find('.transportedcounter').get(0),
@@ -30,5 +30,5 @@ export function presentStats($parent, world) {
     elem_maxwaittime.textContent = world.maxWaitTime.toFixed(1) + 's';
     elem_movecount.textContent = world.moveCount;
   });
-  world.trigger('stats_display_changed');
+  world.emit('stats_display_changed');
 }

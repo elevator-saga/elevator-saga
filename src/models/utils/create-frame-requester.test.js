@@ -6,11 +6,11 @@ describe('createFrameRequester', () => {
     expect(requester.currentT).toBe(0);
   });
 
-  it('should increment currentT by timeStep on trigger', () => {
+  it('should increment currentT by timeStep on emit', () => {
     const requester = createFrameRequester(50);
-    requester.trigger();
+    requester.emit();
     expect(requester.currentT).toBe(50);
-    requester.trigger();
+    requester.emit();
     expect(requester.currentT).toBe(100);
   });
 
@@ -18,9 +18,9 @@ describe('createFrameRequester', () => {
     const requester = createFrameRequester(20);
     const cb = jest.fn();
     requester.register(cb);
-    requester.trigger();
+    requester.emit();
     expect(cb).toHaveBeenCalledWith(20);
-    requester.trigger();
+    requester.emit();
     expect(cb).toHaveBeenCalledWith(40);
     expect(cb).toHaveBeenCalledTimes(2);
   });
@@ -28,7 +28,7 @@ describe('createFrameRequester', () => {
   it('should not call callback if not registered', () => {
     const requester = createFrameRequester(10);
     const cb = jest.fn();
-    requester.trigger();
+    requester.emit();
     expect(cb).not.toHaveBeenCalled();
   });
 
@@ -37,9 +37,9 @@ describe('createFrameRequester', () => {
     const cb1 = jest.fn();
     const cb2 = jest.fn();
     requester.register(cb1);
-    requester.trigger(); // cb1 called with 5
+    requester.emit(); // cb1 called with 5
     requester.register(cb2);
-    requester.trigger(); // cb2 called with 10
+    requester.emit(); // cb2 called with 10
     expect(cb1).toHaveBeenCalledTimes(1);
     expect(cb2).toHaveBeenCalledWith(10);
     expect(cb2).toHaveBeenCalledTimes(1);

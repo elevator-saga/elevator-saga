@@ -1,4 +1,4 @@
-import observable from '@riotjs/observable';
+import { EventEmitter } from 'events';
 import { newGuard } from './utils';
 
 const EPSILON = 0.00001;
@@ -80,9 +80,9 @@ const _tmpPosStorage = [0, 0];
  *   @method getWorldPosition(storage) - Computes the object's world position, considering parent hierarchy.
  *   @method setParent(movableParent) - Sets or removes the object's parent, preserving world position.
  */
-export default class Movable {
+export default class Movable extends EventEmitter {
   constructor() {
-    observable(this);
+    super();
     newGuard(this, Movable);
     this.x = 0.0;
     this.y = 0.0;
@@ -90,14 +90,14 @@ export default class Movable {
     this.worldX = 0.0;
     this.worldY = 0.0;
     this.currentTask = null;
-    this.trigger('new_state', this);
+    this.emit('new_state', this);
   }
 
   /**
    * Updates the display position of the object by retrieving its current world position.
    * If the position has changed or if `forceTrigger` is true, triggers a 'new_display_state' event.
    *
-   * @param {boolean} [forceTrigger] - If true, forces the trigger of the 'new_display_state' event even if the position hasn't changed.
+   * @param {boolean} [forceTrigger] - If true, forces the emit of the 'new_display_state' event even if the position hasn't changed.
    */
   updateDisplayPosition(forceTrigger) {
     this.getWorldPosition(_tmpPosStorage);
@@ -106,7 +106,7 @@ export default class Movable {
     this.worldX = _tmpPosStorage[0];
     this.worldY = _tmpPosStorage[1];
     if (oldX !== this.worldX || oldY !== this.worldY || forceTrigger === true) {
-      this.trigger('new_display_state', this);
+      this.emit('new_display_state', this);
     }
   }
 
@@ -125,7 +125,7 @@ export default class Movable {
     if (newY !== null) {
       this.y = newY;
     }
-    this.trigger('new_state', this);
+    this.emit('new_state', this);
   }
 
   /**
@@ -137,7 +137,7 @@ export default class Movable {
   moveToFast(newX, newY) {
     this.x = newX;
     this.y = newY;
-    this.trigger('new_state', this);
+    this.emit('new_state', this);
   }
 
   /**

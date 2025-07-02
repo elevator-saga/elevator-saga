@@ -15,7 +15,7 @@ describe('World controller', function () {
       update: function (dt) {},
       init: function () {},
       updateDisplayPositions: function () {},
-      trigger: function () {},
+      emit: function () {},
     };
     fakeWorld = observable(fakeWorld);
     fakeCodeObj = { init: function () {}, update: function () {} };
@@ -25,30 +25,30 @@ describe('World controller', function () {
 
   it('does not update world on first animation frame', function () {
     controller.start(fakeWorld, fakeCodeObj, frameRequester.register, true);
-    frameRequester.trigger();
+    frameRequester.emit();
     expect(fakeWorld.update).not.toHaveBeenCalled();
   });
 
   it('calls world update with correct delta t', function () {
     controller.start(fakeWorld, fakeCodeObj, frameRequester.register, true);
-    frameRequester.trigger();
-    frameRequester.trigger();
+    frameRequester.emit();
+    frameRequester.emit();
     expect(fakeWorld.update).toHaveBeenCalledWith(0.01);
   });
 
   it('calls world update with scaled delta t', function () {
     controller.timeScale = 2.0;
     controller.start(fakeWorld, fakeCodeObj, frameRequester.register, true);
-    frameRequester.trigger();
-    frameRequester.trigger();
+    frameRequester.emit();
+    frameRequester.emit();
     expect(fakeWorld.update).toHaveBeenCalledWith(0.02);
   });
 
   it('does not update world when paused', function () {
     controller.start(fakeWorld, fakeCodeObj, frameRequester.register, true);
     controller.isPaused = true;
-    frameRequester.trigger();
-    frameRequester.trigger();
+    frameRequester.emit();
+    frameRequester.emit();
     expect(fakeWorld.update).not.toHaveBeenCalled();
   });
 });

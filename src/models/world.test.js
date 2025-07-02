@@ -10,7 +10,7 @@ jest.mock('@riotjs/observable', () => {
   return jest.fn((obj) => {
     obj.on = jest.fn();
     obj.off = jest.fn();
-    obj.trigger = jest.fn();
+    obj.emit = jest.fn();
   });
 });
 // jest.mock('lodash/clone', () => jest.fn((obj) => ({ ...obj })));
@@ -122,7 +122,7 @@ describe('World', () => {
     // Arrange
     const world = new World({});
     world.elapsedTime = 5;
-    world.trigger = jest.fn();
+    world.emit = jest.fn();
     const user = new MockUser();
 
     // Act
@@ -132,17 +132,17 @@ describe('World', () => {
     expect(world.users).toContain(user);
     expect(user.updateDisplayPosition).toHaveBeenCalledWith(true);
     expect(user.spawnTimestamp).toBe(5);
-    expect(world.trigger).toHaveBeenCalledWith('new_user', user);
+    expect(world.emit).toHaveBeenCalledWith('new_user', user);
     expect(user.on).toHaveBeenCalled();
   });
 
-  it('should recalculate stats and trigger stats_changed', () => {
+  it('should recalculate stats and emit stats_changed', () => {
     // Arrange
     const world = new World({});
     world.transportedCounter = 10;
     world.elapsedTime = 2;
     world.elevators = [{ moveCount: 2 }, { moveCount: 3 }];
-    world.trigger = jest.fn();
+    world.emit = jest.fn();
     // Patch reduce to sum moveCounts
     reduce.mockImplementation((arr, fn, init) => arr.reduce(fn, init));
 
@@ -152,7 +152,7 @@ describe('World', () => {
     // Assert
     expect(world.transportedPerSec).toBe(5);
     expect(world.moveCount).toBe(5);
-    expect(world.trigger).toHaveBeenCalledWith('stats_changed');
+    expect(world.emit).toHaveBeenCalledWith('stats_changed');
   });
 
   it('should handle elevator availability for floors and users', () => {

@@ -34,7 +34,6 @@
     "test": "npx jest --runInBand --config=jest.config.js"
   },
   "dependencies": {
-    "@riotjs/observable": "^4.1.1",
     "@riotjs/route": "^9.2.2",
     "@riotjs/ssr": "^9.0.0",
     "lodash": "^4.17.21",

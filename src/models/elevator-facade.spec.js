@@ -36,13 +36,13 @@ describe('API', function () {
     describe('events', function () {
       it('propagates stopped_at_floor event', function () {
         facade.on('stopped_at_floor', handlers.someHandler);
-        elevator.trigger('stopped_at_floor', 3);
+        elevator.emit('stopped_at_floor', 3);
         expect(handlers.someHandler.mock.calls[handlers.someHandler.mock.calls.length - 1].slice(0, 1)).toEqual([3]);
       });
 
       it('does not propagate stopped event', function () {
         facade.on('stopped', handlers.someHandler);
-        elevator.trigger('stopped', 3.1);
+        elevator.emit('stopped', 3.1);
         expect(handlers.someHandler).not.toHaveBeenCalled();
       });
 
@@ -56,10 +56,10 @@ describe('API', function () {
         facade.on('idle', handlers.someHandler);
         facade.destinationQueue = [11, 21];
         elevator.y = 11;
-        elevator.trigger('stopped', elevator.y);
+        elevator.emit('stopped', elevator.y);
         expect(handlers.someHandler).not.toHaveBeenCalled();
         elevator.y = 21;
-        elevator.trigger('stopped', elevator.y);
+        elevator.emit('stopped', elevator.y);
         expect(handlers.someHandler).toHaveBeenCalled();
       });
     });

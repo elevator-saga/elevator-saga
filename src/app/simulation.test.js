@@ -8,7 +8,7 @@ jest.mock('@riotjs/observable', () => {
   return jest.fn((obj) => {
     obj.on = jest.fn();
     obj.off = jest.fn();
-    obj.trigger = jest.fn();
+    obj.emit = jest.fn();
   });
 });
 
@@ -54,7 +54,7 @@ describe('Simulation', () => {
     // global.localStorage = window.localStorage = { setItem: jest.fn() };
     // mockWorldController = new MockWorldController();
     // mockWorld = new MockWorld();
-    mockEditor = { getCodeObj: jest.fn(() => ({})), trigger: jest.fn() };
+    mockEditor = { getCodeObj: jest.fn(() => ({})), emit: jest.fn() };
     mockChallenges = [
       {
         options: { foo: 'bar' },
@@ -106,7 +106,7 @@ describe('Simulation', () => {
 
     // Reset mocks
     mockEditor.getCodeObj.mockClear();
-    mockEditor.trigger.mockClear();
+    mockEditor.emit.mockClear();
 
     simulation = new Simulation(deps);
     // simulation.worldController = new MockWorldController();

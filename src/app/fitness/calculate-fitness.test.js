@@ -33,7 +33,7 @@ describe('calculateFitness', () => {
     // Mock frameRequester
     mockFrameRequester = {
       register: jest.fn(),
-      trigger: jest.fn(),
+      emit: jest.fn(),
     };
     createFrameRequester.mockReturnValue(mockFrameRequester);
 
@@ -55,9 +55,9 @@ describe('calculateFitness', () => {
     // Simulate usercode_error event (not triggered in this test)
     mockController.on.mockImplementation(() => {});
 
-    // Simulate frameRequester.trigger calling stats_changed at step 2
+    // Simulate frameRequester.emit calling stats_changed at step 2
     let triggerCount = 0;
-    mockFrameRequester.trigger.mockImplementation(() => {
+    mockFrameRequester.emit.mockImplementation(() => {
       triggerCount++;
       if (triggerCount === 2 && statsChangedHandler) statsChangedHandler();
     });
@@ -67,7 +67,7 @@ describe('calculateFitness', () => {
     expect(World).toHaveBeenCalledWith(challenge.options);
     expect(WorldController).toHaveBeenCalledWith(100);
     expect(mockController.start).toHaveBeenCalledWith(mockWorld, codeObj, mockFrameRequester.register, true);
-    expect(mockFrameRequester.trigger).toHaveBeenCalledTimes(5);
+    expect(mockFrameRequester.emit).toHaveBeenCalledTimes(5);
 
     expect(result.transportedPerSec).toBe(2.5);
     expect(result.avgWaitTime).toBe(10);
@@ -82,7 +82,7 @@ describe('calculateFitness', () => {
     });
     mockWorld.on.mockImplementation(() => {});
 
-    mockFrameRequester.trigger.mockImplementation(() => {
+    mockFrameRequester.emit.mockImplementation(() => {
       if (usercodeErrorHandler) usercodeErrorHandler(new Error('User code failed'));
     });
 
@@ -99,7 +99,7 @@ describe('calculateFitness', () => {
     });
     mockWorld.on.mockImplementation(() => {});
 
-    mockFrameRequester.trigger.mockImplementation(() => {
+    mockFrameRequester.emit.mockImplementation(() => {
       if (usercodeErrorHandler) usercodeErrorHandler('string error');
     });
 
@@ -114,14 +114,14 @@ describe('calculateFitness', () => {
     mockController.on.mockImplementation(() => {});
 
     let callCount = 0;
-    mockFrameRequester.trigger.mockImplementation(() => {
+    mockFrameRequester.emit.mockImplementation(() => {
       callCount++;
       if (callCount === 2) mockController.isPaused = true;
     });
 
     const result = calculateFitness(challenge, codeObj, 100, 10);
 
-    expect(mockFrameRequester.trigger).toHaveBeenCalledTimes(2);
+    expect(mockFrameRequester.emit).toHaveBeenCalledTimes(2);
     expect(result).toEqual({});
   });
 });

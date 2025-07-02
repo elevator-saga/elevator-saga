@@ -116,7 +116,7 @@ describe('presentWorld', () => {
     presentWorld($world, world, floorTempl, elevatorTempl, elevatorButtonTempl, userTempl);
 
     const $user = $world.find('.user');
-    user.on.mock.calls[0][1](); // Trigger new_display_state
+    user.on.mock.calls[0][1](); // emit new_display_state
 
     expect($user.hasClass('leaving')).toBe(false); // Assuming done is false
   });

@@ -4,19 +4,19 @@ jest.mock('@riotjs/observable', () => {
   return jest.fn((obj) => {
     obj.on = jest.fn();
     obj.off = jest.fn();
-    obj.trigger = jest.fn();
+    obj.emit = jest.fn();
   });
 });
 
 describe('Floor', () => {
   let floor, errorHandler, triggeredEvents;
 
-  // Mock observable's trigger method
+  // Mock observable's emit method
   beforeEach(() => {
     triggeredEvents = [];
     errorHandler = jest.fn();
     floor = new Floor({ floorLevel: 2, yPosition: 100, errorHandler });
-    jest.spyOn(floor, 'trigger').mockImplementation((event, ...args) => {
+    jest.spyOn(floor, 'emit').mockImplementation((event, ...args) => {
       triggeredEvents.push({ event, args });
     });
   });
@@ -35,7 +35,7 @@ describe('Floor', () => {
   });
 
   describe('_tryTrigger', () => {
-    it('calls trigger with correct arguments', () => {
+    it('calls emit with correct arguments', () => {
       // Act
       floor._tryTrigger('foo', 1, 2, 3, 4);
 
@@ -43,9 +43,9 @@ describe('Floor', () => {
       expect(triggeredEvents).toEqual([{ event: 'foo', args: [1, 2, 3, 4] }]);
     });
 
-    it('calls errorHandler if trigger throws', () => {
+    it('calls errorHandler if emit throws', () => {
       // Arrange
-      floor.trigger = () => {
+      floor.emit = () => {
         throw new Error('fail');
       };
 
@@ -70,7 +70,7 @@ describe('Floor', () => {
       ]);
     });
 
-    it('does not trigger events if up button already activated', () => {
+    it('does not emit events if up button already activated', () => {
       // Arrange
       floor.buttonStates.up = 'activated';
 
@@ -95,7 +95,7 @@ describe('Floor', () => {
       ]);
     });
 
-    it('does not trigger events if down button already activated', () => {
+    it('does not emit events if down button already activated', () => {
       // Arrange
       floor.buttonStates.down = 'activated';
 
@@ -227,7 +227,7 @@ describe('Floor', () => {
       ]);
     });
 
-    it('elevatorAvailable does not trigger if no buttons pressed', () => {
+    it('elevatorAvailable does not emit if no buttons pressed', () => {
       // Arrange
       floor.elevatorAvailable({ goingUpIndicator: true, goingDownIndicator: true });
 

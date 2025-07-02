@@ -34,7 +34,7 @@ export function calculateFitness(challenge, codeObj, stepSize, stepsToSimulate) 
   controller.start(world, codeObj, frameRequester.register, true);
 
   for (let stepCount = 0; stepCount < stepsToSimulate && !controller.isPaused; stepCount++) {
-    frameRequester.trigger();
+    frameRequester.emit();
   }
   return result;
 }

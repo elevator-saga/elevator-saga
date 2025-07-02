@@ -45,9 +45,9 @@ export function setUpElevator(elevator, elevatorTempl, elevatorButtonTempl) {
     $elevator.find('.up').toggleClass('activated', indicatorStates.up);
     $elevator.find('.down').toggleClass('activated', indicatorStates.down);
   });
-  elevator.trigger('new_state', elevator);
-  elevator.trigger('new_display_state', elevator);
-  elevator.trigger('new_current_floor', elevator.currentFloor);
+  elevator.emit('new_state', elevator);
+  elevator.emit('new_display_state', elevator);
+  elevator.emit('new_current_floor', elevator.currentFloor);
 
   return $elevator;
 }

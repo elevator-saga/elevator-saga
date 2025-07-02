@@ -1,4 +1,4 @@
-import observable from '@riotjs/observable';
+import { EventEmitter } from 'events';
 
 /**
  * Controls the simulation loop and manages the state of the world.
@@ -19,12 +19,12 @@ import observable from '@riotjs/observable';
  * const controller = new WorldController(0.1);
  * controller.start(world, userCode, requestAnimationFrame, true);
  */
-export default class WorldController {
+export default class WorldController extends EventEmitter {
   /**
    * @param {number} dtMax - Maximum delta time per update.
    */
   constructor(dtMax) {
-    observable(this);
+    super();
     this.dtMax = dtMax;
     this.timeScale = 1.0;
     this.isPaused = true;
@@ -67,7 +67,7 @@ export default class WorldController {
           scaledDt -= this.dtMax;
         }
         world.updateDisplayPositions();
-        world.trigger('stats_display_changed');
+        world.emit('stats_display_changed');
       }
       lastT = t;
       if (!world.challengeEnded) {
@@ -87,7 +87,7 @@ export default class WorldController {
   handleUserCodeError(e) {
     this.setPaused(true);
     console.log('Usercode error on update', e);
-    this.trigger('usercode_error', e);
+    this.emit('usercode_error', e);
   }
 
   /**
@@ -96,7 +96,7 @@ export default class WorldController {
    */
   setPaused(paused) {
     this.isPaused = paused;
-    this.trigger('timescale_changed');
+    this.emit('timescale_changed');
   }
 
   /**
@@ -105,6 +105,6 @@ export default class WorldController {
    */
   setTimeScale(timeScale) {
     this.timeScale = timeScale;
-    this.trigger('timescale_changed');
+    this.emit('timescale_changed');
   }
 }

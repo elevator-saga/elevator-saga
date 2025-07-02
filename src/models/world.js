@@ -1,4 +1,4 @@
-import observable from '@riotjs/observable';
+import { EventEmitter } from 'events';
 import each from 'lodash/each';
 import map from 'lodash/map';
 import random from 'lodash/random';
@@ -40,7 +40,7 @@ import User from './user';
  * @example
  * const world = new World({ floorHeight: 60, floorCount: 5, elevatorCount: 3, spawnRate: 0.7 });
  */
-export default class World {
+export default class World extends EventEmitter {
   /**
    * @param {Object} options - World configuration options.
    * @param {number} options.floorHeight
@@ -50,7 +50,10 @@ export default class World {
    * @param {Array<number>} [options.elevatorCapacities]
    */
   constructor(options) {
+    super();
     const defaultOptions = { ...options, floorHeight: 50, floorCount: 4, elevatorCount: 2, spawnRate: 0.5 };
+
+    console.log('World: Creating world with options:', defaultOptions);
 
     this.floorCount = defaultOptions.floorCount;
     this.spawnRate = defaultOptions.spawnRate;
@@ -64,9 +67,7 @@ export default class World {
     this.challengeEnded = false;
     this.users = [];
 
-    observable(this);
-
-    this._handleUserCodeError = (e) => this.trigger('usercode_error', e);
+    this._handleUserCodeError = (e) => this.emit('usercode_error', e);
 
     this.floors = this.createFloors(defaultOptions.floorCount, this.floorHeight, this._handleUserCodeError);
     this.elevators = this.createElevators(
@@ -75,9 +76,22 @@ export default class World {
       this.floorHeight,
       defaultOptions.elevatorCapacities
     );
+    // Debug: log elevator types and check for .on method
+    console.log(
+      'Elevators:',
+      this.elevators.map((e) => e && typeof e.on)
+    );
+    if (this.elevators.some((e) => !e)) {
+      throw new Error('World: One or more elevators are undefined after createElevators.');
+    }
     this.facades = map(
       this.elevators,
-      (elevator) => new ElevatorFacade({}, elevator, defaultOptions.floorCount, this._handleUserCodeError)
+      (elevator) =>
+        new ElevatorFacade({
+          elevator,
+          floorCount: defaultOptions.floorCount,
+          errorHandler: this._handleUserCodeError,
+        })
     );
 
     // Bind elevator entrance availability to floors/users
@@ -193,7 +207,7 @@ export default class World {
     this.users.push(user);
     user.updateDisplayPosition(true);
     user.spawnTimestamp = this.elapsedTime;
-    this.trigger('new_user', user);
+    this.emit('new_user', user);
     user.on('exited_elevator', () => {
       this.transportedCounter++;
       this.maxWaitTime = Math.max(this.maxWaitTime, this.elapsedTime - user.spawnTimestamp);
@@ -211,7 +225,7 @@ export default class World {
   recalculateStats() {
     this.transportedPerSec = this.transportedCounter / this.elapsedTime;
     this.moveCount = reduce(this.elevators, (sum, elevator) => sum + elevator.moveCount, 0);
-    this.trigger('stats_changed');
+    this.emit('stats_changed');
   }
 
   /**

@@ -26,7 +26,7 @@ describe('setUpElevator', () => {
       worldY: 20,
       currentFloor: 1,
       on: jest.fn(),
-      trigger: jest.fn(),
+      emit: jest.fn(),
       pressFloorButton: jest.fn(),
     };
 
@@ -96,8 +96,8 @@ describe('setUpElevator', () => {
 
   it('triggers initial elevator events', () => {
     setUpElevator(elevator, elevatorTempl, elevatorButtonTempl);
-    expect(elevator.trigger).toHaveBeenCalledWith('new_state', elevator);
-    expect(elevator.trigger).toHaveBeenCalledWith('new_display_state', elevator);
-    expect(elevator.trigger).toHaveBeenCalledWith('new_current_floor', elevator.currentFloor);
+    expect(elevator.emit).toHaveBeenCalledWith('new_state', elevator);
+    expect(elevator.emit).toHaveBeenCalledWith('new_display_state', elevator);
+    expect(elevator.emit).toHaveBeenCalledWith('new_current_floor', elevator.currentFloor);
   });
 });

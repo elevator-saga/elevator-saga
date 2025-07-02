@@ -2,7 +2,7 @@
  * Fake frame requester helper used for testing and fitness simulations
  * Creates a frame requester that triggers a callback at specified time intervals.
  * @param {number} timeStep - The time step for each frame in milliseconds.
- * @returns {Object} - An object with methods to register a callback and trigger it.
+ * @returns {Object} - An object with methods to register a callback and emit it.
  */
 export function createFrameRequester(timeStep) {
   let currentCb = null;
@@ -11,7 +11,7 @@ export function createFrameRequester(timeStep) {
   requester.register = function (cb) {
     currentCb = cb;
   };
-  requester.trigger = function () {
+  requester.emit = function () {
     requester.currentT += timeStep;
     if (currentCb !== null) {
       currentCb(requester.currentT);

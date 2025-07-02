@@ -89,12 +89,12 @@ export default class User extends Movable {
       this.setParent(null);
       const destination = this.x + 100;
       this.done = true;
-      this.trigger('exited_elevator', elevator);
-      this.trigger('new_state');
-      this.trigger('new_display_state');
+      this.emit('exited_elevator', elevator);
+      this.emit('new_state');
+      this.emit('new_display_state');
       this.moveToOverTime(destination, null, 1 + Math.random() * 0.5, linearInterpolate, () => {
         this.removeMe = true;
-        this.trigger('removed');
+        this.emit('removed');
         this.off('*');
       });
       elevator.off('exit_available', this.exitAvailableHandler);
@@ -123,7 +123,7 @@ export default class User extends Movable {
     const position = elevator.userEntering(this);
     if (position) {
       this.setParent(elevator);
-      this.trigger('entered_elevator', elevator);
+      this.emit('entered_elevator', elevator);
       this.moveToOverTime(position[0], position[1], 1, undefined, () => {
         elevator.pressFloorButton(this.destinationFloor);
         elevator.on('exit_available', this.exitAvailableHandler);

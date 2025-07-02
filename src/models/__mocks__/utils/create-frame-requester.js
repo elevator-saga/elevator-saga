@@ -1,6 +1,6 @@
 export const createFrameRequester = jest.fn(() => {
   return {
-    trigger: jest.fn(),
+    emit: jest.fn(),
     register: jest.fn(),
   };
 });

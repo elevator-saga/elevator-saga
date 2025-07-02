@@ -63,7 +63,7 @@ export default class Simulation {
     this.worldController = new WorldController(1.0 / 60.0);
     this.worldController.on('usercode_error', (e) => {
       console.log('World raised code error', e);
-      this.editor.trigger('usercode_error', e);
+      this.editor.emit('usercode_error', e);
     });
   }
 

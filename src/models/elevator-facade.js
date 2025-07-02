@@ -1,4 +1,4 @@
-import observable from '@riotjs/observable';
+import { EventEmitter } from 'events';
 import first from 'lodash/first';
 import last from 'lodash/last';
 import tail from 'lodash/tail';
@@ -29,8 +29,15 @@ import { createBoolPassthroughFunction, epsilonEquals, limitNumber } from './uti
  * @method loadFactor() - Returns the current load factor of the elevator.
  * @method destinationDirection() - Returns the direction the elevator is heading ('up', 'down', or 'stopped').
  */
-export default class ElevatorFacade {
+export default class ElevatorFacade extends EventEmitter {
   constructor(options) {
+    super();
+    console.log('ElevatorFacade: Creating facade with options:', options);
+
+    if (!options.elevator) {
+      throw new Error('ElevatorFacade: options.elevator is required');
+    }
+
     this.elevator = options.elevator;
     this.floorCount = options.floorCount;
     this.errorHandler = options.errorHandler;
@@ -40,7 +47,6 @@ export default class ElevatorFacade {
     this.goingUpIndicator = createBoolPassthroughFunction(this, this.elevator, 'goingUpIndicator');
     this.goingDownIndicator = createBoolPassthroughFunction(this, this.elevator, 'goingDownIndicator');
 
-    observable(this);
     // Bind elevator events to facade
     this.elevator.on('stopped', (position) => {
       if (this.destinationQueue.length && epsilonEquals(first(this.destinationQueue), position)) {
@@ -68,7 +74,7 @@ export default class ElevatorFacade {
 
   _tryTrigger(event, arg1, arg2, arg3, arg4) {
     try {
-      this.trigger(event, arg1, arg2, arg3, arg4);
+      this.emit(event, arg1, arg2, arg3, arg4);
     } catch (e) {
       this.errorHandler(e);
     }
