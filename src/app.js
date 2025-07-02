@@ -1,4 +1,3 @@
-import { route } from '@riotjs/route';
 import { challenges } from './app/challenges';
 import {
   clearAll,
@@ -145,6 +144,13 @@ const createParamsUrl = function (current, overrides) {
   );
 };
 
+// Add this helper at the top (after imports):
+function onHashChange(callback) {
+  window.addEventListener('hashchange', () => callback(window.location.hash.slice(1)));
+  // Call once on load
+  callback(window.location.hash.slice(1));
+}
+
 $(function () {
   const tsKey = 'elevatorTimeScale';
   createEditorAsync().then((editor) => {
@@ -206,7 +212,8 @@ $(function () {
     });
     editor.emit('change');
 
-    route(function (path) {
+    // Replace route() with onHashChange()
+    onHashChange(function (path) {
       params = path.split(',').reduce(function (result, p) {
         const match = p.match(/(\w+)=(\w+$)/);
         if (match) {

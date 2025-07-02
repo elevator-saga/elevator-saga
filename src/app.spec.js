@@ -1,4 +1,3 @@
-jest.mock('@riotjs/route', () => jest.fn());
 jest.mock('./app/create-editor', () => ({
   createEditorAsync: jest.fn(() => Promise.resolve({ on: jest.fn(), emit: jest.fn() })),
 }));
