@@ -35,7 +35,7 @@ describe('presentChallenge', () => {
 
   it('renders the challenge UI into the parent', () => {
     // Act
-    presentChallenge($parent, challenge, app, world, worldController, challengeNum, challengeTempl);
+    presentChallenge($parent, challenge, { app, world, worldController, challengeNum, challengeTempl });
 
     // Assert
     expect($parent.html()).toContain('startstop');
@@ -45,7 +45,7 @@ describe('presentChallenge', () => {
 
   it('calls app.startStopOrRestart when .startstop is clicked', () => {
     // Arrange
-    presentChallenge($parent, challenge, app, world, worldController, challengeNum, challengeTempl);
+    presentChallenge($parent, challenge, { app, world, worldController, challengeNum, challengeTempl });
 
     // Act
     $parent.find('.startstop').trigger('click');
@@ -57,7 +57,7 @@ describe('presentChallenge', () => {
   it('increases timeScale when .timescale_increase is clicked and timeScale < 40', () => {
     // Arrange
     worldController.timeScale = 10;
-    presentChallenge($parent, challenge, app, world, worldController, challengeNum, challengeTempl);
+    presentChallenge($parent, challenge, { app, world, worldController, challengeNum, challengeTempl });
 
     // Act
     $parent.find('.timescale_increase').trigger({ type: 'click', preventDefault: jest.fn() });
@@ -69,7 +69,7 @@ describe('presentChallenge', () => {
   it('does not increase timeScale when .timescale_increase is clicked and timeScale >= 40', () => {
     // Arrange
     worldController.timeScale = 40;
-    presentChallenge($parent, challenge, app, world, worldController, challengeNum, challengeTempl);
+    presentChallenge($parent, challenge, { app, world, worldController, challengeNum, challengeTempl });
 
     // Act
     $parent.find('.timescale_increase').trigger({ type: 'click', preventDefault: jest.fn() });
@@ -81,7 +81,7 @@ describe('presentChallenge', () => {
   it('decreases timeScale when .timescale_decrease is clicked', () => {
     // Arrange
     worldController.timeScale = 10;
-    presentChallenge($parent, challenge, app, world, worldController, challengeNum, challengeTempl);
+    presentChallenge($parent, challenge, { app, world, worldController, challengeNum, challengeTempl });
 
     // Act
     $parent.find('.timescale_decrease').trigger({ type: 'click', preventDefault: jest.fn() });

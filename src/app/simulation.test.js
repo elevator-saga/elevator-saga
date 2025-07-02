@@ -187,15 +187,13 @@ describe('Simulation', () => {
     expect(World).toHaveBeenCalledWith(mockChallenges[0].options);
     expect(mockClearAll).toHaveBeenCalledWith([mock$world, mock$feedback]);
     expect(mockPresentStats).toHaveBeenCalledWith(mock$stats, expect.any(Object));
-    expect(mockPresentChallenge).toHaveBeenCalledWith(
-      mock$challenge,
-      mockChallenges[0],
-      simulation,
-      expect.any(Object),
-      simulation.worldController,
-      1,
-      mockTemplates.challengeTempl
-    );
+    expect(mockPresentChallenge).toHaveBeenCalledWith(mock$challenge, mockChallenges[0], {
+      app: simulation,
+      world: expect.any(Object),
+      worldController: simulation.worldController,
+      challengeNum: 1,
+      challengeTempl: mockTemplates.challengeTempl,
+    });
     expect(mockPresentWorld).toHaveBeenCalledWith(
       mock$world,
       expect.any(Object),
@@ -285,14 +283,12 @@ describe('Simulation', () => {
 
     // Assert
     expect(mockLocalStorageSpy).toHaveBeenCalledWith(mockTsKey, simulation.worldController.timeScale);
-    expect(mockPresentChallenge).toHaveBeenCalledWith(
-      mock$challenge,
-      mockChallenges[0],
-      simulation,
-      simulation.world,
-      simulation.worldController,
-      1,
-      mockTemplates.challengeTempl
-    );
+    expect(mockPresentChallenge).toHaveBeenCalledWith(mock$challenge, mockChallenges[0], {
+      app: simulation,
+      world: simulation.world,
+      worldController: simulation.worldController,
+      challengeNum: 1,
+      challengeTempl: mockTemplates.challengeTempl,
+    });
   });
 });

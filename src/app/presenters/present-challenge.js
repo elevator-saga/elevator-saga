@@ -6,13 +6,22 @@ import World from '../../models/world';
  *
  * @param {jQuery} $parent - The parent jQuery element where the challenge UI will be rendered.
  * @param {Object} challenge - The challenge data object.
- * @param {Object} app - The main application object, providing control methods.
- * @param {World} world - The current world state object.
- * @param {Object} worldController - Controller for managing world state and time scale.
- * @param {number} challengeNum - The current challenge number.
- * @param {string} challengeTempl - The Riot.js template string for rendering the challenge UI.
+ * @param {Object} options - Additional options for rendering the challenge.
+ * @param {Object} options.app - The main application instance.
+ * @param {World} options.world - The current world instance.
+ * @param {WorldController} options.worldController - The controller managing the world state.
+ * @param {number} options.challengeNum - The current challenge number.
+ * @param {Object} options.challengeTempl - The template used for rendering the challenge
  */
-export function presentChallenge($parent, challenge, app, world, worldController, challengeNum, challengeTempl) {
+export function presentChallenge($parent, challenge, options) {
+  console.log('presentChallenge: Rendering challenge UI');
+  if (!$parent || !$parent.length) {
+    console.warn('presentChallenge called with empty parent element');
+    return;
+  }
+  console.log('presentChallenge with options:', options);
+  const { app, world, worldController, challengeNum, challengeTempl } = options;
+
   const $challenge = $(
     render(challengeTempl, {
       challenge: challenge,

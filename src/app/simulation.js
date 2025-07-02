@@ -94,15 +94,13 @@ export default class Simulation {
 
     this.clearAll([this.$world, this.$feedback]);
     this.presentStats(this.$stats, this.world);
-    this.presentChallenge(
-      this.$challenge,
-      this.challenges[challengeIndex],
-      this,
-      this.world,
-      this.worldController,
-      challengeIndex + 1,
-      this.templates.challengeTempl
-    );
+    this.presentChallenge(this.$challenge, this.challenges[challengeIndex], {
+      app: this,
+      world: this.world,
+      worldController: this.worldController,
+      challengeNum: challengeIndex + 1,
+      challengeTempl: this.templates.challengeTempl,
+    });
     this.presentWorld(
       this.$world,
       this.world,
@@ -114,15 +112,13 @@ export default class Simulation {
 
     this.worldController.on('timescale_changed', () => {
       localStorage.setItem(this.tsKey, this.worldController.timeScale);
-      this.presentChallenge(
-        this.$challenge,
-        this.challenges[challengeIndex],
-        this,
-        this.world,
-        this.worldController,
-        challengeIndex + 1,
-        this.templates.challengeTempl
-      );
+      this.presentChallenge(this.$challenge, this.challenges[challengeIndex], {
+        app: this,
+        world: this.world,
+        worldController: this.worldController,
+        challengeNum: challengeIndex + 1,
+        challengeTempl: this.templates.challengeTempl,
+      });
     });
 
     this.world.on('stats_changed', () => {
