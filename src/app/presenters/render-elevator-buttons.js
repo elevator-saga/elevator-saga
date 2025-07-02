@@ -1,5 +1,5 @@
-import render from '@riotjs/ssr';
 import { map } from 'lodash';
+import { renderTemplate } from './render-template';
 
 /**
  * Renders the HTML for elevator buttons based on the provided states.
@@ -15,6 +15,6 @@ import { map } from 'lodash';
 export function renderElevatorButtons(states, elevatorButtonTempl) {
   // This is a rarely executed inner-inner loop, does not need efficiency
   return map(states, function (b, i) {
-    return render(elevatorButtonTempl, { floorNum: i });
+    return renderTemplate(elevatorButtonTempl, { floorNum: i });
   }).join('');
 }

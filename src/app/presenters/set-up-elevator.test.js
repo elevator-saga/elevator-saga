@@ -1,15 +1,15 @@
-import render from '@riotjs/ssr';
 import $ from 'jquery';
 import { renderElevatorButtons } from './render-elevator-buttons';
+import { renderTemplate } from './render-template';
 import { setTransformPosition } from './set-transform-position';
 import { setUpElevator } from './set-up-elevator';
 
-jest.mock('@riotjs/ssr', () => ({
-  __esModule: true,
-  default: jest.fn((templ, data) => templ),
-}));
 jest.mock('./render-elevator-buttons');
 jest.mock('./set-transform-position');
+jest.mock('./render-template', () => ({
+  __esModule: true,
+  renderTemplate: jest.fn((templ, data) => templ),
+}));
 
 describe('setUpElevator', () => {
   let elevator, elevatorTempl, elevatorButtonTempl, $container;
@@ -35,8 +35,8 @@ describe('setUpElevator', () => {
       '<div class="elevator"><div class="buttonindicator"></div><div class="floorindicator"><span></span></div><div class="up"></div><div class="down"></div></div>';
     elevatorButtonTempl = '<button class="buttonpress">{floorNum}</button>';
 
-    // Mock render to return the template as HTML string
-    render.mockImplementation((templ, data) => templ);
+    // Mock renderTemplate to return the template as HTML string
+    renderTemplate.mockImplementation((templ, data) => templ);
 
     // Mock renderElevatorButtons to return button HTML
     renderElevatorButtons.mockReturnValue(

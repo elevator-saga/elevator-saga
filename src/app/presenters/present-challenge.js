@@ -1,5 +1,5 @@
-import render from '@riotjs/ssr';
 import World from '../../models/world';
+import { renderTemplate } from './render-template';
 
 /**
  * Renders and initializes the challenge UI in the given parent element.
@@ -23,7 +23,7 @@ export function presentChallenge($parent, challenge, options) {
   const { app, world, worldController, challengeNum, challengeTempl } = options;
 
   const $challenge = $(
-    render(challengeTempl, {
+    renderTemplate(challengeTempl, {
       challenge: challenge,
       num: challengeNum,
       timeScale: worldController.timeScale.toFixed(0) + 'x',

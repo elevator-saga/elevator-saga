@@ -1,9 +1,9 @@
-import render from '@riotjs/ssr';
 import { presentFeedback } from './present-feedback';
+import { renderTemplate } from './render-template';
 
-jest.mock('@riotjs/ssr', () => ({
+jest.mock('./render-template', () => ({
   __esModule: true,
-  default: jest.fn((templ, data) => templ),
+  renderTemplate: jest.fn((templ, data) => templ),
 }));
 
 describe('presentFeedback', () => {
@@ -22,7 +22,7 @@ describe('presentFeedback', () => {
       floors: [{}, {}, {}],
       floorHeight: 10,
     };
-    render.mockClear();
+    renderTemplate.mockClear();
     $parent.html.mockClear();
     $parent.find.mockClear();
     $parent.remove.mockClear();
@@ -30,13 +30,13 @@ describe('presentFeedback', () => {
 
   it('renders feedback with correct parameters and calls html', () => {
     // Arrange
-    render.mockReturnValue('<div>output</div>');
+    renderTemplate.mockReturnValue('<div>output</div>');
 
     // Act
     presentFeedback($parent, feedbackTempl, world, 'Test Title', 'Test Message', 'http://example.com');
 
     // Assert
-    expect(render).toHaveBeenCalledWith(feedbackTempl, {
+    expect(renderTemplate).toHaveBeenCalledWith(feedbackTempl, {
       title: 'Test Title',
       message: 'Test Message',
       url: 'http://example.com',
@@ -48,13 +48,13 @@ describe('presentFeedback', () => {
 
   it('removes anchor tags if url is not provided', () => {
     // Arrange
-    render.mockReturnValue('<div>output</div>');
+    renderTemplate.mockReturnValue('<div>output</div>');
 
     // Act
     presentFeedback($parent, feedbackTempl, world, 'No URL', 'No URL Message');
 
     // Assert
-    expect(render).toHaveBeenCalledWith(feedbackTempl, {
+    expect(renderTemplate).toHaveBeenCalledWith(feedbackTempl, {
       title: 'No URL',
       message: 'No URL Message',
       url: undefined,
@@ -69,13 +69,13 @@ describe('presentFeedback', () => {
   it('handles empty floors array', () => {
     // Arrange
     world.floors = [];
-    render.mockReturnValue('<div>output</div>');
+    renderTemplate.mockReturnValue('<div>output</div>');
 
     // Act
     presentFeedback($parent, feedbackTempl, world, 'Empty', 'No Floors', 'http://example.com');
 
     // Assert
-    expect(render).toHaveBeenCalledWith(feedbackTempl, {
+    expect(renderTemplate).toHaveBeenCalledWith(feedbackTempl, {
       title: 'Empty',
       message: 'No Floors',
       url: 'http://example.com',

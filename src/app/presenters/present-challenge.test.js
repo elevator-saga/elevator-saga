@@ -1,10 +1,7 @@
-import render from '@riotjs/ssr';
 import { presentChallenge } from './present-challenge';
+import { renderTemplate } from './render-template';
 
-jest.mock('@riotjs/ssr', () => ({
-  __esModule: true,
-  default: jest.fn((templ, data) => templ),
-}));
+jest.mock('./render-template');
 
 describe('presentChallenge', () => {
   let $parent, challenge, app, world, worldController, challengeNum, challengeTempl;
@@ -22,8 +19,8 @@ describe('presentChallenge', () => {
     challengeNum = 1;
     challengeTempl = '<div></div>';
 
-    // Mock render to return expected HTML for tests
-    render.mockImplementation(
+    // Mock renderTemplate to return expected HTML for tests
+    renderTemplate.mockImplementation(
       () =>
         `<div>
         <div class="startstop"></div>
