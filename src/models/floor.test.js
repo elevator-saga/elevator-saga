@@ -1,12 +1,4 @@
 import Floor from './floor';
-// Mocks for dependencies
-jest.mock('@riotjs/observable', () => {
-  return jest.fn((obj) => {
-    obj.on = jest.fn();
-    obj.off = jest.fn();
-    obj.emit = jest.fn();
-  });
-});
 
 describe('Floor', () => {
   let floor, errorHandler, triggeredEvents;

@@ -1,4 +1,5 @@
 import { EventEmitter } from 'events';
+import World from './world';
 
 /**
  * Controls the simulation loop and manages the state of the world.

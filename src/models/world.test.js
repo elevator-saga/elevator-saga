@@ -6,14 +6,7 @@ import World from './world';
 const reduce = require('lodash/reduce');
 
 // Mocks for dependencies
-jest.mock('@riotjs/observable', () => {
-  return jest.fn((obj) => {
-    obj.on = jest.fn();
-    obj.off = jest.fn();
-    obj.emit = jest.fn();
-  });
-});
-// jest.mock('lodash/clone', () => jest.fn((obj) => ({ ...obj })));
+
 jest.mock('lodash/each', () => jest.fn((arr, fn) => arr.forEach(fn)));
 jest.mock('lodash/map', () => jest.fn((arr, fn) => Array.prototype.map.call(arr, fn)));
 jest.mock('lodash/random', () => jest.fn(() => 0));

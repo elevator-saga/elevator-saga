@@ -1,4 +1,3 @@
-import observable from '@riotjs/observable';
 import World from '../models/world';
 import WorldController from '../models/world-controller';
 
@@ -42,7 +41,6 @@ export default class Simulation {
     $stats,
     $challenge,
   }) {
-    observable(this);
     this.editor = editor;
     this.challenges = challenges;
     this.clearAll = clearAll;

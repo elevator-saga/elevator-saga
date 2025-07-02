@@ -1,4 +1,3 @@
-import observable from '@riotjs/observable';
 import { route } from '@riotjs/route';
 import debounce from 'lodash/debounce';
 import each from 'lodash/each';

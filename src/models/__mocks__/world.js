@@ -1,6 +1,8 @@
 export default class MockWorld {
   constructor() {
     this.on = jest.fn();
+    this.off = jest.fn();
+    this.emit = jest.fn();
     this.spawnRate = 0.5;
     this.floorCount = 4;
     this.floorHeight = 50;

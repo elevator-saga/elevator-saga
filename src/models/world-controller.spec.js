@@ -1,4 +1,3 @@
-import observable from '@riotjs/observable';
 import { createFrameRequester } from './utils';
 import WorldController from './world-controller';
 
@@ -16,8 +15,9 @@ describe('World controller', function () {
       init: function () {},
       updateDisplayPositions: function () {},
       emit: function () {},
+      on: function () {},
+      off: function () {},
     };
-    fakeWorld = observable(fakeWorld);
     fakeCodeObj = { init: function () {}, update: function () {} };
     frameRequester = createFrameRequester(10.0);
     jest.spyOn(fakeWorld, 'update').mockImplementation(function (dt) {});

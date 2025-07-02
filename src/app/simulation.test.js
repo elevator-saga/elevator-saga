@@ -4,14 +4,6 @@ import World from '../models/world';
 import Simulation from './simulation';
 
 // Mocks for dependencies
-jest.mock('@riotjs/observable', () => {
-  return jest.fn((obj) => {
-    obj.on = jest.fn();
-    obj.off = jest.fn();
-    obj.emit = jest.fn();
-  });
-});
-
 jest.mock('../models/world', () => {
   const ActualMock = require('../models/__mocks__/world').default;
   return {
@@ -32,7 +24,7 @@ jest.mock('../models/world-controller', () => {
 });
 
 describe('Simulation', () => {
-  let deps;
+  let options = {};
   let simulation;
   let mockEditor;
   let mockChallenges;
@@ -46,14 +38,9 @@ describe('Simulation', () => {
   let mockCreateParamsUrl;
   let mockTsKey;
   let mock$world, mock$feedback, mock$stats, mock$challenge;
-  let mockWorldController;
-  let mockWorld;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    // global.localStorage = window.localStorage = { setItem: jest.fn() };
-    // mockWorldController = new MockWorldController();
-    // mockWorld = new MockWorld();
     mockEditor = { getCodeObj: jest.fn(() => ({})), emit: jest.fn() };
     mockChallenges = [
       {
@@ -86,7 +73,7 @@ describe('Simulation', () => {
     mock$stats = {};
     mock$challenge = {};
 
-    deps = {
+    options = {
       editor: mockEditor,
       challenges: mockChallenges,
       clearAll: mockClearAll,
@@ -108,9 +95,7 @@ describe('Simulation', () => {
     mockEditor.getCodeObj.mockClear();
     mockEditor.emit.mockClear();
 
-    simulation = new Simulation(deps);
-    // simulation.worldController = new MockWorldController();
-    // simulation.world = new MockWorld();
+    simulation = new Simulation({ ...options });
   });
 
   it('should initialize with dependencies', () => {
